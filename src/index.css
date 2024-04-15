@@ -3,3 +3,15 @@ body{
     color: aliceblue;
     font-family: 'Courier New', Courier, monospace;
 }
+
+#root{
+    display: flex
+}
+
+aside{
+    width: 30%;
+}
+
+main{
+    width: 70%;
+}

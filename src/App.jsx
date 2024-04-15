@@ -1,33 +1,25 @@
+import Principal from './componentes/Principal'
 import { useEffect, useState } from 'react'
 import './App.css'
 
-// function App () {
-//   // Bueno, hacer la primera conexion
-//   const [data, setData] = useState(null)
-//   useEffect(() => {
-//     fetch('http://localhost:3000')
-//       .then((res) => {
-//         return res.json()
-//       })
-//       .then(data => {
-//         setData(data)
-//         console.log(data)
-//       })
-//       .catch(err => {
-//         console.error(err)
-//         setData({ mensaje: err.message })
-//       })
-//   }, [])
-//   return (
-//     <>
-//       {data && (<h1>{data.mensaje} :3</h1>)}
-//     </>
-//   )
-// }
-
 function App () {
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState(null)
+  useEffect(() => {
+    fetch('http://localhost:3000')
+      .then(res => {
+        return res.json()
+      }).then(d => {
+        console.log(d)
+        setData(d)
+        setLoading(false)
+      })
+  }, [])
+  // Renderizo Principal porque tenia la idea de hacer algun fetch previo a cargar los componentes, pero por ahora creo que no va a hacer falta. Nomas lo dejo aca como memo xd
   return (
     <>
+      {loading && <h1>cargando</h1>}
+      {data && <Principal {...data} />}
     </>
   )
 }
