@@ -18,6 +18,7 @@ function App () {
   // Renderizo Principal porque tenia la idea de hacer algun fetch previo a cargar los componentes, pero por ahora creo que no va a hacer falta. Nomas lo dejo aca como memo xd
   return (
     <>
+      {console.log(data)}
       {loading && <h1>cargando</h1>}
       {data && <Principal {...data} />}
     </>

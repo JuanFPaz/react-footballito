@@ -1,6 +1,6 @@
 # React Footballito
 
-Proyecto `React` creado y configurado con `Vite`. Es una aplicacion frontend que obtiene los datos de distintas ligas, copas nacionales e internacionales de la [API Football](), desarrollada con express.
+Proyecto `React` creado y configurado con `Vite`. Es una aplicacion frontend que obtiene los datos de distintas ligas, copas nacionales e internacionales de la [API Football](localhost:3000), desarrollada con express.
 
 ## Enlaces
 

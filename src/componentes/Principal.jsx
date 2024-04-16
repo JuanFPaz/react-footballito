@@ -6,23 +6,29 @@ import Inicio from './inicio/Inicio'
 import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
 
-function NavSide ({ lista, onInicio, onLiga, onCopa }) {
-  console.log('Debuando en NAVSIDE')
-  const [{ country }] = lista
+function NavSide ({ navItems, onInicio, onLiga, onCopa }) {
   return (
     <>
-      <h1>Inicio</h1>
-      <ul>
-        <li onClick={onInicio}>Inicio</li>
-      </ul>
-      <h1>{country.name}</h1>
-      <ul>
-        {lista.map(({ league }) =>
-          (
-            <li key={league.id} onClick={league.type === 'League' ? onLiga : onCopa}>{league.name}</li>
-          )
-        )}
-      </ul>
+      <div>
+        <h1>Inicio</h1>
+        <ul>
+          <li onClick={onInicio}>Inicio</li>
+        </ul>
+      </div>
+      {navItems.map(({ country, list }) => (
+        <div key={country.code}>
+          <h1>
+            {country.name}
+          </h1>
+          <ul>
+            {list.map(l => (
+              <li key={l.id} onClick={l.type === 'League' ? onLiga : onCopa}>
+                {l.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </>
   )
 }
@@ -58,12 +64,12 @@ function Principal ({ response }) {
     setDataLiga(false)
   }
 
-  console.log()
   return (
     <>
       <>
+        {console.log(dataLista)}
         <aside>
-          <NavSide lista={dataLista} onInicio={handleEventInicio} onLiga={handleEventLiga} onCopa={handleEventCopa} />
+          <NavSide navItems={dataLista} onInicio={handleEventInicio} onLiga={handleEventLiga} onCopa={handleEventCopa} />
         </aside>
         <main>
           {/* Por el momento este no es la mejor forma de chequear los renderizados, pero es una idea inicial */}
