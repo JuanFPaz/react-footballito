@@ -7,6 +7,7 @@ import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
 
 function NavSide ({ navItems, onInicio, onLiga, onCopa }) {
+  console.log(navItems)
   return (
     <>
       <div>
@@ -15,15 +16,15 @@ function NavSide ({ navItems, onInicio, onLiga, onCopa }) {
           <li onClick={onInicio}>Inicio</li>
         </ul>
       </div>
-      {navItems.map(({ country, list }) => (
-        <div key={country.code}>
+      {navItems.map(({ country, list }, idx) => (
+        <div key={idx}>
           <h1>
             {country.name}
           </h1>
           <ul>
-            {list.map(l => (
-              <li key={l.id} onClick={l.type === 'League' ? onLiga : onCopa}>
-                {l.name}
+            {list.map(({ league, seasons }) => (
+              <li key={league.id} onClick={league.type === 'League' ? () => { onLiga({ league, seasons }) } : onCopa}>
+                {league.name}
               </li>
             ))}
           </ul>
@@ -43,39 +44,39 @@ function Footer () {
 
 function Principal ({ response }) {
   const [dataLista, setDataLista] = useState([...response])
-  const [dataInicio, setDataInicio] = useState(true)
-  const [dataLiga, setDataLiga] = useState(false)
-  const [dataCopa, setDataCopa] = useState(false)
+  const [dataLeague, setDataLeague] = useState({})
+  const [renderInicio, setRenderInicio] = useState(true)
+  const [renderLiga, setRenderLiga] = useState(false)
+  const [renderCopa, setRenderCopa] = useState(false)
 
-  const handleEventRenderInicio = () => {
-    setDataInicio(true)
-    setDataCopa(false)
-    setDataLiga(false)
+  const handleEventRenderInicio = (unaData) => {
+    setRenderInicio(true)
+    setRenderCopa(false)
+    setRenderLiga(false)
   }
-  const handleEventRenderLiga = () => {
-    setDataInicio(false)
-    setDataCopa(false)
-    setDataLiga(true)
+  const handleEventRenderLiga = (unaData) => {
+    setRenderInicio(false)
+    setRenderCopa(false)
+    setRenderLiga(true)
+    setDataLeague(unaData)
   }
-
-  const handleEventRenderCopa = () => {
-    setDataCopa(true)
-    setDataInicio(false)
-    setDataLiga(false)
+  const handleEventRenderCopa = (unaData) => {
+    setRenderCopa(true)
+    setRenderLiga(false)
+    setRenderLiga(false)
   }
 
   return (
     <>
       <>
-        {console.log(dataLista)}
         <aside>
-          <NavSide navItems={dataLista} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
+          <NavSide navItems={dataLista} onInicio={handleEventRenderInicio} onLiga={(unaData) => { handleEventRenderLiga(unaData) }} onCopa={handleEventRenderCopa} />
         </aside>
         <main>
           {/* Por el momento este no es la mejor forma de chequear los renderizados, pero es una idea inicial */}
-          {dataInicio && <Inicio />}
-          {dataLiga && <Ligas />}
-          {dataCopa && <Copas />}
+          {renderInicio && <Inicio />}
+          {renderLiga && <Ligas {...dataLeague} />}
+          {renderCopa && <Copas />}
           <footer>
             <Footer />
           </footer>
