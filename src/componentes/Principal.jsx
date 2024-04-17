@@ -47,18 +47,18 @@ function Principal ({ response }) {
   const [dataLiga, setDataLiga] = useState(false)
   const [dataCopa, setDataCopa] = useState(false)
 
-  const handleEventInicio = () => {
+  const handleEventRenderInicio = () => {
     setDataInicio(true)
     setDataCopa(false)
     setDataLiga(false)
   }
-  const handleEventLiga = () => {
+  const handleEventRenderLiga = () => {
     setDataInicio(false)
     setDataCopa(false)
     setDataLiga(true)
   }
 
-  const handleEventCopa = () => {
+  const handleEventRenderCopa = () => {
     setDataCopa(true)
     setDataInicio(false)
     setDataLiga(false)
@@ -69,7 +69,7 @@ function Principal ({ response }) {
       <>
         {console.log(dataLista)}
         <aside>
-          <NavSide navItems={dataLista} onInicio={handleEventInicio} onLiga={handleEventLiga} onCopa={handleEventCopa} />
+          <NavSide navItems={dataLista} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
         </aside>
         <main>
           {/* Por el momento este no es la mejor forma de chequear los renderizados, pero es una idea inicial */}

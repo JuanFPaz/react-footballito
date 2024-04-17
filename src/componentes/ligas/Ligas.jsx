@@ -1,78 +1,78 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React, { useEffect, useState } from 'react'
 
-function Ligas () {
+function Fixture () {
   return (
     <>
-      <div>
-        <h1>Historial de Temporadas:</h1>
-        <ul>
-          <li>Temporada 2024</li>
-          <li>Temporada 2023</li>
-        </ul>
-      </div>
-      <div>
-        <h1>Ligas</h1>
-      </div>
-      {/* TEMPLATE TABLA DE POSICIONES */}
-      <div>
-        <table border='1'>
-          <thead>
-            <tr>
-              <th>Ranking</th>
-              <th>Equipo</th>
-              <th>Puntos</th>
-              <th>PJ</th>
-              <th>PG</th>
-              <th>PE</th>
-              <th>PP</th>
-              <th>Dif Gol</th>
-              <th>Goles favor</th>
-              <th>Goles encontra</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>Equipo A</td>
-              <td>20</td>
-              <td>10</td>
-              <td>7</td>
-              <td>2</td>
-              <td>1</td>
-              <td>+10</td>
-              <td>25</td>
-              <td>15</td>
-            </tr>
-            <tr />
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <table border='1'>
-          <thead>
-            <tr>
-              Ligarcha Argentina
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>14:00</td>
-              <td>Equipo A</td>
-              <td>2</td>
-              <td>1</td>
-              <td>Equipo B</td>
-            </tr>
-            <tr>
-              <td>16:30</td>
-              <td>Equipo C</td>
-              <td>0</td>
-              <td>0</td>
-              <td>Equipo D</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {/* TEMPLATE FIXTURE */}
+      Holi
+    </>
+  )
+}
+
+/* TODO: ARREGLA ESTA PROP POR EL AMOR DE DIOS, osea la props esta bien, pero no entiendo porque me hice tanto lio, mañana la veo con más calma */
+function Tabla ({ tablaData }) {
+  console.log(tablaData)
+  return (
+    <>
+      <table border='1'>
+        <thead>
+          <tr>
+            <th>Ranking</th>
+            <th>Equipo</th>
+            <th>Puntos</th>
+            <th>PJ</th>
+            <th>PG</th>
+            <th>PE</th>
+            <th>PP</th>
+            <th>Dif Gol</th>
+            <th>Goles favor</th>
+            <th>Goles encontra</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tablaData.map((equipo, idx) =>
+            (
+              <tr key={equipo.team.id}>
+                <td>{idx + 1}</td>
+                <td>{equipo.team.name}</td>
+                <td>{equipo.points}</td>
+                <td>{equipo.all.played}</td>
+                <td>{equipo.all.win}</td>
+                <td>{equipo.all.draw}</td>
+                <td>{equipo.all.lose}</td>
+                <td>{equipo.goalsDiff}</td>
+                <td>{equipo.all.goals.for}</td>
+                <td>{equipo.all.goals.against}</td>
+              </tr>
+            )
+          )}
+        </tbody>
+      </table>
+    </>
+  )
+}
+
+function Ligas () {
+  const [loading, setLoading] = useState(true)
+  const [dataTable, setDataTable] = useState(null)
+  useEffect(() => {
+    fetch('http://localhost:3000/2024/liga-profesional-argentina')
+      .then(res => res.json())
+      .then(data => {
+        const { response: [{ standing }] } = data
+        setLoading(false)
+        setDataTable(standing)
+      })
+  }, [])
+  return (
+    <>
+      {loading && <h1>cargando</h1>}
+      {dataTable && (
+        <>
+          <Tabla tablaData={dataTable} />
+          <Fixture />
+        </>
+      )}
 
     </>
   )
