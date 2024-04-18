@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 function Fixture () {
   return (
     <>
-      Holi
+       Fixture
     </>
   )
 }
@@ -114,7 +114,7 @@ function Ligas ({ league, seasons }) {
           Equipos :
         </h3>
         <ul>
-          <li>RiBer</li>
+          <li>SLO</li>
         </ul>
       </section>
       <section>
