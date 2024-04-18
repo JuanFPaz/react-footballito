@@ -6,8 +6,8 @@ import Inicio from './inicio/Inicio'
 import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
 
+/* Cambiar props navitems? anda, pero nose, */
 function NavSide ({ navItems, onInicio, onLiga, onCopa }) {
-  console.log(navItems)
   return (
     <>
       <div>

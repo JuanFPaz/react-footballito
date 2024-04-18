@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
@@ -5,61 +6,76 @@ import React, { useEffect, useState } from 'react'
 function Fixture () {
   return (
     <>
-       Fixture
+      Fixture
     </>
   )
 }
 
-/* TODO: ARREGLA ESTA PROP POR EL AMOR DE DIOS, osea la props esta bien, pero no entiendo porque me hice tanto lio, mañana la veo con más calma */
-function Tabla ({ response }) {
-  console.log(response)
-  // return (
-  //   <>
-  //     <table border='1'>
-  //       <thead>
-  //         <tr>
-  //           <th>Ranking</th>
-  //           <th>Equipo</th>
-  //           <th>Puntos</th>
-  //           <th>PJ</th>
-  //           <th>PG</th>
-  //           <th>PE</th>
-  //           <th>PP</th>
-  //           <th>Dif Gol</th>
-  //           <th>Goles favor</th>
-  //           <th>Goles encontra</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {tablaData.map((equipo, idx) =>
-  //           (
-  //             <tr key={equipo.team.id}>
-  //               <td>{idx + 1}</td>
-  //               <td>{equipo.team.name}</td>
-  //               <td>{equipo.points}</td>
-  //               <td>{equipo.all.played}</td>
-  //               <td>{equipo.all.win}</td>
-  //               <td>{equipo.all.draw}</td>
-  //               <td>{equipo.all.lose}</td>
-  //               <td>{equipo.goalsDiff}</td>
-  //               <td>{equipo.all.goals.for}</td>
-  //               <td>{equipo.all.goals.against}</td>
-  //             </tr>
-  //           )
-  //         )}
-  //       </tbody>
-  //     </table>
-  //   </>
-  // )
+function TablaContainer ({ tablaItems }) {
+  console.log('<TablaCntainer/>')
+  return (
+    <>
+      <table border='1'>
+        <thead>
+          <tr>
+            <th>Ranking</th>
+            <th>Equipo</th>
+            <th>Puntos</th>
+            <th>PJ</th>
+            <th>PG</th>
+            <th>PE</th>
+            <th>PP</th>
+            <th>Dif Gol</th>
+            <th>Goles favor</th>
+            <th>Goles encontra</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tablaItems.map(({ team: { id, name }, points, goalsDiff, all: { played, win, draw, lose, goals: { for: aFavor, against } } }, idx) => (
+            <tr key={id}>
+              <td>{idx + 1}</td>
+              <td>{name}</td>
+              <td>{points}</td>
+              <td>{played}</td>
+              <td>{win}</td>
+              <td>{draw}</td>
+              <td>{lose}</td>
+              <td>{goalsDiff}</td>
+              <td>{aFavor}</td>
+              <td>{against}</td>
+            </tr>
+          ))}
+
+        </tbody>
+      </table>
+    </>
+  )
+}
+
+function Tabla ({ response: [{ standings }] }) {
+  const [dataStanding, setDataStanding] = useState([...standings])
+
+  return (
+    <>
+      {dataStanding.map((standing, idx) => (
+        <TablaContainer key={idx} tablaItems={standing} />
+      ))}
+    </>
+  )
 }
 
 /* TOODO: arreglar el dataTable, anda, pero la desestructuracion esta medio tomada de los pelos. */
 function Ligas ({ league, seasons }) {
   const [loading, setLoading] = useState(true)
   const [renderStadistic, setRenderStadistic] = useState(false)
-  const [dataStadistic, setDataStadistic] = useState(null)
+  const [dataStadistic, setDataStadistic] = useState({})
   const [dataLeague, setDataLeague] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
+  useEffect(() => {
+    setRenderStadistic(false)
+    setDataLeague({ ...league })
+    setDataSeasons([...seasons])
+  }, [league, seasons])
 
   useEffect(() => {
     /*
@@ -70,26 +86,23 @@ function Ligas ({ league, seasons }) {
       localhost:3000/2024/copa-de-la-liga-profesiona -> Cuando es seleccionada la copa de la ligarcha
 
   */
-    const season = '2024'
-    const league = 'liga-profesional-argentina'
-    console.log('LOG DE USEFFECT 1')
-    console.log(dataLeague)
-    console.log(dataSeasons)
-    fetch(`http://localhost:3000/${season}/${league}`)
-      .then(res => res.json())
-      .then(data => {
-        setLoading(false)
-        setRenderStadistic(true)
-        setDataStadistic([...data])
-        console.log(data)
-      })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const checkSeason = dataSeasons.find(ds => ds.current)?.year
+    const checkLeague = dataLeague.name
+    if (checkSeason !== undefined && checkLeague !== undefined) {
+      const season = checkSeason.toString()
+      const league = checkLeague.toLowerCase().replace(/\s/g, '-')
+      fetch(`http://localhost:3000/${season}/${league}`)
+        .then(res => res.json())
+        .then(data => {
+          setLoading(false)
+          setRenderStadistic(true)
+          setDataStadistic(data)
+        })
+    }
+    // obtenemos el año del objeto del arreglo que contenga el current en true
+    // Est o lo voy a tener que arreglar en el futuro, porque cuando dataLeague y dataSeason sufran cambios (por ejemplo cuando seleccionemos una temporada de la lista)
+  }, [dataLeague, dataSeasons])
 
-  useEffect(() => {
-    setDataLeague({ ...league })
-    setDataSeasons([...seasons])
-  }, [league, seasons])
   return (
     <>
       {/* ESTOS DATOS LOS PODEMOS OBTENER DEL PRIMER GET (APP -> PRINCIPAL -> NAVASIDE)
@@ -121,7 +134,7 @@ function Ligas ({ league, seasons }) {
         {loading && <h1>cargando</h1>}
         {renderStadistic && (
           <>
-            <Tabla tablaData={dataStadistic} />
+            <Tabla {...dataStadistic} />
             <Fixture />
           </>
         )}
