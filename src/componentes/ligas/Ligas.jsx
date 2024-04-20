@@ -2,6 +2,7 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
+import Tabla from '../tablas/Tablas'
 
 function Fixture () {
   return (
@@ -11,66 +12,14 @@ function Fixture () {
   )
 }
 
-function TablaContainer ({ tablaItems }) {
-  console.log('<TablaCntainer/>')
-  return (
-    <>
-      <table border='1'>
-        <thead>
-          <tr>
-            <th>Ranking</th>
-            <th>Equipo</th>
-            <th>Puntos</th>
-            <th>PJ</th>
-            <th>PG</th>
-            <th>PE</th>
-            <th>PP</th>
-            <th>Dif Gol</th>
-            <th>Goles favor</th>
-            <th>Goles encontra</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tablaItems.map(({ team: { id, name }, points, goalsDiff, all: { played, win, draw, lose, goals: { for: aFavor, against } } }, idx) => (
-            <tr key={id}>
-              <td>{idx + 1}</td>
-              <td>{name}</td>
-              <td>{points}</td>
-              <td>{played}</td>
-              <td>{win}</td>
-              <td>{draw}</td>
-              <td>{lose}</td>
-              <td>{goalsDiff}</td>
-              <td>{aFavor}</td>
-              <td>{against}</td>
-            </tr>
-          ))}
-
-        </tbody>
-      </table>
-    </>
-  )
-}
-
-function Tabla ({ response: [{ standings }] }) {
-  const [dataStanding, setDataStanding] = useState([...standings])
-
-  return (
-    <>
-      {dataStanding.map((standing, idx) => (
-        <TablaContainer key={idx} tablaItems={standing} />
-      ))}
-    </>
-  )
-}
-
-/* TOODO: arreglar el dataTable, anda, pero la desestructuracion esta medio tomada de los pelos. */
-function Ligas ({ league, seasons }) {
+export default function Ligas ({ league, seasons }) {
   const [loading, setLoading] = useState(true)
   const [renderStadistic, setRenderStadistic] = useState(false)
+  const [renderError, setRenderError] = useState(false)
   const [dataStadistic, setDataStadistic] = useState({})
   const [dataLeague, setDataLeague] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
+  const [dataError, setDataError] = useState({})
   useEffect(() => {
     setRenderStadistic(false)
     setDataLeague({ ...league })
@@ -95,9 +44,21 @@ function Ligas ({ league, seasons }) {
         .then(res => res.json())
         .then(data => {
           setLoading(false)
+          if (data.response.error) {
+            console.log('Ocurrio un error xd')
+            console.log(data.response.error)
+            throw data.response
+          }
           setRenderStadistic(true)
           setDataStadistic(data)
+        }).catch(err => {
+          setDataError(err)
+          setRenderError(true)
         })
+
+      return () => {
+        setRenderError(false)
+      }
     }
     // obtenemos el año del objeto del arreglo que contenga el current en true
     // Est o lo voy a tener que arreglar en el futuro, porque cuando dataLeague y dataSeason sufran cambios (por ejemplo cuando seleccionemos una temporada de la lista)
@@ -138,11 +99,14 @@ function Ligas ({ league, seasons }) {
             <Fixture />
           </>
         )}
+        {renderError &&
+          <>
+            Error Obteniendo la liga :(
+            {console.log(dataError)}
+          </>}
 
       </section>
 
     </>
   )
 }
-
-export default Ligas

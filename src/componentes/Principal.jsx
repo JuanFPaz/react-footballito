@@ -23,7 +23,7 @@ function NavSide ({ navItems, onInicio, onLiga, onCopa }) {
           </h1>
           <ul>
             {list.map(({ league, seasons }) => (
-              <li key={league.id} onClick={league.type === 'League' ? () => { onLiga({ league, seasons }) } : onCopa}>
+              <li key={league.id} onClick={league.type === 'League' ? () => { onLiga({ league, seasons }) } : () => { onCopa({ league, seasons }) }}>
                 {league.name}
               </li>
             ))}
@@ -42,7 +42,7 @@ function Footer () {
   )
 }
 
-function Principal ({ response }) {
+export default function Principal ({ response }) {
   const [dataLista, setDataLista] = useState([...response])
   const [dataLeague, setDataLeague] = useState({})
   const [renderInicio, setRenderInicio] = useState(true)
@@ -64,19 +64,20 @@ function Principal ({ response }) {
     setRenderCopa(true)
     setRenderLiga(false)
     setRenderLiga(false)
+    setDataLeague(unaData)
   }
 
   return (
     <>
       <>
         <aside>
-          <NavSide navItems={dataLista} onInicio={handleEventRenderInicio} onLiga={(unaData) => { handleEventRenderLiga(unaData) }} onCopa={handleEventRenderCopa} />
+          <NavSide navItems={dataLista} onInicio={handleEventRenderInicio} onLiga={(unaData) => { handleEventRenderLiga(unaData) }} onCopa={(unaData) => { handleEventRenderCopa(unaData) }} />
         </aside>
         <main>
           {/* Por el momento este no es la mejor forma de chequear los renderizados, pero es una idea inicial */}
           {renderInicio && <Inicio />}
           {renderLiga && <Ligas {...dataLeague} />}
-          {renderCopa && <Copas />}
+          {renderCopa && <Copas {...dataLeague} />}
           <footer>
             <Footer />
           </footer>
@@ -85,5 +86,3 @@ function Principal ({ response }) {
     </>
   )
 }
-
-export default Principal
