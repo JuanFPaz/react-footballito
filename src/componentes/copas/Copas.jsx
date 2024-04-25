@@ -2,51 +2,51 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import Tabla from '../tablas/Tablas'
+import NavSeasons from '../navLinks/NavSeasons'
 
 export default function Copas ({ league, seasons }) {
   const [loading, setLoading] = useState(true)
   const [renderStadistic, setRenderStadistic] = useState(false)
+  const [renderError, setRenderError] = useState(false)
   const [dataStadistic, setDataStadistic] = useState({})
   const [dataCup, setDataCup] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
+  const [dataCurrentLink, setDataCurrentLink] = useState(null)
+  const [dataError, setDataError] = useState({})
 
   useEffect(() => {
-    setRenderStadistic(false)
+    const [{ link }] = seasons.filter((season) => season.current)
+    setDataCurrentLink(link)
     setDataCup({ ...league })
     setDataSeasons([...seasons])
+    setRenderStadistic(false)
   }, [league, seasons])
 
   useEffect(() => {
-    /* Esto tmb esta media agarrado de los pelos,
-    podria crear una propiedad en el json de {league} o {season},
-    para cuando el usuario seleccione el list item que desea ver,
-    hacer el fetch con una url directamente desde el json.
-
-    TODO: arreglar esto en Ligas y Copa
-    */
-    const checkSeason = dataSeasons.find(ds => ds.current)?.year
-    const checkLeague = dataCup.name
-    if (checkSeason !== undefined && checkLeague !== undefined) {
-      const season = checkSeason.toString()
-      const league = checkLeague.toLowerCase().replace(/\s/g, '-')
-      fetch(`http://localhost:3000/${season}/${league}`)
+    if (dataCurrentLink) {
+      fetch(dataCurrentLink)
         .then(res => res.json())
         .then(data => {
           setLoading(false)
+          if (data.response.error) {
+            console.log('Ocurrio un error xd')
+            console.log(data.response)
+            throw data
+          }
           setRenderStadistic(true)
           setDataStadistic(data)
-          console.log(data.standings)
+        }).catch(err => {
+          setDataError(err)
+          setRenderError(true)
         })
-    }
-    // obtenemos el año del objeto del arreglo que contenga el current en true
-    // Est o lo voy a tener que arreglar en el futuro, porque cuando dataLeague y dataSeason sufran cambios (por ejemplo cuando seleccionemos una temporada de la lista)
-  }, [dataCup, dataSeasons])
 
-  // return (
-  //   <>
-  //     ¡Hola!
-  //   </>
-  // )
+      return () => {
+        setLoading(true)
+        setRenderStadistic(false)
+        setRenderError(false)
+      }
+    }
+  }, [dataCup, dataSeasons, dataCurrentLink])
 
   return (
     <>
@@ -59,32 +59,31 @@ export default function Copas ({ league, seasons }) {
           <ul>
             {dataSeasons.map(ds =>
               (
-                <li key={ds.year}>
-                  Temporada {ds.year}
-                </li>
+                <NavSeasons {...ds} key={ds.year} onLink={(unLink) => { setDataCurrentLink(unLink) }} />
               )
             )}
           </ul>
         </nav>
       </header>
-      <section>
-        <h3>
-          Equipos :
-        </h3>
-        <ul>
-          <li>riBargüenza Nacional</li>
-        </ul>
-      </section>
-      <section>
-        {loading && <h1>cargando</h1>}
-        {renderStadistic && (
-          <>
-            <Tabla {...dataStadistic} />
-          </>
-        )}
-
-      </section>
-
+      {loading && <h1>cargando</h1>}
+      {renderStadistic && (
+        <>
+          <section>
+            <h3>
+              Equipos :
+            </h3>
+            <ul>
+              <li>riBargüenza Nacional</li>
+            </ul>
+          </section>
+          <Tabla {...dataStadistic} />
+        </>
+      )}
+      {renderError &&
+        <section>
+          Error Obteniendo la copa :(
+          {console.log(dataError)}
+        </section>}
     </>
   )
 }
