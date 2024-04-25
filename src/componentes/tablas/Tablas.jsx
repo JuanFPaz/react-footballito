@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react'
 
-function TablaContainer ({ tablaItems }) {
+function TablaEquipos ({ tablaItems }) {
   return (
     <>
       <table border='1'>
@@ -46,10 +46,10 @@ export default function Tabla ({ response: [{ standings }] }) {
   const [dataStanding, setDataStanding] = useState([...standings])
 
   return (
-    <>
+    <section>
       {dataStanding.map((standing, idx) => (
-        <TablaContainer key={idx} tablaItems={standing} />
+        <TablaEquipos key={idx} tablaItems={standing} />
       ))}
-    </>
+    </section>
   )
 }
