@@ -5,45 +5,12 @@ import { useState } from 'react'
 import Inicio from './inicio/Inicio'
 import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
+import NavAside from './navLinks/NavAside'
 
 /* Cambiar props navitems? anda, pero nose, */
-function NavSide ({ navItems, onInicio, onLiga, onCopa }) {
-  return (
-    <>
-      <div>
-        <h1>Inicio</h1>
-        <ul>
-          <li onClick={onInicio}>Inicio</li>
-        </ul>
-      </div>
-      {navItems.map(({ country, list }, idx) => (
-        <div key={idx}>
-          <h1>
-            {country.name}
-          </h1>
-          <ul>
-            {list.map(({ league, seasons }) => (
-              <li key={league.id} onClick={league.type === 'League' ? () => { onLiga({ league, seasons }) } : () => { onCopa({ league, seasons }) }}>
-                {league.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </>
-  )
-}
-
-function Footer () {
-  return (
-    <>
-      Footer xd
-    </>
-  )
-}
 
 export default function Principal ({ response }) {
-  const [dataLista, setDataLista] = useState([...response])
+  const [dataLinks, setDataLinks] = useState({ links: response })
   const [dataLeague, setDataLeague] = useState({})
   const [renderInicio, setRenderInicio] = useState(true)
   const [renderLiga, setRenderLiga] = useState(false)
@@ -54,34 +21,36 @@ export default function Principal ({ response }) {
     setRenderCopa(false)
     setRenderLiga(false)
   }
-  const handleEventRenderLiga = (unaData) => {
+  const handleEventRenderLiga = ({ league, seasons }) => {
     setRenderInicio(false)
     setRenderCopa(false)
     setRenderLiga(true)
-    setDataLeague(unaData)
+    setDataLeague({ league, seasons })
   }
-  const handleEventRenderCopa = (unaData) => {
+  const handleEventRenderCopa = ({ league, seasons }) => {
     setRenderCopa(true)
     setRenderLiga(false)
     setRenderLiga(false)
-    setDataLeague(unaData)
+    setDataLeague({ league, seasons })
   }
 
   return (
     <>
       <>
         <aside>
-          <NavSide navItems={dataLista} onInicio={handleEventRenderInicio} onLiga={(unaData) => { handleEventRenderLiga(unaData) }} onCopa={(unaData) => { handleEventRenderCopa(unaData) }} />
+          <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={(unaData) => { handleEventRenderLiga(unaData) }} onCopa={(unaData) => { handleEventRenderCopa(unaData) }} />
         </aside>
         <main>
-          {/* Por el momento este no es la mejor forma de chequear los renderizados, pero es una idea inicial */}
-          {renderInicio && <Inicio />}
-          {renderLiga && <Ligas {...dataLeague} />}
-          {renderCopa && <Copas {...dataLeague} />}
+          <section>
+            {renderInicio && <Inicio />}
+            {renderLiga && <Ligas {...dataLeague} />}
+            {renderCopa && <Copas {...dataLeague} />}
+          </section>
           <footer>
-            <Footer />
+            {new Date().getFullYear().toString()}
           </footer>
         </main>
+
       </>
     </>
   )
