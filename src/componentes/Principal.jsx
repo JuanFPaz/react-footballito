@@ -1,26 +1,29 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-sequences */
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Inicio from './inicio/Inicio'
 import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
 import NavAside from './navLinks/NavAside'
 
-/* Cambiar props navitems? anda, pero nose, */
-
-export default function Principal ({ response }) {
+export default function Principal ({ response, onLoadingApp }) {
   const [dataLinks, setDataLinks] = useState({ links: response })
   const [dataLeague, setDataLeague] = useState({})
   const [renderInicio, setRenderInicio] = useState(true)
   const [renderLiga, setRenderLiga] = useState(false)
   const [renderCopa, setRenderCopa] = useState(false)
 
+  useEffect(() => {
+    onLoadingApp()
+  }, [onLoadingApp])
+
   const handleEventRenderInicio = (unaData) => {
     setRenderInicio(true)
     setRenderCopa(false)
     setRenderLiga(false)
   }
+
   const handleEventRenderLiga = ({ league, seasons }) => {
     setRenderInicio(false)
     setRenderCopa(false)
@@ -38,10 +41,10 @@ export default function Principal ({ response }) {
     <>
       <>
         <aside>
-          <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={(unaData) => { handleEventRenderLiga(unaData) }} onCopa={(unaData) => { handleEventRenderCopa(unaData) }} />
+          <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
         </aside>
         <main>
-          <section>
+          <section id='miau'>
             {renderInicio && <Inicio />}
             {renderLiga && <Ligas {...dataLeague} />}
             {renderCopa && <Copas {...dataLeague} />}

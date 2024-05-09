@@ -2,11 +2,14 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import Tabla from '../tablas/Tablas'
+import Fixture from '../fixture/Fixture'
 import NavSeasons from '../navLinks/NavSeasons'
+import NavTeams from '../navLinks/NavTeams'
+import { LoadingSection } from '../loading/Loading'
 
 export default function Copas ({ league, seasons }) {
-  const [loading, setLoading] = useState(true)
-  const [renderStadistic, setRenderStadistic] = useState(false)
+  const [renderLoading, setRenderLoading] = useState(true)
+  const [renderData, setRenderData] = useState(false)
   const [renderError, setRenderError] = useState(false)
   const [dataStadistic, setDataStadistic] = useState({})
   const [dataCup, setDataCup] = useState({})
@@ -19,30 +22,30 @@ export default function Copas ({ league, seasons }) {
     setDataCurrentLink(link)
     setDataCup({ ...league })
     setDataSeasons([...seasons])
-    setRenderStadistic(false)
   }, [league, seasons])
 
   useEffect(() => {
     if (dataCurrentLink) {
       fetch(dataCurrentLink)
-        .then(res => res.json())
-        .then(data => {
-          setLoading(false)
+        .then((res) => res.json())
+        .then((data) => {
+          setRenderLoading(false)
           if (data.response.error) {
             console.log('Ocurrio un error xd')
             console.log(data.response)
             throw data
           }
-          setRenderStadistic(true)
+          setRenderData(true)
           setDataStadistic(data)
-        }).catch(err => {
+        })
+        .catch((err) => {
           setDataError(err)
           setRenderError(true)
         })
 
       return () => {
-        setLoading(true)
-        setRenderStadistic(false)
+        setRenderLoading(true)
+        setRenderData(false)
         setRenderError(false)
       }
     }
@@ -52,38 +55,61 @@ export default function Copas ({ league, seasons }) {
     <>
       {/* ESTOS DATOS LOS PODEMOS OBTENER DEL PRIMER GET (APP -> PRINCIPAL -> NAVASIDE)
       - Cuando seleccinamos un item de la lista, ademas del renderizado condicional, podemos enviar a los componentes seleccionados, los datos como el nombre de la liga y lase seasons disponibles a mostrar.  */}
+      {renderLoading && <LoadingSection />}
+      {renderData && (<SeasonData cupData={dataCup} seasonsData={dataSeasons} standingsData={dataStadistic.response[0].standings} fixturesData={dataStadistic.response[0].fixtures} />)}
+      {renderError && (
+        <section>
+          Error Obteniendo la copa :(
+          {console.log(dataError)}
+        </section>
+      )}
+    </>
+  )
+}
+
+function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
+  const [loading, setLoading] = useState(true)
+  const [renderError, setRenderError] = useState(false)
+  const [renderStadistic, setRenderStadistic] = useState(false)
+  const [dataStandings, setDatStandings] = useState([])
+  const [dataFixtures, setDataFixtures] = useState([])
+  const [dataCup, setDataCup] = useState({})
+  const [dataSeasons, setDataSeasons] = useState([])
+
+  useEffect(() => {
+    console.log('Use efect de <LigaData/>')
+    setDatStandings([...standingsData])
+    setDataFixtures([...fixturesData])
+    setDataCup({ ...cupData })
+    setDataSeasons([...seasonsData])
+    setLoading(false)
+    setRenderStadistic(true)
+  }, [cupData, seasonsData, standingsData, fixturesData])
+
+  return (
+    <>
       <header>
         <h1>{dataCup.name}</h1>
         <nav>
           <h2>Temporadas:</h2>
           <ul>
-            {dataSeasons.map(ds =>
+            {dataSeasons.map((ds) =>
               (
-                <NavSeasons {...ds} key={ds.year} onLink={(unLink) => { setDataCurrentLink(unLink) }} />
+                <NavSeasons {...ds} key={ds.year} />
               )
             )}
           </ul>
         </nav>
       </header>
-      {loading && <h1>cargando</h1>}
+      {loading && (<>Holaaa cargandoo...</>)}
       {renderStadistic && (
         <>
-          <section>
-            <h3>
-              Equipos :
-            </h3>
-            <ul>
-              <li>riBargüenza Nacional</li>
-            </ul>
-          </section>
-          <Tabla {...dataStadistic} />
+          <NavTeams />
+          <Tabla standings={dataStandings} />
+          <Fixture fixtures={dataFixtures} />
         </>
       )}
-      {renderError &&
-        <section>
-          Error Obteniendo la copa :(
-          {console.log(dataError)}
-        </section>}
+      {renderError && (<>hola errorrr </>)}
     </>
   )
 }

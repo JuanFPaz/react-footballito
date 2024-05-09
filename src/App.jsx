@@ -8,22 +8,24 @@ function App () {
   const [renderLoading, setRenderLoading] = useState(true)
   const [dataLinks, setDataLinks] = useState(null)
   const [dataError, setDataError] = useState(null)
+
+  const handleEventRenderLoading = () => {
+    setRenderLoading(false)
+  }
   useEffect(() => {
     fetch('http://localhost:3000')
       .then(res => {
         return res.json()
       }).then(data => {
         setDataLinks(data)
-        setRenderLoading(false)
       }).catch(err => {
-        setRenderLoading(false)
         setDataError({ error: err })
       })
   }, [])
   return (
     <>
       {renderLoading && <Loading />}
-      {dataLinks && <Principal {...dataLinks} />}
+      {dataLinks && <Principal {...dataLinks} onLoadingApp={handleEventRenderLoading} />}
       {dataError && <Error {...dataError} />}
     </>
   )
