@@ -1,6 +1,14 @@
 import React from 'react'
 import './Loading.css'
 
+export function LoadingSection () {
+  return (
+    <>
+      <div className='loader-principal' />
+    </>
+  )
+}
+
 export default function Loading () {
   return (
     <div className='loading-overlay show'>

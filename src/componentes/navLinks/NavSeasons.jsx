@@ -1,7 +1,8 @@
-export default function NavSeasons ({ year, link, onLink }) {
+/* eslint-disable react/prop-types */
+export default function NavSeasons ({ year }) {
   return (
     <>
-      <li onClick={() => { onLink(link) }}>
+      <li>
         Temporada {year}
       </li>
     </>

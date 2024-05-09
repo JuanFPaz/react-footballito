@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 /*
     ESTE COMPONENTE ES UN BOCETO DE LO QUE VA A SER FINALMENTE, LOS ESTADOS CREADOS INTERMANETE EN FIXTURE SON UNA IDEA INICIAL
@@ -13,21 +13,39 @@ import React, { useState } from 'react'
     SEGURAMENTE CON EL USO DE WEBSOCKET, PERO NO SE USARLO PERO NI DE ONDA.
 */
 /* Esto va por mi motomel, :') */
-export default function Fixture ({ response: [, { fixtures }] }) {
+export default function Fixture ({ fixtures }) {
   const [dataFixtures, setDataFixture] = useState([...fixtures])
-  const [dataFecha, setDataFecha] = useState('Fecha 1')
-  const [dataMatchs, setDataMatchs] = useState(dataFixtures[0].partidos)
 
-  const handleEventFecha = (jornada, partidos) => {
-    setDataFecha(jornada)
-    setDataMatchs(partidos)
+  useEffect(() => {
+  }, [fixtures])
+
+  const FaseRegular = () => {
+    return (
+      <>
+        {}
+      </>
+    )
   }
-
   return (
-    <section>
+    <>
+      {console.log(dataFixtures)}
+      <FixtureRegular fixturesItems={dataFixtures[0]} />
+    </>
+  )
+}
+
+// TODO : Desestructurar mejor la props "faseItems"
+function FixtureRegular ({ fixturesItems }) {
+  const [dataPhase, setDataPhase] = useState(fixturesItems[0])
+  const [dataRondas, setDataRondas] = useState(fixturesItems[0].rounds)
+  const [dataJornada, setDataJornada] = useState(fixturesItems[0].rounds[0])
+  const [dataMatchs, setDataMatchs] = useState(fixturesItems[0].rounds[0].partidos)
+  return (
+    <>
+      <p>{dataPhase.roundName}</p>
       <div>
-        {dataFixtures.map(({ jornada, partidos }, idx) => (
-          <span style={{ border: '1px solid white' }} key={idx} onClick={() => { handleEventFecha(jornada, partidos) }}>
+        {dataRondas.map(({ jornada, partidos }, idx) => (
+          <span style={{ border: '1px solid white' }} key={idx}>
             {idx + 1}
           </span>
         ))}
@@ -35,26 +53,21 @@ export default function Fixture ({ response: [, { fixtures }] }) {
       <table border='1'>
         <thead>
           <tr>
-            <th colSpan='4'>Jornada: {dataFecha}</th>
+            <th colSpan='4'>Jornada: {dataJornada.jornada[0]}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td colSpan='4'> Domingo 22 de Abril</td>
-          </tr>
-          <tr>
-            <td colSpan='4'>A confirmar</td>
-          </tr>
-          {dataMatchs.map(f => (
-            <tr key={f.id}>
-              <td>{f.teams.home.name}</td>
-              <td>{f.goals.home === null ? '0' : f.goals.home}</td>
-              <td>{f.goals.away === null ? '0' : f.goals.away}</td>
-              <td>{f.teams.away.name}</td>
+          {dataMatchs.map(m => (
+            <tr key={m.id}>
+              <td>{m.teams.home.name}</td>
+              <td>{m.goals.home === null ? ' ' : m.goals.home}</td>
+              <td>{m.goals.away === null ? ' ' : m.goals.away}</td>
+              <td>{m.teams.away.name}</td>
             </tr>
-          ))}
+          )
+          )}
         </tbody>
       </table>
-    </section>
+    </>
   )
 }
