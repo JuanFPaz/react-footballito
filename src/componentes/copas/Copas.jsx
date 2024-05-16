@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
-import Tabla from '../tablas/Tablas'
-import Fixture from '../fixture/Fixture'
+import { useEffect, useState } from 'react'
+import Tabla from '../tablas/TablaEquipos'
 import NavSeasons from '../navLinks/NavSeasons'
 import NavTeams from '../navLinks/NavTeams'
 import { LoadingSection } from '../loading/Loading'
@@ -29,18 +28,19 @@ export default function Copas ({ league, seasons }) {
       fetch(dataCurrentLink)
         .then((res) => res.json())
         .then((data) => {
-          setRenderLoading(false)
           if (data.response.error) {
             console.log('Ocurrio un error xd')
             console.log(data.response)
             throw data
           }
+          setRenderLoading(false)
           setRenderData(true)
           setDataStadistic(data)
         })
         .catch((err) => {
-          setDataError(err)
+          setRenderLoading(false)
           setRenderError(true)
+          setDataError(err)
         })
 
       return () => {
@@ -56,13 +56,12 @@ export default function Copas ({ league, seasons }) {
       {/* ESTOS DATOS LOS PODEMOS OBTENER DEL PRIMER GET (APP -> PRINCIPAL -> NAVASIDE)
       - Cuando seleccinamos un item de la lista, ademas del renderizado condicional, podemos enviar a los componentes seleccionados, los datos como el nombre de la liga y lase seasons disponibles a mostrar.  */}
       {renderLoading && <LoadingSection />}
-      {renderData && (<SeasonData cupData={dataCup} seasonsData={dataSeasons} standingsData={dataStadistic.response[0].standings} fixturesData={dataStadistic.response[0].fixtures} />)}
-      {renderError && (
+      {renderData && <SeasonData cupData={dataCup} seasonsData={dataSeasons} standingsData={dataStadistic.response[0].standings} fixturesData={dataStadistic.response[0].fixtures} />}
+      {renderError &&
         <section>
           Error Obteniendo la copa :(
           {console.log(dataError)}
-        </section>
-      )}
+        </section>}
     </>
   )
 }
@@ -71,14 +70,13 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
   const [loading, setLoading] = useState(true)
   const [renderError, setRenderError] = useState(false)
   const [renderStadistic, setRenderStadistic] = useState(false)
-  const [dataStandings, setDatStandings] = useState([])
+  const [dataStandings, setDataStandings] = useState([])
   const [dataFixtures, setDataFixtures] = useState([])
   const [dataCup, setDataCup] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
 
   useEffect(() => {
-    console.log('Use efect de <LigaData/>')
-    setDatStandings([...standingsData])
+    setDataStandings([...standingsData])
     setDataFixtures([...fixturesData])
     setDataCup({ ...cupData })
     setDataSeasons([...seasonsData])
@@ -101,15 +99,14 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
           </ul>
         </nav>
       </header>
-      {loading && (<>Holaaa cargandoo...</>)}
-      {renderStadistic && (
+      {loading && <>Holaaa cargandoo...</>}
+      {renderStadistic &&
         <>
           <NavTeams />
           <Tabla standings={dataStandings} />
-          <Fixture fixtures={dataFixtures} />
-        </>
-      )}
-      {renderError && (<>hola errorrr </>)}
+          {/* <Fixture fixtures={dataFixtures} /> */}
+        </>}
+      {renderError && <>hola errorrr </>}
     </>
   )
 }

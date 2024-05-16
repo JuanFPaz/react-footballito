@@ -3,14 +3,13 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
-import Tabla from '../tablas/Tablas'
-import Fixture from '../fixture/Fixture'
 import NavSeasons from '../navLinks/NavSeasons'
-import NavTeams from '../navLinks/NavTeams'
 import { LoadingSection } from '../loading/Loading'
+import LigaArgentina from './LigaArgentina'
+import CopaLigaArgentina from './CopaLigaArgentina'
 
 export default function Ligas ({ league, seasons }) {
-  const [loading, setLoading] = useState(true)
+  const [renderLoading, setRenderLoading] = useState(true)
   const [renderData, setRenderData] = useState(false)
   const [renderError, setRenderError] = useState(false)
   const [dataStadistic, setDataStadistic] = useState({})
@@ -31,22 +30,22 @@ export default function Ligas ({ league, seasons }) {
       fetch(dataCurrentLink)
         .then(res => res.json())
         .then(data => {
-          setLoading(false)
-          // if (data.response.error) {
-          //   console.log('Ocurrio un error xd')
-          //   console.log(data.response)
-          //   throw data
-          // }
+          if (data.response.error) {
+            console.log('Ocurrio un error xd')
+            console.log(data.response)
+            throw data
+          }
+          setRenderLoading(false)
           setRenderData(true)
           setDataStadistic(data)
         }).catch(err => {
-          setLoading(false)
+          setRenderLoading(false)
           setRenderError(true)
           setDataError(err)
         })
 
       return () => {
-        setLoading(true)
+        setRenderLoading(true)
         setRenderData(false)
         setRenderError(false)
       }
@@ -58,7 +57,7 @@ export default function Ligas ({ league, seasons }) {
       {/* ESTOS DATOS LOS PODEMOS OBTENER DEL PRIMER GET (APP -> PRINCIPAL -> NAVASIDE)
       - Cuando seleccinamos un item de la lista, ademas del renderizado condicional, podemos enviar a los componentes seleccionados, los datos como el nombre de la liga y lase seasons disponibles a mostrar.  */}
 
-      {loading && <h1>cargando</h1>}
+      {renderLoading && <LoadingSection />}
       {renderData && <SeasonData leagueData={dataLeague} seasonsData={dataSeasons} standingsData={dataStadistic.response[0].standings} fixturesData={dataStadistic.response[0].fixtures} />}
       {renderError &&
         <section>
@@ -74,14 +73,14 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
   const [loading, setLoading] = useState(true)
   const [renderError, setRenderError] = useState(false)
   const [renderStadistic, setRenderStadistic] = useState(false)
-  const [dataStandings, setDatStandings] = useState([])
+  const [dataStandings, setDataStandings] = useState([])
   const [dataFixtures, setDataFixtures] = useState([])
   const [dataLeague, setDataLeague] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
 
   useEffect(() => {
     console.log('Use efect de <LigaData/>')
-    setDatStandings([...standingsData])
+    setDataStandings([...standingsData])
     setDataFixtures([...fixturesData])
     setDataLeague({ ...leagueData })
     setDataSeasons([...seasonsData])
@@ -104,15 +103,14 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
           </ul>
         </nav>
       </header>
-      {loading && (<>Holaaa cargandoo...</>)}
+      {loading && <LoadingSection />}
       {renderStadistic && (
         <>
-          <NavTeams />
-          <Tabla standings={dataStandings} />
-          <Fixture fixtures={dataFixtures} />
+          {dataLeague.name === 'Liga Profesional Argentina' && (<LigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+          {dataLeague.name === 'Copa de la Liga Profesional' && (<CopaLigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
         </>
       )}
-      {renderError && (<>hola errorrr </>)}
+      {renderError && <>hola errorrr </>}
     </>
   )
 }
