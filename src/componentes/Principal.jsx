@@ -10,6 +10,7 @@ import NavAside from './navLinks/NavAside'
 export default function Principal ({ response, onLoadingApp }) {
   const [dataLinks, setDataLinks] = useState({ links: response })
   const [dataLeague, setDataLeague] = useState({})
+  const [dataInicio, setDataInicio] = useState('')
   const [renderInicio, setRenderInicio] = useState(true)
   const [renderLiga, setRenderLiga] = useState(false)
   const [renderCopa, setRenderCopa] = useState(false)

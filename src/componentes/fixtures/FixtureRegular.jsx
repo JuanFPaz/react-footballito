@@ -6,17 +6,17 @@ import { useState, useEffect } from 'react'
 export default function FixtureRegular ({ fixture }) {
   const [dataPhase, setDataPhase] = useState(null)
   const [dataRondas, setDataRondas] = useState([])
-  const [dataJornada, setDataJornada] = useState(null)
+  const [dataJornada, setDataJornada] = useState('')
   const [dataMatchs, setDataMatchs] = useState([])
-  const [ctm, setCtm] = useState(false)
 
   useEffect(() => {
-    const [{ phaseName, phaseLength, phasesFixtures }] = fixture
+    const [{ phaseName, phasesFixtures }] = fixture
+    const [{ fixtureName, fixturesMatchs }] = phasesFixtures
     console.log(phasesFixtures)
     setDataPhase(phaseName)
     setDataRondas(phasesFixtures)
-    setDataJornada(phasesFixtures[0].fixtureName)
-    setDataMatchs(phasesFixtures[0].fixturesMatchs)
+    setDataJornada(fixtureName)
+    setDataMatchs(fixturesMatchs)
   }, [fixture])
 
   return (
@@ -43,8 +43,8 @@ export default function FixtureRegular ({ fixture }) {
               {dataMatchs.map(m => (
                 <tr key={m.id}>
                   <td>{m.teams.home.name}</td>
-                  <td>{m.goals.home === null ? ' ' : m.goals.home}</td>
-                  <td>{m.goals.away === null ? ' ' : m.goals.away}</td>
+                  <td>{m.goals.home === null ? '-' : m.goals.home}</td>
+                  <td>{m.goals.away === null ? '-' : m.goals.away}</td>
                   <td>{m.teams.away.name}</td>
                 </tr>
               )
@@ -55,9 +55,4 @@ export default function FixtureRegular ({ fixture }) {
       )}
     </>
   )
-  // return (
-  //   <>
-
-  //   </>
-  // )
 }

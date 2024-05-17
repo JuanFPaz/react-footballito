@@ -90,27 +90,20 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <header>
-        <h1>{dataLeague.name}</h1>
-        <nav>
-          <h2>Temporadas:</h2>
-          <ul>
-            {dataSeasons.map((ds) =>
-              (
-                <NavSeasons {...ds} key={ds.year} />
-              )
-            )}
-          </ul>
-        </nav>
-      </header>
-      {loading && <LoadingSection />}
-      {renderStadistic && (
-        <>
-          {dataLeague.name === 'Liga Profesional Argentina' && (<LigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
-          {dataLeague.name === 'Copa de la Liga Profesional' && (<CopaLigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
-        </>
-      )}
-      {renderError && <>hola errorrr </>}
+      <nav>
+        <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} />
+      </nav>
+      <section>
+        {loading && <LoadingSection />}
+        {renderStadistic && (
+          <>
+            {dataLeague.name === 'Liga Profesional Argentina' && (<LigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+            {dataLeague.name === 'Copa de la Liga Profesional' && (<CopaLigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+          </>
+        )}
+        {renderError && <>hola errorrr </>}
+      </section>
+
     </>
   )
 }

@@ -10,7 +10,8 @@ export default function CopaLigaArgentina ({ dataStandings, dataFixtures }) {
   const [tablaclA, setTablaA] = useState([])
   const [tablaclB, setTablaB] = useState([])
   const [faseRegular, setPhaseRegular] = useState([])
-  const [ctm, setCtm] = useState(false)
+  const [faseFinal, setFaseFinal] = useState([])
+  const [renderLeague, setRenderLeague] = useState(false)
 
   useEffect(() => {
     const [zonaA, zonaB] = dataStandings
@@ -18,19 +19,20 @@ export default function CopaLigaArgentina ({ dataStandings, dataFixtures }) {
     setTablaA(zonaA)
     setTablaB(zonaB)
     setPhaseRegular(fixtureRegular)
-    setCtm(true)
+    setFaseFinal(fixtureFinal)
+    setRenderLeague(true)
   }, [dataStandings, dataFixtures])
   return (
     <>
-      {ctm && (
+      {renderLeague && (
         <>
           <NavTeams />
-          <FixtureEliminacion />
+          <FixtureEliminacion fixture={faseFinal} />
           <TablaEquipos standing={tablaclA} />
           <TablaEquipos standing={tablaclB} />
           <FixtureRegular fixture={faseRegular} />
-        </>)}
-
+        </>
+      )}
     </>
   )
 }

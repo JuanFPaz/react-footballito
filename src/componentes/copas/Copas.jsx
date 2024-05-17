@@ -86,19 +86,9 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <header>
-        <h1>{dataCup.name}</h1>
-        <nav>
-          <h2>Temporadas:</h2>
-          <ul>
-            {dataSeasons.map((ds) =>
-              (
-                <NavSeasons {...ds} key={ds.year} />
-              )
-            )}
-          </ul>
-        </nav>
-      </header>
+      <nav>
+        <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} />
+      </nav>
       {loading && <>Holaaa cargandoo...</>}
       {renderStadistic &&
         <>
