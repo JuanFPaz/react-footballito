@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/prop-types */
@@ -18,6 +17,22 @@ export default function Ligas ({ league, seasons }) {
   const [dataCurrentLink, setDataCurrentLink] = useState(null)
   const [dataError, setDataError] = useState({})
 
+  const handleSettersOk = (data) => {
+    if (data.response.error) {
+      console.log('Ocurrio un error xd')
+      console.log(data.response)
+      throw data
+    }
+    setRenderLoading(false)
+    setRenderData(true)
+    setDataStadistic(data)
+  }
+
+  const handleSettersError = (err) => {
+    setRenderLoading(false)
+    setRenderError(true)
+    setDataError(err)
+  }
   useEffect(() => {
     const [{ link }] = seasons.filter((season) => season.current)
     setDataCurrentLink(link)
@@ -29,19 +44,10 @@ export default function Ligas ({ league, seasons }) {
     if (dataCurrentLink) {
       fetch(dataCurrentLink)
         .then(res => res.json())
-        .then(data => {
-          if (data.response.error) {
-            console.log('Ocurrio un error xd')
-            console.log(data.response)
-            throw data
-          }
-          setRenderLoading(false)
-          setRenderData(true)
-          setDataStadistic(data)
+        .then((data) => {
+          handleSettersOk(data)
         }).catch(err => {
-          setRenderLoading(false)
-          setRenderError(true)
-          setDataError(err)
+          handleSettersError(err)
         })
 
       return () => {
@@ -50,7 +56,7 @@ export default function Ligas ({ league, seasons }) {
         setRenderError(false)
       }
     }
-  }, [dataLeague, dataSeasons, dataCurrentLink])
+  }, [dataCurrentLink])
 
   return (
     <>
@@ -79,7 +85,6 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
   const [dataSeasons, setDataSeasons] = useState([])
 
   useEffect(() => {
-    console.log('Use efect de <LigaData/>')
     setDataStandings([...standingsData])
     setDataFixtures([...fixturesData])
     setDataLeague({ ...leagueData })

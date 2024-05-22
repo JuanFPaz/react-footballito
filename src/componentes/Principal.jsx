@@ -39,7 +39,7 @@ export default function Principal ({ response, onLoadingApp }) {
   const handleEventRenderCopa = ({ league, seasons }) => {
     setRenderCopa(true)
     setRenderLiga(false)
-    setRenderLiga(false)
+    setRenderInicio(false)
     setDataLeague({ league, seasons })
   }
 

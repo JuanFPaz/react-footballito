@@ -2,15 +2,14 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 
-export default function FixtureFinal ({ fixture }) {
+export default function FixtureEliminacion ({ fixture }) {
   const [dataPhase, setDataPhase] = useState(null)
   const [dataRondas, setDataRondas] = useState([])
 
   useEffect(() => {
-    const [{ phaseName, phasesFixtures }] = fixture
-    console.log(phasesFixtures)
+    const [{ phaseName, phaseFixtures }] = fixture
     setDataPhase(phaseName)
-    setDataRondas(phasesFixtures)
+    setDataRondas(phaseFixtures)
   }, [fixture])
 
   return (
@@ -20,23 +19,27 @@ export default function FixtureFinal ({ fixture }) {
           <div>
             <h1>{dataPhase}</h1>
           </div>
-          {dataRondas.map(({ fixtureName, fixturesMatchs }) => (
-            <table key={fixtureName}>
+          {dataRondas.map(({ fixtureName, fixtureMatchs }) => (
+            <table key={fixtureName} border='1'>
               <thead>
-                {fixtureName}
+                <tr>
+                  <th colSpan={4}>
+                    {fixtureName}
+                  </th>
+                </tr>
               </thead>
               <tbody>
-                {fixturesMatchs.map(m => (
+                {fixtureMatchs.map(m => (
                   <tr key={m.id}>
                     <td>{m.teams.home.name}</td>
                     <td>{m.goals.home === null ? '-' : m.goals.home}</td>
                     <td>{m.goals.away === null ? '-' : m.goals.away}</td>
                     <td>{m.teams.away.name}</td>
                   </tr>
-                )).reverse()}
+                ))}
               </tbody>
             </table>
-          ))}
+          )).reverse()}
         </>
       )}
     </>

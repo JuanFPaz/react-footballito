@@ -10,13 +10,12 @@ export default function FixtureRegular ({ fixture }) {
   const [dataMatchs, setDataMatchs] = useState([])
 
   useEffect(() => {
-    const [{ phaseName, phasesFixtures }] = fixture
-    const [{ fixtureName, fixturesMatchs }] = phasesFixtures
-    console.log(phasesFixtures)
+    const [{ phaseName, phaseFixtures }] = fixture
+    const [{ fixtureName, fixtureMatchs }] = phaseFixtures
     setDataPhase(phaseName)
-    setDataRondas(phasesFixtures)
+    setDataRondas(phaseFixtures)
     setDataJornada(fixtureName)
-    setDataMatchs(fixturesMatchs)
+    setDataMatchs(fixtureMatchs)
   }, [fixture])
 
   return (
@@ -27,8 +26,8 @@ export default function FixtureRegular ({ fixture }) {
             <h1>{dataPhase}</h1>
           </div>
           <div>
-            {dataRondas.map((r, idx) => (
-              <span style={{ border: '1px solid white' }} key={idx}>
+            {dataRondas.map(({ fixtureName, fixtureMatchs }, idx) => (
+              <span style={{ border: '1px solid white' }} key={idx} onClick={() => { setDataJornada(fixtureName); setDataMatchs(fixtureMatchs) }}>
                 {idx + 1}
               </span>
             ))}

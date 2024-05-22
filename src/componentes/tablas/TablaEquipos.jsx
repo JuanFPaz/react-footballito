@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react'
 
 export default function TablaEquipos ({ standing }) {
   return (
     <>
       <table border='1'>
         <thead>
-          <tr colSpan='10'>
-            {standing[0].group}
+          <tr>
+            <th colSpan='10'>{standing[0].group}</th>
           </tr>
           <tr>
             <th>#</th>
