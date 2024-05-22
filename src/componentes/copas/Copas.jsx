@@ -1,10 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import Tabla from '../tablas/TablaEquipos'
-import NavSeasons from '../navLinks/NavSeasons'
-import NavTeams from '../navLinks/NavTeams'
 import { LoadingSection } from '../loading/Loading'
+import NavSeasons from '../navLinks/NavSeasons'
+import CopaArgentina from './CopaArgentina'
+import CopaLibertadores from './conmebol/CopaLibertadores'
+import CopaSudamericana from './conmebol/CopaSudamericana'
+import ChampionsLeague from './uefa/ChampionsLeague'
+import EuropaLeague from './uefa/EuropaLeague'
+import ConferenceLeague from './uefa/ConferenceLeague'
 
 export default function Copas ({ league, seasons }) {
   const [renderLoading, setRenderLoading] = useState(true)
@@ -92,9 +96,13 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
       {loading && <>Holaaa cargandoo...</>}
       {renderStadistic &&
         <>
-          <NavTeams />
-          <Tabla standings={dataStandings} />
-          {/* <Fixture fixtures={dataFixtures} /> */}
+          {console.log(dataCup.name)}
+          {dataCup.name === 'Copa Argentina' && (<CopaArgentina dataFixtures={dataFixtures} />)}
+          {dataCup.name === 'CONMEBOL Libertadores' && (<CopaLibertadores dataStandings={dataStandings} />)}
+          {dataCup.name === 'CONMEBOL Sudamericana' && (<CopaSudamericana dataStandings={dataStandings} />)}
+          {dataCup.name === 'UEFA Champions League' && (<ChampionsLeague dataStandings={dataStandings} />)}
+          {dataCup.name === 'UEFA Europa League' && (<EuropaLeague dataStandings={dataStandings} />)}
+          {dataCup.name === 'UEFA Europa Conference League' && (<ConferenceLeague dataStandings={dataStandings} />)}
         </>}
       {renderError && <>hola errorrr </>}
     </>
