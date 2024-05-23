@@ -2,7 +2,9 @@ import React from 'react'
 
 function Inicio () {
   return (
-    <h1>Inicio</h1>
+    <section id='sectionInicio'>
+      <h1>Inicio</h1>
+    </section>
   )
 }
 

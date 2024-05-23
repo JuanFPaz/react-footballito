@@ -6,6 +6,7 @@ import Inicio from './inicio/Inicio'
 import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
 import NavAside from './navLinks/NavAside'
+import './Principal.css'
 
 export default function Principal ({ response, onLoadingApp }) {
   const [dataLinks, setDataLinks] = useState({ links: response })
@@ -45,22 +46,17 @@ export default function Principal ({ response, onLoadingApp }) {
 
   return (
     <>
-      <>
-        <aside>
-          <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
-        </aside>
-        <main>
-          <section id='miau'>
-            {renderInicio && <Inicio />}
-            {renderLiga && <Ligas {...dataLeague} />}
-            {renderCopa && <Copas {...dataLeague} />}
-          </section>
-          <footer>
-            {new Date().getFullYear().toString()}
-          </footer>
-        </main>
-
-      </>
+      <aside id='asidePrincipal'>
+        <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
+      </aside>
+      <main id='mainPrincipal'>
+        {renderInicio && <Inicio />}
+        {renderLiga && <Ligas {...dataLeague} />}
+        {renderCopa && <Copas {...dataLeague} />}
+        <footer>
+          {new Date().getFullYear().toString()}
+        </footer>
+      </main>
     </>
   )
 }

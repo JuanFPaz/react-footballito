@@ -13,12 +13,14 @@ function App () {
     setRenderLoading(false)
   }
   useEffect(() => {
-    fetch('http://localhost:3000')
+    fetch('http://localhost:3000/')
       .then(res => {
+        console.log(res)
         return res.json()
       }).then(data => {
         setDataLinks(data)
       }).catch(err => {
+        console.log(err)
         setDataError({ error: err })
       })
   }, [])
@@ -26,7 +28,7 @@ function App () {
     <>
       {renderLoading && <Loading />}
       {dataLinks && <Principal {...dataLinks} onLoadingApp={handleEventRenderLoading} />}
-      {dataError && <Error {...dataError} />}
+      {dataError && <Error {...dataError} onLoadingApp={handleEventRenderLoading} />}
     </>
   )
 }

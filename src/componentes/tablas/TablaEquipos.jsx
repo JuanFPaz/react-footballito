@@ -10,6 +10,7 @@ export default function TablaEquipos ({ standing }) {
             <th colSpan='10'>{standing[0].group}</th>
           </tr>
           <tr>
+            <th />
             <th>#</th>
             <th>Equipo</th>
             <th>Pts.</th>
@@ -26,7 +27,7 @@ export default function TablaEquipos ({ standing }) {
           {standing.map(
             (
               {
-                team: { id, name },
+                team: { id, name, logo },
                 points,
                 goalsDiff,
                 all: {
@@ -40,6 +41,7 @@ export default function TablaEquipos ({ standing }) {
               idx
             ) => (
               <tr key={id}>
+                <td><img src={logo} alt='' /></td>
                 <td>{idx + 1}</td>
                 <td>{name}</td>
                 <td>{points}</td>

@@ -12,6 +12,7 @@ export default function LigaArgentina ({ dataStandings, dataFixtures }) {
   useEffect(() => {
     const [ligaProfesional] = dataStandings
     const [fixtureRegular] = dataFixtures
+    console.log(ligaProfesional)
     setTabla(ligaProfesional)
     setPhaseRegular(fixtureRegular)
     setRenderLeague(true)
@@ -20,8 +21,8 @@ export default function LigaArgentina ({ dataStandings, dataFixtures }) {
     <>
       {renderLeague && (
         <>
-          {console.log(tablaLiga)}
-          <NavTeams />
+
+          <NavTeams teams={tablaLiga} />
           <TablaEquipos standing={tablaLiga} />
           <FixtureRegular fixture={faseRegular} />
         </>

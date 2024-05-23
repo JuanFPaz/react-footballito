@@ -56,7 +56,7 @@ export default function Copas ({ league, seasons }) {
   }, [dataCup, dataSeasons, dataCurrentLink])
 
   return (
-    <>
+    <section id='sectionCopa'>
       {/* ESTOS DATOS LOS PODEMOS OBTENER DEL PRIMER GET (APP -> PRINCIPAL -> NAVASIDE)
       - Cuando seleccinamos un item de la lista, ademas del renderizado condicional, podemos enviar a los componentes seleccionados, los datos como el nombre de la liga y lase seasons disponibles a mostrar.  */}
       {renderLoading && <LoadingSection />}
@@ -66,7 +66,7 @@ export default function Copas ({ league, seasons }) {
           Error Obteniendo la copa :(
           {console.log(dataError)}
         </section>}
-    </>
+    </section>
   )
 }
 
@@ -90,9 +90,9 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <nav>
+      <header id='headerSeasons'>
         <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} />
-      </nav>
+      </header>
       {loading && <>Holaaa cargandoo...</>}
       {renderStadistic &&
         <>

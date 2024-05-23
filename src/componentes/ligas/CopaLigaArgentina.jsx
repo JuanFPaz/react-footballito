@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 export default function CopaLigaArgentina ({ dataStandings, dataFixtures }) {
   const [tablaclA, setTablaA] = useState([])
   const [tablaclB, setTablaB] = useState([])
+  const [teams, setTeams] = useState([])
   const [faseRegular, setPhaseRegular] = useState([])
   const [faseFinal, setFaseFinal] = useState([])
   const [renderLeague, setRenderLeague] = useState(false)
@@ -16,6 +17,8 @@ export default function CopaLigaArgentina ({ dataStandings, dataFixtures }) {
   useEffect(() => {
     const [zonaA, zonaB] = dataStandings
     const [fixtureRegular, fixtureFinal] = dataFixtures
+    const equiposTotales = [...zonaA, ...zonaB]
+    setTeams(equiposTotales)
     setTablaA(zonaA)
     setTablaB(zonaB)
     setPhaseRegular(fixtureRegular)
@@ -26,7 +29,7 @@ export default function CopaLigaArgentina ({ dataStandings, dataFixtures }) {
     <>
       {renderLeague && (
         <>
-          <NavTeams />
+          <NavTeams teams={teams} />
           <FixtureEliminacion fixture={faseFinal} />
           <TablaEquipos standing={tablaclA} />
           <TablaEquipos standing={tablaclB} />

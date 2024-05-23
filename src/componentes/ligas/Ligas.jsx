@@ -59,19 +59,19 @@ export default function Ligas ({ league, seasons }) {
   }, [dataCurrentLink])
 
   return (
-    <>
+    <section id='sectionLiga'>
       {/* ESTOS DATOS LOS PODEMOS OBTENER DEL PRIMER GET (APP -> PRINCIPAL -> NAVASIDE)
       - Cuando seleccinamos un item de la lista, ademas del renderizado condicional, podemos enviar a los componentes seleccionados, los datos como el nombre de la liga y lase seasons disponibles a mostrar.  */}
 
       {renderLoading && <LoadingSection />}
       {renderData && <SeasonData leagueData={dataLeague} seasonsData={dataSeasons} standingsData={dataStadistic.response[0].standings} fixturesData={dataStadistic.response[0].fixtures} />}
       {renderError &&
-        <section>
+        <section id='sectionLigaError'>
           Error Obteniendo la liga :(
           {console.log(dataError)}
         </section>}
 
-    </>
+    </section>
   )
 }
 
@@ -95,10 +95,10 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <nav>
+      <header id='headerSeasons'>
         <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} />
-      </nav>
-      <section>
+      </header>
+      <>
         {loading && <LoadingSection />}
         {renderStadistic && (
           <>
@@ -107,7 +107,7 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
           </>
         )}
         {renderError && <>hola errorrr </>}
-      </section>
+      </>
 
     </>
   )

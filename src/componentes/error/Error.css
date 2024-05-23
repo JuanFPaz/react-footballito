@@ -1,0 +1,20 @@
+main#mainError {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section#sectionError {
+  width: 100%;
+  height: max-content;
+  border-radius: 10px;
+  border: 2px solid #0a192f;
+  box-shadow: 2px 2px 15px -5px #0a192f;
+  padding: 20px;
+}
+
+section#sectionError {
+  text-shadow: 0 0px 10px #0a192f;
+  text-align: center;
+}

@@ -1,19 +1,22 @@
 /* eslint-disable react/prop-types */
+import './NavSeasons.css'
+
 export default function NavSeasons ({ dataLeague, dataSeasons }) {
   return (
-    <header>
+    <>
       <h1>{dataLeague.name}</h1>
-      <nav>
+      {console.log()}
+      <nav id='navSeasons'>
         <h2>Temporadas:</h2>
-        <ul>
+        <ul className='seasons-grid'>
           {dataSeasons.map((ds) => (
-            <li key={ds.year}>
-              Temporada {ds.year}
+            <li className='season-grid-item' key={ds.year}>
+              <img className='season-logo' src={dataLeague.logo} /> {ds.year}
             </li>
           )
-          )}
+          ).reverse()}
         </ul>
       </nav>
-    </header>
+    </>
   )
 }

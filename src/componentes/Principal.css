@@ -1,0 +1,55 @@
+main#mainPrincipal {
+  width: 70%;
+  height: 100vh;
+}
+
+aside#asidePrincipal {
+  width: 30%;
+  display: flex;
+  font-size: small;
+  height: max-content;
+}
+
+
+
+section {
+  width: 100%;
+}
+
+section#sectionInicio,
+section#sectionLiga,
+section#sectionCopa {
+  border-radius: 10px;
+  border: 2px solid #0a192f;
+  box-shadow: 2px 2px 15px -5px #0a192f;
+  padding: 20px;
+}
+
+header#headerSeasons{
+    text-align: center;
+}
+
+nav#navAside {
+  border-radius: 10px;
+  border: 2px solid #0a192f;
+  box-shadow: 0px 0px 15px -5px #0a192f;
+  padding: 20px;
+}
+
+
+ img{
+    width: 20px;
+    border-radius: 5px;
+}
+
+ul{
+    padding: 0;
+}
+
+li{
+    list-style: none;
+}
+
+li:hover {
+  cursor: pointer;
+}
