@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import './NavSeasons.css'
+import './NavTeams.css'
 
 export default function NavTeams ({ teams }) {
   return (
-    <section>
+    <section id='sectionTeams'>
       <h3>Equipos :</h3>
       <nav id='navTeams'>
         <ul className='teams-grid'>

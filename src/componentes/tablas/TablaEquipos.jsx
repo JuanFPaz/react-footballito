@@ -1,26 +1,27 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import './Tablas.css'
 
 export default function TablaEquipos ({ standing }) {
   return (
-    <>
-      <table border='1'>
+    <article className='articleTablaEquipos'>
+      <table>
         <thead>
-          <tr>
-            <th colSpan='10'>{standing[0].group}</th>
+          <tr className='rowGroupName'>
+            <th colSpan='11'>{standing[0].group}</th>
           </tr>
-          <tr>
-            <th />
-            <th>#</th>
-            <th>Equipo</th>
+          <tr className='rowStadistics'>
+            <th className='tdataPosicion'>Pos</th>
+            <th className='tdataEscudo' />
+            <th className='tdataEquipo'>Equipo</th>
             <th>Pts.</th>
             <th>PJ</th>
             <th>PG</th>
             <th>PE</th>
             <th>PP</th>
-            <th>DG</th>
             <th>GF</th>
             <th>GE</th>
+            <th>DG</th>
           </tr>
         </thead>
         <tbody>
@@ -41,60 +42,22 @@ export default function TablaEquipos ({ standing }) {
               idx
             ) => (
               <tr key={id}>
-                <td><img src={logo} alt='' /></td>
-                <td>{idx + 1}</td>
-                <td>{name}</td>
+                <td className='tdataPosicion'>{idx + 1}</td>
+                <td className='tdataEscudo'><img src={logo} alt='' /></td>
+                <td className='tdataEquipo'>{name}</td>
                 <td>{points}</td>
                 <td>{played}</td>
                 <td>{win}</td>
                 <td>{draw}</td>
                 <td>{lose}</td>
-                <td>{goalsDiff}</td>
                 <td>{aFavor}</td>
                 <td>{against}</td>
+                <td>{goalsDiff}</td>
               </tr>
             )
           )}
         </tbody>
       </table>
-    </>
+    </article>
   )
 }
-
-// export default function Tabla ({ standings }) {
-//   const [dataStanding, setDataStanding] = useState([...standings])
-
-//   const UnicaTabla = () => {
-//     return (
-//       <>
-//         {dataStanding.length === 1 && (
-//           <TablaEquipos tablaItems={dataStanding[0]} />
-//         )}
-//       </>
-//     )
-//   }
-
-//   const DosTablas = () => {
-//     return (
-//       <>
-//         {dataStanding.length === 2 &&
-//           dataStanding.map((standing, idx) => (
-//             <TablaEquipos key={idx} tablaItems={standing} />
-//           ))}
-//       </>
-//     )
-//   }
-//   return (
-//     <section>
-//       {/* El componente Tabla, se va a encargar de verificar si la dataStanding contiene una tabla o no
-//           Va a tener una tabla para:
-//             - Copas (Libertadores, Uefa, FIFA, etc)
-//             - Ligas (Torneos de una sola rueda o doble torneos como aperturas y clausuras (estos ultimos todavia ni los planifique xd))
-
-//           Dos tablas: Si en una liga hay 2 tablas divididas en la misma temporada/semetre (Ej copa de la liga)
-//       */}
-//       <UnicaTabla />
-//       <DosTablas />
-//     </section>
-//   )
-// }

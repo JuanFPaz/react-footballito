@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
+import './Fixtures.css'
 
 export default function FixtureEliminacion ({ fixture }) {
   const [dataPhase, setDataPhase] = useState(null)
@@ -15,14 +16,12 @@ export default function FixtureEliminacion ({ fixture }) {
   return (
     <>
       {dataPhase && (
-        <>
-          <div>
-            <h1>{dataPhase}</h1>
-          </div>
+        <article className='articleFixtureEliminacion'>
+          <h1>{dataPhase}</h1>
           {dataRondas.map(({ fixtureName, fixtureMatchs }) => (
-            <table key={fixtureName} border='1'>
+            <table key={fixtureName}>
               <thead>
-                <tr>
+                <tr className='trJornadaName'>
                   <th colSpan={4}>
                     {fixtureName}
                   </th>
@@ -30,17 +29,36 @@ export default function FixtureEliminacion ({ fixture }) {
               </thead>
               <tbody>
                 {fixtureMatchs.map(m => (
-                  <tr key={m.id}>
-                    <td>{m.teams.home.name}</td>
-                    <td>{m.goals.home === null ? '-' : m.goals.home}</td>
-                    <td>{m.goals.away === null ? '-' : m.goals.away}</td>
-                    <td>{m.teams.away.name}</td>
+                  <tr className='trDataMatch' key={m.id}>
+                    {console.log(m)}
+                    <td className='tdDataTeam'>
+                      <div>
+                        <img src={m.teams.home.logo} />
+                        <span>{m.teams.home.name}</span>
+                      </div>
+                    </td>
+
+                    <td className='tdDataResult'>
+                      {m.goals.home === null ? '-' : m.goals.home}
+                      {m.status.short === 'PEN' ? (<div>({m.score.penalty.home})</div>) : (<></>)}
+                    </td>
+                    <td className='tdDataResult'>
+                      {m.goals.away === null ? '-' : m.goals.away}
+                      {m.status.short === 'PEN' ? (<div>({m.score.penalty.away})</div>) : (<></>)}
+                    </td>
+
+                    <td className='tdDataTeam'>
+                      <div>
+                        <img src={m.teams.away.logo} />
+                        <span>{m.teams.away.name}</span>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )).reverse()}
-        </>
+        </article>
       )}
     </>
   )

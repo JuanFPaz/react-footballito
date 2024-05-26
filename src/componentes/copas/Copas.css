@@ -1,0 +1,29 @@
+section#sectionCopa section#sectionFaseGrupos{
+    display: flex;
+    flex-direction: column;
+}
+
+section#sectionFaseGrupos section.sectionTabla{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+section#sectionFaseGrupos article.articleTablaEquipos{
+    width: 35%;
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section#sectionFaseGrupos section.sectionFixture{
+    width: 60%;
+}
+
+section#sectionFaseGrupos article.articleFixtureGrupos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

@@ -5,7 +5,7 @@ nav#navTeams{
     text-align: center;
     border-radius: 10px;
     border: 2px solid #ccd6f6;
-    background-color: rgba(10, 25, 47, 0.486);
+    background-color: rgb(113, 146, 255);
 }
 
 nav#navSeasons h2,
@@ -14,24 +14,18 @@ nav#navSeasons li
     color: #ccd6f6;
 }
 nav#navSeasons li:hover{
-    color: #84a0fc;
-    text-shadow: 0 0 15px #84a0fc;
+    color: #3b4f92;
+    text-shadow: 0 0 15px #475da3;
 }
-.seasons-grid,
-.teams-grid {
+.seasons-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
     gap: 20px;
     list-style: none;
     padding: 0;
   }
   
-  .teams-grid{
-    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 
-  }
-
-  .team-grid-item,
   .season-grid-item {
     border-radius: 8px;
     padding: 10px;
@@ -44,12 +38,6 @@ nav#navSeasons li:hover{
   
   .season-logo {
     width: 50px;
-    height: auto;
-    margin-bottom: 10px;
-  }
-
-  .team-logo{
-    width: 40px;
     height: auto;
     margin-bottom: 10px;
   }

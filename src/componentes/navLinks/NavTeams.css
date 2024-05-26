@@ -1,0 +1,33 @@
+nav#navTeams{
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #ccd6f6;
+    background-color: rgb(113, 146, 255);
+}
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .teams-grid{
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+
+  }
+.team-grid-item {
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.team-logo{
+    width: 40px;
+    height: auto;
+    margin-bottom: 10px;
+  }

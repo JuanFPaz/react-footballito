@@ -1,0 +1,55 @@
+article.articleTablaEquipos table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: small;
+}
+
+article.articleTablaEquipos tr.rowGroupName{
+    color:rgb(204, 214, 246);
+    background-color: rgba(10, 25, 47, 0.486);
+}
+article.articleTablaEquipos tr.rowStadistics{
+    background-color: rgba(10, 25, 47, 0.486);
+    color:rgb(204, 214, 246);
+}
+
+article.articleTablaEquipos tr.rowGroupName th{
+    padding: 2px 2px 2px 8px;
+}
+article.articleTablaEquipos .tdataPosicion{
+    padding: 2px 2px 2px 8px;
+    width: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+
+article.articleTablaEquipos .tdataEscudo{
+    padding: 2px 2px 2px 2px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+article.articleTablaEquipos td{
+    text-align: center;
+}
+
+article.articleTablaEquipos .tdataEscudo img{
+    display: block;
+    width: 16px ;
+    height: 16px ;
+}
+
+article.articleTablaEquipos .tdataEquipo {
+    min-width: 100px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+article.articleTablaEquipos tbody tr:nth-child(odd) {
+    background-color: #b4c5fd;; /* Color para filas impares */
+  }
+  
+article.articleTablaEquipos tbody tr:nth-child(even) {
+    background-color: #d8e1ff; /* Color para filas pares */
+  }

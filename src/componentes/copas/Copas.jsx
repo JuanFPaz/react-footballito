@@ -9,6 +9,7 @@ import CopaSudamericana from './conmebol/CopaSudamericana'
 import ChampionsLeague from './uefa/ChampionsLeague'
 import EuropaLeague from './uefa/EuropaLeague'
 import ConferenceLeague from './uefa/ConferenceLeague'
+import './Copas.css'
 
 export default function Copas ({ league, seasons }) {
   const [renderLoading, setRenderLoading] = useState(true)
@@ -90,16 +91,14 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <header id='headerSeasons'>
-        <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} />
-      </header>
+      <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} />
       {loading && <>Holaaa cargandoo...</>}
       {renderStadistic &&
         <>
-          {console.log(dataCup.name)}
           {dataCup.name === 'Copa Argentina' && (<CopaArgentina dataFixtures={dataFixtures} />)}
-          {dataCup.name === 'CONMEBOL Libertadores' && (<CopaLibertadores dataStandings={dataStandings} />)}
-          {dataCup.name === 'CONMEBOL Sudamericana' && (<CopaSudamericana dataStandings={dataStandings} />)}
+          {dataCup.name === 'FA Cup' && (<CopaArgentina dataFixtures={dataFixtures} />)}
+          {dataCup.name === 'CONMEBOL Libertadores' && (<CopaLibertadores dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLali' />)}
+          {dataCup.name === 'CONMEBOL Sudamericana' && (<CopaSudamericana dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionSudaca' />)}
           {dataCup.name === 'UEFA Champions League' && (<ChampionsLeague dataStandings={dataStandings} />)}
           {dataCup.name === 'UEFA Europa League' && (<EuropaLeague dataStandings={dataStandings} />)}
           {dataCup.name === 'UEFA Europa Conference League' && (<ConferenceLeague dataStandings={dataStandings} />)}

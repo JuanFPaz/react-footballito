@@ -3,7 +3,7 @@ import './NavSeasons.css'
 
 export default function NavSeasons ({ dataLeague, dataSeasons }) {
   return (
-    <>
+    <header id='headerSeasons'>
       <h1>{dataLeague.name}</h1>
       {console.log()}
       <nav id='navSeasons'>
@@ -17,6 +17,6 @@ export default function NavSeasons ({ dataLeague, dataSeasons }) {
           ).reverse()}
         </ul>
       </nav>
-    </>
+    </header>
   )
 }

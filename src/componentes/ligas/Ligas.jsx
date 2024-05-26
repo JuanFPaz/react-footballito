@@ -4,8 +4,10 @@
 import React, { useEffect, useState } from 'react'
 import NavSeasons from '../navLinks/NavSeasons'
 import { LoadingSection } from '../loading/Loading'
-import LigaArgentina from './LigaArgentina'
-import CopaLigaArgentina from './CopaLigaArgentina'
+import LigaArgentina from './argentina/LigaArgentina'
+import CopaLigaArgentina from './argentina/CopaLigaArgentina'
+import PremierLeague from './england/PremierLeague'
+import './Ligas.css'
 
 export default function Ligas ({ league, seasons }) {
   const [renderLoading, setRenderLoading] = useState(true)
@@ -95,15 +97,14 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <header id='headerSeasons'>
-        <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} />
-      </header>
+      <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} />
       <>
         {loading && <LoadingSection />}
         {renderStadistic && (
           <>
-            {dataLeague.name === 'Liga Profesional Argentina' && (<LigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
-            {dataLeague.name === 'Copa de la Liga Profesional' && (<CopaLigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+            {dataLeague.name === 'Liga Profesional Argentina' && (<LigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLPA' />)}
+            {dataLeague.name === 'Copa de la Liga Profesional' && (<CopaLigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionCLPA' />)}
+            {dataLeague.name === 'Premier League' && (<PremierLeague dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionCLPA' />)}
           </>
         )}
         {renderError && <>hola errorrr </>}

@@ -1,27 +1,47 @@
 main#mainPrincipal {
-  width: 70%;
-  height: 100vh;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 60px; /* este valor debe coincidir con el ancho del aside */
+  right: 0;
+  bottom: 0;
+  overflow-y: auto; /* para que el contenido del aside sea desplazable si es necesario */
+
 }
 
 aside#asidePrincipal {
-  width: 30%;
   display: flex;
-  font-size: small;
-  height: max-content;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* para que el contenido del aside sea desplazable si es necesario */
+}
+#mainPrincipal::-webkit-scrollbar,
+#asidePrincipal::-webkit-scrollbar {
+  height: 8px;
+  width: 8px; /* Ancho de la barra de desplazamiento vertical */
+}
+#mainPrincipal::-webkit-scrollbar,
+#asidePrincipal::-webkit-scrollbar-track {
+  background: #84a0fc; /* Color de la pista de la barra de desplazamiento */
+}
+#mainPrincipal::-webkit-scrollbar,
+#asidePrincipal::-webkit-scrollbar-thumb {
+  background-color: #0a192f; /* Color de la "thumb" de la barra de desplazamiento */
+  border-radius: 10px; /* Redondear esquinas */
+  border: 2px solid #84a0fc; /* Espacio alrededor de la "thumb" */
+  box-shadow: 0px 0px 15px -5px #84a0fc;
 }
 
-
-
-section {
-  width: 100%;
+/* Estilo para cuando se pasa el cursor sobre la "thumb" */
+#mainPrincipal::-webkit-scrollbar,
+#asidePrincipal::-webkit-scrollbar-thumb:hover {
+  background: #0a192f;
 }
-
 section#sectionInicio,
 section#sectionLiga,
 section#sectionCopa {
-  border-radius: 10px;
-  border: 2px solid #0a192f;
-  box-shadow: 2px 2px 15px -5px #0a192f;
   padding: 20px;
 }
 
@@ -29,17 +49,8 @@ header#headerSeasons{
     text-align: center;
 }
 
-nav#navAside {
-  border-radius: 10px;
-  border: 2px solid #0a192f;
-  box-shadow: 0px 0px 15px -5px #0a192f;
-  padding: 20px;
-}
-
-
  img{
     width: 20px;
-    border-radius: 5px;
 }
 
 ul{

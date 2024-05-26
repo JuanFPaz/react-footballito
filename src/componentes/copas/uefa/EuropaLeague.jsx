@@ -5,9 +5,12 @@ import TablaEquipos from '../../tablas/TablaEquipos'
 
 export default function EuropaLeague ({ dataStandings }) {
   const [grupos, setDataGrupos] = useState([])
+  const [equipos, setEquipos] = useState([])
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
+    const equipos = [...dataStandings].reduce((acc, curr) => acc.concat(curr), [])
+    setEquipos(equipos)
     setDataGrupos(dataStandings)
     setRenderCup(true)
   }, [dataStandings])
@@ -15,10 +18,13 @@ export default function EuropaLeague ({ dataStandings }) {
     <>
       {renderCup && (
         <>
-          <NavTeams />
-          {grupos.map((g, idx) => (
-            <TablaEquipos key={idx} standing={g} />
-          ))}
+          <NavTeams teams={equipos} />
+          <div className='contenedorTabla'>
+            {grupos.map((g, idx) => (
+              <TablaEquipos key={idx} standing={g} />
+            ))}
+          </div>
+
         </>
       )}
     </>

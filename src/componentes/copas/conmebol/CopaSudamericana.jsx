@@ -2,28 +2,48 @@
 import React, { useEffect, useState } from 'react'
 import NavTeams from '../../navLinks/NavTeams'
 import TablaEquipos from '../../tablas/TablaEquipos'
+import FixtureGrupos from '../../fixtures/FixtureGrupos'
+import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
 
 // eslint-disable-next-line react/prop-types
-export default function CopaSudamericana ({ dataStandings }) {
+export default function CopaSudamericana ({ dataStandings, dataFixtures, idSection }) {
   const [grupos, setDataGrupos] = useState([])
+  const [faseGrupos, setDataFaseGrupos] = useState([])
+  const [fasePrevia, setDataFasePrevia] = useState([])
   const [equipos, setEquipos] = useState([])
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
-    const equipos = dataStandings.reduce((acc, curr) => acc.concat(curr), [])
+    const equipos = [...dataStandings].reduce((acc, curr) => acc.concat(curr), [])
+    const [fixtureFasePrevia, fixtureGrupos] = dataFixtures
     setEquipos(equipos)
+    setDataFaseGrupos(fixtureGrupos)
+    setDataFasePrevia(fixtureFasePrevia)
     setDataGrupos(dataStandings)
     setRenderCup(true)
-  }, [dataStandings])
+  }, [dataStandings, dataFixtures])
   return (
     <>
       {renderCup && (
-        <>
+        <section id={idSection}>
           <NavTeams teams={equipos} />
-          {grupos.map((g, idx) => (
-            <TablaEquipos key={idx} standing={g} />
-          ))}
-        </>
+          <section id='sectionFaseGrupos'>
+            <h1>
+              {faseGrupos[0].phaseName}
+            </h1>
+            {grupos.map((g, idx) => (
+              <section className='sectionTabla' key={idx}>
+                <TablaEquipos standing={g} />
+                <section className='sectionFixture'>
+                  <FixtureGrupos fixture={faseGrupos} teamsGroup={g} />
+                </section>
+              </section>
+            ))}
+          </section>
+          <section id='sectionFasePrevia'>
+            <FixtureEliminacion fixture={fasePrevia} />
+          </section>
+        </section>
       )}
     </>
 

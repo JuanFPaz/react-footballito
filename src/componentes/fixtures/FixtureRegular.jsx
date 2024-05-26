@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
+import './Fixtures.css'
 
 /* Esto va por mi motomel, :') */
 export default function FixtureRegular ({ fixture }) {
@@ -21,36 +23,44 @@ export default function FixtureRegular ({ fixture }) {
   return (
     <>
       {dataPhase && (
-        <>
-          <div>
-            <h1>{dataPhase}</h1>
-          </div>
-          <div>
+        <article className='articleFixtureRegular'>
+          <div className='btnFixture'>
             {dataRondas.map(({ fixtureName, fixtureMatchs }, idx) => (
-              <span style={{ border: '1px solid white' }} key={idx} onClick={() => { setDataJornada(fixtureName); setDataMatchs(fixtureMatchs) }}>
+              <button key={idx} onClick={() => { setDataJornada(fixtureName); setDataMatchs(fixtureMatchs) }}>
                 {idx + 1}
-              </span>
+              </button>
             ))}
           </div>
-          <table border='1'>
+          <table>
             <thead>
-              <tr>
+              <tr className='trJornadaName'>
                 <th colSpan='4'>Jornada: {dataJornada}</th>
               </tr>
             </thead>
             <tbody>
               {dataMatchs.map(m => (
-                <tr key={m.id}>
-                  <td>{m.teams.home.name}</td>
-                  <td>{m.goals.home === null ? '-' : m.goals.home}</td>
-                  <td>{m.goals.away === null ? '-' : m.goals.away}</td>
-                  <td>{m.teams.away.name}</td>
+                <tr className='trDataMatch' key={m.id}>
+                  {console.log(m)}
+                  <td className='tdDataTeam'>
+                    <div>
+                      <img src={m.teams.home.logo} />
+                      <span>{m.teams.home.name}</span>
+                    </div>
+                  </td>
+                  <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
+                  <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
+                  <td className='tdDataTeam'>
+                    <div>
+                      <img src={m.teams.away.logo} />
+                      <span>{m.teams.away.name}</span>
+                    </div>
+                  </td>
                 </tr>
               )
               )}
             </tbody>
           </table>
-        </>
+        </article>
       )}
     </>
   )
