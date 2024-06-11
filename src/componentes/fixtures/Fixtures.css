@@ -37,7 +37,7 @@ article.articleFixtureEliminacion table{
 }
 
 article.articleFixtureGrupos table{
-    width: 50%;
+    width: 49%;
     text-align: center;
     border-collapse: collapse;
     font-size: small;
@@ -52,7 +52,8 @@ article.articleFixtureGrupos td.tdDataTeam{
 }
 
 article.articleFixtureRegular td.tdDataTeam div,
-article.articleFixtureEliminacion td.tdDataTeam div{
+article.articleFixtureEliminacion td.tdDataTeam div,
+article.articleFixtureGrupos td.tdDataTeam div{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,8 +75,7 @@ article.articleFixtureGrupos td.tdDataResult{
 }
 
 
-article.articleFixtureRegular td.tdDataTeam img,
-article.articleFixtureRegular td.tdDataTeam span
+td.tdDataTeam img, td.tdDataTeam span
 {
     display: block;
 }

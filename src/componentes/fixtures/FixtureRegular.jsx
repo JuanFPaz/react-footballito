@@ -40,7 +40,6 @@ export default function FixtureRegular ({ fixture }) {
             <tbody>
               {dataMatchs.map(m => (
                 <tr className='trDataMatch' key={m.id}>
-                  {console.log(m)}
                   <td className='tdDataTeam'>
                     <div>
                       <img src={m.teams.home.logo} />
