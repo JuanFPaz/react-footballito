@@ -9,15 +9,18 @@ export default function CopaLibertadores ({ dataStandings, dataFixtures, idSecti
   const [grupos, setDataGrupos] = useState([])
   const [faseGrupos, setDataFaseGrupos] = useState([])
   const [fasePrevia, setDataFasePrevia] = useState([])
+  const [faseFinal, setDataFaseFinal] = useState([])
+  // fase peke :)
   const [equipos, setEquipos] = useState([])
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
     const equipos = [...dataStandings].reduce((acc, curr) => acc.concat(curr), [])
-    const [fixtureFasePrevia, fixtureGrupos] = dataFixtures
+    const [fixtureFasePrevia, fixtureGrupos, fixtureFinal] = dataFixtures
     setEquipos(equipos)
     setDataFaseGrupos(fixtureGrupos)
     setDataFasePrevia(fixtureFasePrevia)
+    setDataFaseFinal(fixtureFinal)
     setDataGrupos(dataStandings)
     setRenderCup(true)
   }, [dataStandings, dataFixtures])
@@ -26,6 +29,9 @@ export default function CopaLibertadores ({ dataStandings, dataFixtures, idSecti
       {renderCup && (
         <section id={idSection}>
           <NavTeams teams={equipos} />
+          <section id='sectionFaseFinal'>
+            <FixtureEliminacion fixture={faseFinal} />
+          </section>
           <section id='sectionFaseGrupos'>
             <h1>
               {faseGrupos[0].phaseName}

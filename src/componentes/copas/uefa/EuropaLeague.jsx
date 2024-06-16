@@ -3,28 +3,45 @@ import React, { useEffect, useState } from 'react'
 import NavTeams from '../../navLinks/NavTeams'
 import TablaEquipos from '../../tablas/TablaEquipos'
 
-export default function EuropaLeague ({ dataStandings }) {
+export default function EuropaLeague ({ dataStandings, dataFixtures }) {
   const [grupos, setDataGrupos] = useState([])
+  const [faseGrupos, setDataFaseGrupos] = useState([])
+  const [fasePrevia, setDataFasePrevia] = useState([])
+  const [faseFinal, setDataFaseFinal] = useState([])
   const [equipos, setEquipos] = useState([])
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
     const equipos = [...dataStandings].reduce((acc, curr) => acc.concat(curr), [])
+    const [fixtureFasePrevia, fixtureGrupos, fixtureFinal] = dataFixtures
     setEquipos(equipos)
+    setDataFaseGrupos(fixtureGrupos)
+    setDataFasePrevia(fixtureFasePrevia)
+    setDataFaseFinal(fixtureFinal)
     setDataGrupos(dataStandings)
     setRenderCup(true)
-  }, [dataStandings])
+  }, [dataStandings, dataFixtures])
   return (
     <>
       {renderCup && (
         <>
           <NavTeams teams={equipos} />
-          <div className='contenedorTabla'>
+          <section id='sectionFaseFinal'>
+            <FixtureEliminacion fixture={faseFinal} />
+          </section>
+          <section className='sectionFaseGrupos'>
+            <h1>
+              {faseGrupos[0].phaseName}
+            </h1>
             {grupos.map((g, idx) => (
-              <TablaEquipos key={idx} standing={g} />
+              <section className='sectionTabla' key={idx}>
+                <TablaEquipos standing={g} />
+              </section>
             ))}
-          </div>
-
+          </section>
+          <section id='sectionFasePrevia'>
+            <FixtureEliminacion fixture={fasePrevia} />
+          </section>
         </>
       )}
     </>

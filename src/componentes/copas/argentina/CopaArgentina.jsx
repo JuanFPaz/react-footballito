@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import NavTeams from '../navLinks/NavTeams'
-import FixtureFinal from '../fixtures/FixtureEliminacion'
+import NavTeams from '../../navLinks/NavTeams'
+import FixtureFinal from '../../fixtures/FixtureEliminacion'
 
 // eslint-disable-next-line react/prop-types
 export default function CopaArgentina ({ dataFixtures }) {
@@ -23,7 +23,6 @@ export default function CopaArgentina ({ dataFixtures }) {
 
     const equiposTodes = [...equiposLocales, ...equiposVisitantes]
 
-    console.log(equiposTodes)
     setTeams(equiposTodes)
     setFaseUnica(unicaFase)
     setRenderLeague(true)

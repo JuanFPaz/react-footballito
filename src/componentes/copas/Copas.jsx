@@ -3,13 +3,15 @@
 import { useEffect, useState } from 'react'
 import { LoadingSection } from '../loading/Loading'
 import NavSeasons from '../navLinks/NavSeasons'
-import CopaArgentina from './CopaArgentina'
+import CopaArgentina from './argentina/CopaArgentina'
 import CopaLibertadores from './conmebol/CopaLibertadores'
 import CopaSudamericana from './conmebol/CopaSudamericana'
 import ChampionsLeague from './uefa/ChampionsLeague'
 import EuropaLeague from './uefa/EuropaLeague'
 import ConferenceLeague from './uefa/ConferenceLeague'
+import CopaAmerica from './nations/CopaAmerica'
 import './Copas.css'
+import Eurocopa from './nations/Eurocopa'
 
 export default function Copas ({ league, seasons }) {
   const [renderLoading, setRenderLoading] = useState(true)
@@ -94,14 +96,16 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
       <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} />
       {loading && <>Holaaa cargandoo...</>}
       {renderStadistic &&
-        <>
+        <>{/* Arregla ese id sectionLali, no me acuerdo para q lo use */}
           {dataCup.name === 'Copa Argentina' && (<CopaArgentina dataFixtures={dataFixtures} />)}
           {dataCup.name === 'FA Cup' && (<CopaArgentina dataFixtures={dataFixtures} />)}
           {dataCup.name === 'CONMEBOL Libertadores' && (<CopaLibertadores dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLali' />)}
           {dataCup.name === 'CONMEBOL Sudamericana' && (<CopaSudamericana dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionSudaca' />)}
-          {dataCup.name === 'UEFA Champions League' && (<ChampionsLeague dataStandings={dataStandings} />)}
-          {dataCup.name === 'UEFA Europa League' && (<EuropaLeague dataStandings={dataStandings} />)}
-          {dataCup.name === 'UEFA Europa Conference League' && (<ConferenceLeague dataStandings={dataStandings} />)}
+          {dataCup.name === 'UEFA Champions League' && (<ChampionsLeague dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+          {dataCup.name === 'UEFA Europa League' && (<EuropaLeague dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+          {dataCup.name === 'UEFA Europa Conference League' && (<ConferenceLeague dataStandings={dataStandings} dataFixtures={dataFixtures} />)}
+          {dataCup.name === 'Copa America' && (<CopaAmerica dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLali' />)}
+          {dataCup.name === 'Euro Championship' && (<Eurocopa dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLali' />)}
         </>}
       {renderError && <>hola errorrr </>}
     </>
