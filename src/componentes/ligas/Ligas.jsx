@@ -1,3 +1,4 @@
+/* eslint-disable n/handle-callback-err */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/prop-types */
@@ -19,6 +20,7 @@ export default function Ligas ({ league, seasons }) {
   const [dataCurrentLink, setDataCurrentLink] = useState(null)
   const [dataError, setDataError] = useState({})
 
+  /* wtf q eran estos setters */
   const handleSettersOk = (data) => {
     if (data.response.error) {
       console.log('Ocurrio un error xd')
@@ -85,19 +87,44 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
   const [dataFixtures, setDataFixtures] = useState([])
   const [dataLeague, setDataLeague] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
+  const [dataSelectLink, setDataSelectLink] = useState(null)
 
   useEffect(() => {
-    setDataStandings([...standingsData])
-    setDataFixtures([...fixturesData])
-    setDataLeague({ ...leagueData })
-    setDataSeasons([...seasonsData])
-    setLoading(false)
-    setRenderStadistic(true)
-  }, [leagueData, seasonsData, standingsData, fixturesData])
+    if (!dataSelectLink) {
+      setDataStandings([...standingsData])
+      setDataFixtures([...fixturesData])
+      setDataLeague({ ...leagueData })
+      setDataSeasons([...seasonsData])
+      setLoading(false)
+      setRenderStadistic(true)
+    } else {
+      fetch(dataSelectLink)
+        .then(res => res.json())
+        .then((data) => {
+          setDataStandings(data.response[0].standings)
+          setDataFixtures(data.response[0].fixtures)
+          setLoading(false)
+          setRenderStadistic(true)
+        }).catch((err) => {
+          setRenderStadistic(false)
+          setRenderError(true)
+        })
+    }
+
+    return () => {
+      setLoading(true)
+      setRenderStadistic(false)
+      setRenderError(false)
+    }
+  }, [leagueData, seasonsData, standingsData, fixturesData, dataSelectLink])
+
+  const handleSelectLink = (link) => {
+    setDataSelectLink(link)
+  }
 
   return (
     <>
-      <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} />
+      <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} onSelectLink={(link) => { handleSelectLink(link) }} />
       <>
         {loading && <LoadingSection />}
         {renderStadistic && (

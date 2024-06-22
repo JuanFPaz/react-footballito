@@ -1,3 +1,4 @@
+/* eslint-disable n/handle-callback-err */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
@@ -81,19 +82,43 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
   const [dataFixtures, setDataFixtures] = useState([])
   const [dataCup, setDataCup] = useState({})
   const [dataSeasons, setDataSeasons] = useState([])
+  const [dataSelectLink, setDataSelectLink] = useState(null)
 
   useEffect(() => {
-    setDataStandings([...standingsData])
-    setDataFixtures([...fixturesData])
-    setDataCup({ ...cupData })
-    setDataSeasons([...seasonsData])
-    setLoading(false)
-    setRenderStadistic(true)
-  }, [cupData, seasonsData, standingsData, fixturesData])
+    if (!dataSelectLink) {
+      setDataStandings([...standingsData])
+      setDataFixtures([...fixturesData])
+      setDataCup({ ...cupData })
+      setDataSeasons([...seasonsData])
+      setLoading(false)
+      setRenderStadistic(true)
+    } else {
+      fetch(dataSelectLink)
+        .then(res => res.json())
+        .then((data) => {
+          setDataStandings(data.response[0].standings)
+          setDataFixtures(data.response[0].fixtures)
+          setLoading(false)
+          setRenderStadistic(true)
+        }).catch((err) => {
+          setRenderStadistic(false)
+          setRenderError(true)
+        })
+    }
+    return () => {
+      setLoading(true)
+      setRenderStadistic(false)
+      setRenderError(false)
+    }
+  }, [cupData, seasonsData, standingsData, fixturesData, dataSelectLink])
+
+  const handleSelectLink = (link) => {
+    setDataSelectLink(link)
+  }
 
   return (
     <>
-      <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} />
+      <NavSeasons dataLeague={dataCup} dataSeasons={dataSeasons} onSelectLink={(link) => { handleSelectLink(link) }} />
       {loading && <>Holaaa cargandoo...</>}
       {renderStadistic &&
         <>{/* Arregla ese id sectionLali, no me acuerdo para q lo use */}

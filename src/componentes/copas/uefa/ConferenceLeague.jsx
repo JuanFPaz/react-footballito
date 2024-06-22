@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NavTeams from '../../navLinks/NavTeams'
 import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
+import FixtureGrupos from '../../fixtures/FixtureGrupos'
 
 // eslint-disable-next-line react/prop-types
 export default function ConferenceLeague ({ dataStandings, dataFixtures, idSection }) {
@@ -39,6 +40,9 @@ export default function ConferenceLeague ({ dataStandings, dataFixtures, idSecti
             {grupos.map((g, idx) => (
               <section className='sectionTabla' key={idx}>
                 <TablaEquipos standing={g} />
+                <section className='sectionFixture'>
+                  <FixtureGrupos fixture={faseGrupos} teamsGroup={g} />
+                </section>
               </section>
             ))}
           </section>

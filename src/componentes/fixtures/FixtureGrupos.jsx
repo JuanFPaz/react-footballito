@@ -31,20 +31,30 @@ export default function FixtureGrupos ({ fixture, teamsGroup }) {
                     {m.teams.home.name === dataEquipos[0].team.name || m.teams.home.name === dataEquipos[1].team.name || m.teams.home.name === dataEquipos[2].team.name || m.teams.home.name === dataEquipos[3].team.name
                       ? (
                         <>
-                          <td className='tdDataTeam'>
-                            <div>
-                              <img src={m.teams.home.logo} />
-                              <span>{m.teams.home.name}</span>
-                            </div>
-                          </td>
-                          <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
-                          <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
-                          <td className='tdDataTeam'>
-                            <div>
-                              <img src={m.teams.away.logo} />
-                              <span>{m.teams.away.name}</span>
-                            </div>
-                          </td>
+                          {/* <tr>
+                            <td className='tdDateMatch'>
+                              {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
+                            </td>
+                          </tr> */}
+                          <tr>
+                            <td className='tdDateMatch'>
+                              {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
+                            </td>
+                            <td className='tdDataTeam'>
+                              <div>
+                                <img src={m.teams.home.logo} />
+                                <span>{m.teams.home.name}</span>
+                              </div>
+                            </td>
+                            <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
+                            <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
+                            <td className='tdDataTeam'>
+                              <div>
+                                <img src={m.teams.away.logo} />
+                                <span>{m.teams.away.name}</span>
+                              </div>
+                            </td>
+                          </tr>
                         </>
                         )
                       : (<></>)}

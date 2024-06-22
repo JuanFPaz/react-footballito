@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import NavTeams from '../../navLinks/NavTeams'
 import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
+import FixtureGrupos from '../../fixtures/FixtureGrupos'
 
 export default function ChampionsLeague ({ dataStandings, dataFixtures }) {
   const [grupos, setDataGrupos] = useState([])
@@ -37,6 +38,9 @@ export default function ChampionsLeague ({ dataStandings, dataFixtures }) {
             {grupos.map((g, idx) => (
               <section className='sectionTabla' key={idx}>
                 <TablaEquipos standing={g} />
+                <section className='sectionFixture'>
+                  <FixtureGrupos fixture={faseGrupos} teamsGroup={g} />
+                </section>
               </section>
             ))}
           </section>
