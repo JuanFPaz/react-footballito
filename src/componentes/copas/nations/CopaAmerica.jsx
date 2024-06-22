@@ -28,12 +28,12 @@ export default function CopaAmerica ({ dataStandings, dataFixtures, idSection })
               {faseGrupos[0].phaseName}
             </h1>
             {grupos.map((g, idx) => (
-              <section className='sectionTabla' key={idx}>
+              <div className='sectionTabla' key={idx}>
                 <TablaEquipos standing={g} />
-                <section className='sectionFixture'>
+                <div className='sectionFixture'>
                   <FixtureGrupos fixture={faseGrupos} teamsGroup={g} />
-                </section>
-              </section>
+                </div>
+              </div>
             ))}
           </section>
         </section>

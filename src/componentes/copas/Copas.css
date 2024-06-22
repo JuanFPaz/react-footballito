@@ -3,13 +3,13 @@ section#sectionCopa section#sectionFaseGrupos{
     flex-direction: column;
 }
 
-section#sectionFaseGrupos section.sectionTabla{
+section#sectionFaseGrupos .sectionTabla{
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-section#sectionFaseGrupos article.articleTablaEquipos{
+section#sectionFaseGrupos .articleTablaEquipos{
     width: 35%;
     display: flex;
     margin: 0;
@@ -17,11 +17,11 @@ section#sectionFaseGrupos article.articleTablaEquipos{
     justify-content: center;
 }
 
-section#sectionFaseGrupos section.sectionFixture{
+section#sectionFaseGrupos .sectionFixture{
     width: 60%;
 }
 
-section#sectionFaseGrupos article.articleFixtureGrupos{
+section#sectionFaseGrupos .articleFixtureGrupos{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
