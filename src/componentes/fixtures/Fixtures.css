@@ -79,3 +79,8 @@ td.tdDataTeam img, td.tdDataTeam span
 {
     display: block;
 }
+
+.thDateMatch {
+    background-color: rgba(10, 25, 47, 0.486);
+    color:rgb(204, 214, 246);
+}

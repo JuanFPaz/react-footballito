@@ -1,7 +1,7 @@
-/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
+import sortMatchs from '../../helpers/sortMatchs'
 import './Fixtures.css'
 
 /* Esto va por mi motomel, :') */
@@ -37,34 +37,32 @@ export default function FixtureRegular ({ fixture }) {
                 <th colSpan='4'>Jornada: {dataJornada}</th>
               </tr>
             </thead>
-            <tbody>
-              {dataMatchs.map(m => (
-                <tr className='trDataMatch' key={m.id}>
-                  <tr>
-                    <td className='tdDateMatch'>
-                      {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='tdDataTeam'>
-                      <div>
-                        <img src={m.teams.home.logo} />
-                        <span>{m.teams.home.name}</span>
-                      </div>
-                    </td>
-                    <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
-                    <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
-                    <td className='tdDataTeam'>
-                      <div>
-                        <img src={m.teams.away.logo} />
-                        <span>{m.teams.away.name}</span>
-                      </div>
-                    </td>
-                  </tr>
+            {dataMatchs.sort(sortMatchs).map(m => (
+              <tbody key={m.id}>
+                <tr>
+                  <th className='thDateMatch' colSpan={4}>
+                    {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
+                  </th>
                 </tr>
-              )
-              )}
-            </tbody>
+                <tr>
+                  <td className='tdDataTeam'>
+                    <div>
+                      <img src={m.teams.home.logo} />
+                      <span>{m.teams.home.name}</span>
+                    </div>
+                  </td>
+                  <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
+                  <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
+                  <td className='tdDataTeam'>
+                    <div>
+                      <img src={m.teams.away.logo} />
+                      <span>{m.teams.away.name}</span>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            )
+            )}
           </table>
         </article>
       )}

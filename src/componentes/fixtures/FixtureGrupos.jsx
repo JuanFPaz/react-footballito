@@ -2,6 +2,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import './Fixtures.css'
+import filterMatchs from '../../helpers/filterMatchs'
+import sortMatchs from '../../helpers/sortMatchs'
 
 /* no fixtures solo miau miau */
 export default function FixtureGrupos ({ fixture, teamsGroup }) {
@@ -25,43 +27,34 @@ export default function FixtureGrupos ({ fixture, teamsGroup }) {
                   <th colSpan='4'>Jornada: {fixtureName}</th>
                 </tr>
               </thead>
-              <tbody>
-                {fixtureMatchs.map(m => (
-                  <tr key={m.id} className='trDataMatch'>
-                    {m.teams.home.name === dataEquipos[0].team.name || m.teams.home.name === dataEquipos[1].team.name || m.teams.home.name === dataEquipos[2].team.name || m.teams.home.name === dataEquipos[3].team.name
-                      ? (
-                        <>
-                          {/* <tr>
-                            <td className='tdDateMatch'>
-                              {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
-                            </td>
-                          </tr> */}
-                          <tr>
-                            <td className='tdDateMatch'>
-                              {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
-                            </td>
-                            <td className='tdDataTeam'>
-                              <div>
-                                <img src={m.teams.home.logo} />
-                                <span>{m.teams.home.name}</span>
-                              </div>
-                            </td>
-                            <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
-                            <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
-                            <td className='tdDataTeam'>
-                              <div>
-                                <img src={m.teams.away.logo} />
-                                <span>{m.teams.away.name}</span>
-                              </div>
-                            </td>
-                          </tr>
-                        </>
-                        )
-                      : (<></>)}
-                  </tr>
+              {fixtureMatchs.filter((m) => filterMatchs(m, dataEquipos)).sort(sortMatchs).map(m => (
+                (
+                  <tbody key={m.id}>
+                    <tr>
+                      <th colSpan={4} className='thDateMatch'>
+                        {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
+                      </th>
+                    </tr>
+                    <tr>
+                      <td className='tdDataTeam'>
+                        <div>
+                          <img src={m.teams.home.logo} />
+                          <span>{m.teams.home.name}</span>
+                        </div>
+                      </td>
+                      <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
+                      <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
+                      <td className='tdDataTeam'>
+                        <div>
+                          <img src={m.teams.away.logo} />
+                          <span>{m.teams.away.name}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 )
-                )}
-              </tbody>
+              )
+              )}
             </table>
           ))}
         </article>
