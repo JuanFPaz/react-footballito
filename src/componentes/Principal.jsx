@@ -46,16 +46,13 @@ export default function Principal ({ response, onLoadingApp }) {
 
   return (
     <>
-      <aside id='asidePrincipal'>
-        <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
-      </aside>
       <main id='mainPrincipal'>
+        <aside id='asidePrincipal'>
+          <NavAside {...dataLinks} onInicio={handleEventRenderInicio} onLiga={handleEventRenderLiga} onCopa={handleEventRenderCopa} />
+        </aside>
         {renderInicio && <Inicio />}
         {renderLiga && <Ligas {...dataLeague} />}
         {renderCopa && <Copas {...dataLeague} />}
-        <footer>
-          {new Date().getFullYear().toString()}
-        </footer>
       </main>
     </>
   )
