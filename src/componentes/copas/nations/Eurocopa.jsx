@@ -3,24 +3,25 @@ import React, { useEffect, useState } from 'react'
 import NavTeams from '../../navLinks/NavTeams'
 import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureGrupos from '../../fixtures/FixtureGrupos'
+import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
 
 export default function Eurocopa ({ dataStandings, dataFixtures, idSection }) {
   const [grupos, setDataGrupos] = useState([])
   const [thirdPlace, setDataThirdPlaces] = useState([])
+  const [faseFinal, setDataFaseFinal] = useState([])
   const [faseGrupos, setDataFaseGrupos] = useState([])
   const [equipos, setEquipos] = useState([])
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
-    dataStandings.forEach(ds => {
-      console.log(ds[0])
-    })
     const dataStandingGroup = dataStandings.filter(ds => ds[0].group !== 'Ranking of third-placed teams')
     const dataStandingThird = dataStandings.filter(ds => ds[0].group === 'Ranking of third-placed teams')
     const equipos = [...dataStandingGroup].reduce((acc, curr) => acc.concat(curr), [])
-    const [fixtureGrupos] = dataFixtures
+    console.log(dataFixtures)
+    const [fixtureGrupos, fixtureFinal] = dataFixtures
     setEquipos(equipos)
     setDataFaseGrupos(fixtureGrupos)
+    setDataFaseFinal(fixtureFinal)
     setDataGrupos(dataStandingGroup)
     setDataThirdPlaces(dataStandingThird)
     setRenderCup(true)
@@ -30,6 +31,14 @@ export default function Eurocopa ({ dataStandings, dataFixtures, idSection }) {
       {renderCup && (
         <section id={idSection}>
           <NavTeams teams={equipos} />
+          <section id='sectionFaseFinal'>
+            <FixtureEliminacion fixture={faseFinal} />
+          </section>
+          <div>
+            <h2>Tabla terceros</h2>
+            <TablaEquipos standing={thirdPlace[0]} />
+            {console.log(thirdPlace)}
+          </div>
           <section id='sectionFaseGrupos'>
             <h1>
               {faseGrupos[0].phaseName}
