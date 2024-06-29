@@ -11,8 +11,8 @@ import ChampionsLeague from './uefa/ChampionsLeague'
 import EuropaLeague from './uefa/EuropaLeague'
 import ConferenceLeague from './uefa/ConferenceLeague'
 import CopaAmerica from './nations/CopaAmerica'
-import './Copas.css'
 import Eurocopa from './nations/Eurocopa'
+import './Copas.css'
 
 export default function Copas ({ league, seasons }) {
   const [renderLoading, setRenderLoading] = useState(true)
@@ -86,7 +86,7 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
 
   useEffect(() => {
     if (!dataSelectLink) {
-      setDataStandings([...standingsData])
+      setDataStandings(standingsData ? [...standingsData] : standingsData)
       setDataFixtures([...fixturesData])
       setDataCup({ ...cupData })
       setDataSeasons([...seasonsData])

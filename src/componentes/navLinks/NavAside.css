@@ -43,6 +43,7 @@ nav#navAside li {
   transition: background-color ease-in-out 0.5s;
 }
 
+nav#navAside li.active,
 nav#navAside li:hover {
   border-radius: 4px;
   background-color: rgba(232, 238, 255, 0.664);
