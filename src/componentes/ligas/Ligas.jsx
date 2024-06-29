@@ -21,16 +21,6 @@ export default function Ligas ({ league, seasons }) {
   const [dataError, setDataError] = useState({})
 
   /* wtf q eran estos setters */
-  const handleSettersOk = (data) => {
-    if (data.response.error) {
-      console.log('Ocurrio un error xd')
-      console.log(data.response)
-      throw data
-    }
-    setRenderLoading(false)
-    setRenderData(true)
-    setDataStadistic(data)
-  }
 
   const handleSettersError = (err) => {
     setRenderLoading(false)
@@ -47,11 +37,36 @@ export default function Ligas ({ league, seasons }) {
   useEffect(() => {
     if (dataCurrentLink) {
       fetch(dataCurrentLink)
-        .then(res => res.json())
+        .then(async (res) => {
+          const data = await res.json()
+          console.log(res)
+          console.log(data)
+          if (!res.ok) {
+            const err = {
+              status: res.status,
+              ...data
+            }
+            throw err
+          }
+          return data
+        })
         .then((data) => {
-          handleSettersOk(data)
-        }).catch(err => {
-          handleSettersError(err)
+          try {
+            setDataStadistic(data)
+          } catch (error) {
+            console.error('Error en el bloque then asignando las respuestas')
+            console.error(error.message)
+            throw data
+          }
+          setRenderLoading(false)
+          setRenderData(true)
+        })
+        .catch((err) => {
+          console.error('estamos en error .')
+          console.error(err)
+          setRenderLoading(false)
+          setRenderError(true)
+          setDataError(err)
         })
 
       return () => {
@@ -68,13 +83,20 @@ export default function Ligas ({ league, seasons }) {
       - Cuando seleccinamos un item de la lista, ademas del renderizado condicional, podemos enviar a los componentes seleccionados, los datos como el nombre de la liga y lase seasons disponibles a mostrar.  */}
 
       {renderLoading && <LoadingSection />}
-      {renderData && <SeasonData leagueData={dataLeague} seasonsData={dataSeasons} standingsData={dataStadistic.response[0].standings} fixturesData={dataStadistic.response[0].fixtures} />}
-      {renderError &&
+      {renderData && (
+        <SeasonData
+          leagueData={dataLeague}
+          seasonsData={dataSeasons}
+          standingsData={dataStadistic.response[0].standings}
+          fixturesData={dataStadistic.response[0].fixtures}
+        />
+      )}
+      {renderError && (
         <section id='sectionLigaError'>
           Error Obteniendo la liga :(
           {console.log(dataError)}
-        </section>}
-
+        </section>
+      )}
     </section>
   )
 }
@@ -99,14 +121,34 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
       setRenderStadistic(true)
     } else {
       fetch(dataSelectLink)
-        .then(res => res.json())
+        .then(async (res) => {
+          const data = await res.json()
+          console.log(res)
+          console.log(data)
+          if (!res.ok) {
+            const err = {
+              status: res.status,
+              ...data
+            }
+            throw err
+          }
+          return data
+        })
         .then((data) => {
-          setDataStandings(data.response[0].standings)
-          setDataFixtures(data.response[0].fixtures)
+          try {
+            setDataStandings(data.response[0].standings)
+            setDataFixtures(data.response[0].fixtures)
+          } catch (error) {
+            console.error('Error en el bloque then asignando las respuestas')
+            console.error(error.message)
+            throw data
+          }
           setLoading(false)
           setRenderStadistic(true)
-        }).catch((err) => {
-          setRenderStadistic(false)
+        })
+        .catch((err) => {
+          console.log(err)
+          setLoading(false)
           setRenderError(true)
         })
     }
@@ -124,19 +166,42 @@ function SeasonData ({ leagueData, seasonsData, standingsData, fixturesData }) {
 
   return (
     <>
-      <NavSeasons dataLeague={dataLeague} dataSeasons={dataSeasons} onSelectLink={(link) => { handleSelectLink(link) }} />
+      <NavSeasons
+        dataLeague={dataLeague}
+        dataSeasons={dataSeasons}
+        onSelectLink={(link) => {
+          handleSelectLink(link)
+        }}
+      />
       <>
         {loading && <LoadingSection />}
         {renderStadistic && (
           <>
-            {dataLeague.name === 'Liga Profesional Argentina' && (<LigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLPA' />)}
-            {dataLeague.name === 'Copa de la Liga Profesional' && (<CopaLigaArgentina dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionCLPA' />)}
-            {dataLeague.name === 'Premier League' && (<PremierLeague dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionCLPA' />)}
+            {dataLeague.name === 'Liga Profesional Argentina' && (
+              <LigaArgentina
+                dataStandings={dataStandings}
+                dataFixtures={dataFixtures}
+                idSection='sectionLPA'
+              />
+            )}
+            {dataLeague.name === 'Copa de la Liga Profesional' && (
+              <CopaLigaArgentina
+                dataStandings={dataStandings}
+                dataFixtures={dataFixtures}
+                idSection='sectionCLPA'
+              />
+            )}
+            {dataLeague.name === 'Premier League' && (
+              <PremierLeague
+                dataStandings={dataStandings}
+                dataFixtures={dataFixtures}
+                idSection='sectionCLPA'
+              />
+            )}
           </>
         )}
         {renderError && <>hola errorrr </>}
       </>
-
     </>
   )
 }

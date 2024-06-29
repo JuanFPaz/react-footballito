@@ -1,3 +1,4 @@
+/* eslint-disable promise/param-names */
 /* eslint-disable n/handle-callback-err */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -34,18 +35,34 @@ export default function Copas ({ league, seasons }) {
   useEffect(() => {
     if (dataCurrentLink) {
       fetch(dataCurrentLink)
-        .then((res) => res.json())
+        .then(async (res) => {
+          const data = await res.json()
+          console.log(res)
+          console.log(data)
+          if (!res.ok) {
+            const err = {
+              status: res.status,
+              ...data
+            }
+            throw err
+          }
+          return data
+        })
         .then((data) => {
-          if (data.response.error) {
-            console.log('Ocurrio un error xd')
-            console.log(data.response)
+          try {
+            /* el handle nos podria ayudar a detectar si el param esta vacio, no usar el setDataStadistics, y asegurarnos que no olvidamos de pasarlo, o que no haya nada malo con a respuesta tampoco je */
+            setDataStadistic(data)
+          } catch (error) {
+            console.error('Error en el bloque then asignando las respuestas')
+            console.error(error.message)
             throw data
           }
           setRenderLoading(false)
           setRenderData(true)
-          setDataStadistic(data)
         })
         .catch((err) => {
+          console.error('estamos en error .')
+          console.error(err)
           setRenderLoading(false)
           setRenderError(true)
           setDataError(err)
@@ -75,7 +92,7 @@ export default function Copas ({ league, seasons }) {
 }
 
 function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
-  const [loading, setLoading] = useState(true)
+  const [loading, setRenderLoading] = useState(true)
   const [renderError, setRenderError] = useState(false)
   const [renderStadistic, setRenderStadistic] = useState(false)
   const [dataStandings, setDataStandings] = useState([])
@@ -90,23 +107,43 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
       setDataFixtures([...fixturesData])
       setDataCup({ ...cupData })
       setDataSeasons([...seasonsData])
-      setLoading(false)
+      setRenderLoading(false)
       setRenderStadistic(true)
     } else {
       fetch(dataSelectLink)
-        .then(res => res.json())
+        .then(async (res) => {
+          const data = await res.json()
+          console.log(res)
+          console.log(data)
+          if (!res.ok) {
+            const err = {
+              status: res.status,
+              ...data
+            }
+            throw err
+          }
+          return data
+        })
         .then((data) => {
-          setDataStandings(data.response[0].standings)
-          setDataFixtures(data.response[0].fixtures)
-          setLoading(false)
+          try {
+            setDataStandings(data.response[0].standings)
+            setDataFixtures(data.response[0].fixtures)
+          } catch (error) {
+            console.error('Error en el bloque then asignando las respuestas')
+            console.error(error.message)
+            throw data
+          }
+          setRenderLoading(false)
           setRenderStadistic(true)
         }).catch((err) => {
-          setRenderStadistic(false)
+          console.error('estamos en error .')
+          console.error(err)
+          setRenderLoading(false)
           setRenderError(true)
         })
     }
     return () => {
-      setLoading(true)
+      setRenderLoading(true)
       setRenderStadistic(false)
       setRenderError(false)
     }
@@ -132,7 +169,7 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
           {dataCup.name === 'Copa America' && (<CopaAmerica dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLali' />)}
           {dataCup.name === 'Euro Championship' && (<Eurocopa dataStandings={dataStandings} dataFixtures={dataFixtures} idSection='sectionLali' />)}
         </>}
-      {renderError && <>hola errorrr </>}
+      {renderError && <> Error al hacer la segybda cargar del componente </>}
     </>
   )
 }
