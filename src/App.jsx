@@ -14,21 +14,34 @@ function App () {
   }
   useEffect(() => {
     fetch('http://localhost:3000/')
-      .then(res => {
-        console.log(res)
-        return res.json()
+      .then(async (res) => {
+        const data = await res.json()
+        if (!res.ok) {
+          const err = {
+            status: res.status,
+            ...data
+          }
+          throw err
+        }
+        return data
       }).then(data => {
         setDataLinks(data)
-      }).catch(err => {
-        console.log(err)
-        setDataError({ error: err })
+      }).catch((err) => {
+        console.error('estamos en error .')
+        setDataError(err)
       })
+
+    return () => {
+      setRenderLoading(true)
+      setDataLinks(null)
+      setDataError(null)
+    }
   }, [])
   return (
     <>
       {renderLoading && <Loading />}
       {dataLinks && <Principal {...dataLinks} onLoadingApp={handleEventRenderLoading} />}
-      {dataError && <Error {...dataError} onLoadingApp={handleEventRenderLoading} />}
+      {dataError && <Error error={dataError} onLoadingApp={handleEventRenderLoading} />}
     </>
   )
 }

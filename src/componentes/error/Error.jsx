@@ -10,6 +10,7 @@ export default function Error ({ error, onLoadingApp }) {
       ya que al ser el primer componente por default que se renderiza, cuando este termine
       de obtener los datos que necesita, finaliza los dos loading (Loading app y el futuro loading inicio.)
     */
+
     onLoadingApp()
   }, [onLoadingApp])
   return (

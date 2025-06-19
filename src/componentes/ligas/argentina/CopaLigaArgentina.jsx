@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import TablaEquipos from '../../tablas/TablaEquipos'
-import NavTeams from '../../navLinks/NavTeams'
 import FixtureRegular from '../../fixtures/FixtureRegular'
 import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
 import { useEffect, useState } from 'react'
@@ -9,7 +8,6 @@ import { useEffect, useState } from 'react'
 export default function CopaLigaArgentina ({ dataStandings, dataFixtures, idSection }) {
   const [tablaclA, setTablaA] = useState([])
   const [tablaclB, setTablaB] = useState([])
-  const [teams, setTeams] = useState([])
   const [faseRegular, setPhaseRegular] = useState([])
   const [faseFinal, setFaseFinal] = useState([])
   const [renderLeague, setRenderLeague] = useState(false)
@@ -17,8 +15,6 @@ export default function CopaLigaArgentina ({ dataStandings, dataFixtures, idSect
   useEffect(() => {
     const [zonaA, zonaB] = dataStandings
     const [fixtureRegular, fixtureFinal] = dataFixtures
-    const equiposTotales = [...zonaA, ...zonaB]
-    setTeams(equiposTotales)
     setTablaA(zonaA)
     setTablaB(zonaB)
     setPhaseRegular(fixtureRegular)
@@ -29,7 +25,6 @@ export default function CopaLigaArgentina ({ dataStandings, dataFixtures, idSect
     <>
       {renderLeague && (
         <section id={idSection}>
-          <NavTeams teams={teams} />
           <section id='sectionFaseFinal'>
             <FixtureEliminacion fixture={faseFinal} />
           </section>

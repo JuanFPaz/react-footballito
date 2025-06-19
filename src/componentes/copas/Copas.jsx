@@ -123,8 +123,7 @@ function SeasonData ({ cupData, seasonsData, standingsData, fixturesData }) {
             throw err
           }
           return data
-        })
-        .then((data) => {
+        }).then((data) => {
           try {
             setDataStandings(data.response[0].standings)
             setDataFixtures(data.response[0].fixtures)

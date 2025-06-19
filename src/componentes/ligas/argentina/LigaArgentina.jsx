@@ -7,14 +7,11 @@ import { useState, useEffect } from 'react'
 
 export default function LigaArgentina ({ dataStandings, dataFixtures, idSection }) {
   const [tablaLiga, setTabla] = useState([])
-  const [equiposLiga, setEquiposLiga] = useState([])
   const [faseRegular, setPhaseRegular] = useState([])
   const [renderLeague, setRenderLeague] = useState(false)
   useEffect(() => {
     const [ligaProfesional] = dataStandings
     const [fixtureRegular] = dataFixtures
-    const teams = [...ligaProfesional]
-    setEquiposLiga(teams)
     setTabla(ligaProfesional)
     setPhaseRegular(fixtureRegular)
     setRenderLeague(true)
@@ -23,7 +20,6 @@ export default function LigaArgentina ({ dataStandings, dataFixtures, idSection 
     <>
       {renderLeague && (
         <section id={idSection}>
-          <NavTeams teams={equiposLiga} />
           <section id='sectionFaseRegular'>
             <section className='sectionTabla'>
               <h1>

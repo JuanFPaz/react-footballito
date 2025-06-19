@@ -13,8 +13,6 @@ export default function PremierLeague ({ dataStandings, dataFixtures, idSection 
   useEffect(() => {
     const [premierLeague] = dataStandings
     const [fixtureRegular] = dataFixtures
-    const teams = [...premierLeague]
-    setEquiposLiga(teams)
     setTabla(premierLeague)
     setPhaseRegular(fixtureRegular)
     setRenderLeague(true)
@@ -23,7 +21,6 @@ export default function PremierLeague ({ dataStandings, dataFixtures, idSection 
     <>
       {renderLeague && (
         <section id={idSection}>
-          <NavTeams teams={equiposLiga} />
           <section id='sectionFaseRegular'>
             <section className='sectionTabla'>
               <h1>

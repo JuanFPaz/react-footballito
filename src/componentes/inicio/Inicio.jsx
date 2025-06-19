@@ -3,7 +3,7 @@ import React from 'react'
 function Inicio () {
   return (
     <section id='sectionInicio'>
-      <h1>Inicio</h1>
+      <h1>deportes.jpaz.ar</h1>
     </section>
   )
 }

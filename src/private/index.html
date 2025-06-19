@@ -1,0 +1,534 @@
+<html lang="en"><head>
+    <script type="module">import { injectIntoGlobalHook } from "/@react-refresh";
+injectIntoGlobalHook(window);
+window.$RefreshReg$ = () => {};
+window.$RefreshSig$ = () => (type) => type;</script>
+
+    <script type="module" src="/@vite/client"></script>
+
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Vite + React</title>
+  <style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/loading/Loading.css">/*Full chatgpt*/
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    display: none; /* Inicialmente oculto */
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .loading-overlay.show {
+    display: flex; /* Mostrar cuando se activa */
+  }
+  
+  .loading-spinner-container {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db; /* Color del spinner */
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/navLinks/navSeasons.css">
+nav#navSeasons,
+nav#navTeams{
+    /*tiene opacidad*/
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #ccd6f6;
+    background-color: rgb(113, 146, 255);
+}
+
+nav#navSeasons h2,
+nav#navSeasons li
+{
+    color: #ccd6f6;
+}
+nav#navSeasons li:hover{
+    color: #3b4f92;
+    text-shadow: 0 0 15px #475da3;
+}
+.seasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+
+  .season-grid-item {
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .season-logo {
+    width: 50px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/fixtures/Fixtures.css">article.articleFixtureRegular tr.trJornadaName,
+article.articleFixtureGrupos tr.trJornadaName,
+article.articleFixtureEliminacion tr.trJornadaName{
+    background-color: rgba(10, 25, 47, 0.486);
+    color:rgb(204, 214, 246);
+}
+
+article.articleFixtureRegular th,
+article.articleFixtureEliminacion th,
+article.articleFixtureGrupos th{
+    padding: 2px 2px 2px 8px;
+}
+
+
+article.articleFixtureRegular div.btnFixture{
+    margin: 0 auto;
+    background-color: #0a192f7c;
+}
+
+article.articleFixtureRegular div.btnFixture button{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    margin: 5px;
+    border: none;
+    background-color: #0a192f7c;
+    color: #d8e1ff;
+    cursor: pointer;
+}
+
+article.articleFixtureRegular table,
+article.articleFixtureEliminacion table{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    font-size: small;
+}
+
+article.articleFixtureGrupos table{
+    width: 49%;
+    text-align: center;
+    border-collapse: collapse;
+    font-size: small;
+}
+
+article.articleFixtureRegular td.tdDataTeam,
+article.articleFixtureEliminacion td.tdDataTeam,
+article.articleFixtureGrupos td.tdDataTeam{
+    width: 45%;
+    border-bottom: 1px solid #0a192f7c ;
+    background-color: #d8e1ff;; /* Color para filas impares */
+}
+
+article.articleFixtureRegular td.tdDataTeam div,
+article.articleFixtureEliminacion td.tdDataTeam div,
+article.articleFixtureGrupos td.tdDataTeam div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+article.articleFixtureRegular td.tdDataResult,
+article.articleFixtureEliminacion td.tdDataResult,
+article.articleFixtureGrupos td.tdDataResult{
+    width: 5%;
+    background-color: #0a192f7c;
+    border-bottom: 1px solid #d8e1ff ;
+    color: #d8e1ff;
+}
+
+article.articleFixtureRegular tr:last-child td.tdDataResult,
+article.articleFixtureEliminacion tr:last-child td.tdDataResult,
+article.articleFixtureGrupos td.tdDataResult{
+    border-bottom: none;
+}
+
+
+td.tdDataTeam img, td.tdDataTeam span
+{
+    display: block;
+}
+
+.thDateMatch {
+    background-color: rgba(10, 25, 47, 0.486);
+    color:rgb(204, 214, 246);
+}</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/tablas/Tablas.css">article.articleTablaEquipos table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: small;
+}
+
+article.articleTablaEquipos tr.rowGroupName{
+    color:rgb(204, 214, 246);
+    background-color: rgba(10, 25, 47, 0.486);
+}
+article.articleTablaEquipos tr.rowStadistics{
+    background-color: rgba(10, 25, 47, 0.486);
+    color:rgb(204, 214, 246);
+}
+
+article.articleTablaEquipos tr.rowGroupName th{
+    padding: 2px 2px 2px 8px;
+}
+article.articleTablaEquipos .tdataPosicion{
+    padding: 2px 2px 2px 8px;
+    width: 20px;
+    text-align: left;
+    font-weight: bold;
+}
+
+article.articleTablaEquipos .tdataEscudo{
+    padding: 2px 2px 2px 2px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+article.articleTablaEquipos td{
+    text-align: center;
+}
+
+article.articleTablaEquipos .tdataEscudo img{
+    display: block;
+    width: 16px ;
+    height: 16px ;
+}
+
+article.articleTablaEquipos .tdataEquipo {
+    min-width: 100px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+article.articleTablaEquipos tbody tr:nth-child(odd) {
+    background-color: #b4c5fd;; /* Color para filas impares */
+  }
+  
+article.articleTablaEquipos tbody tr:nth-child(even) {
+    background-color: #d8e1ff; /* Color para filas pares */
+  }</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/copas/Copas.css">section#sectionCopa section#sectionFaseGrupos{
+    display: flex;
+    flex-direction: column;
+}
+
+section#sectionFaseGrupos .sectionTabla{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+section#sectionFaseGrupos .articleTablaEquipos{
+    width: 35%;
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section#sectionFaseGrupos .sectionFixture{
+    width: 60%;
+}
+
+section#sectionFaseGrupos .articleFixtureGrupos{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/navLinks/NavTeams.css">nav#navTeams{
+    text-align: center;
+    border-radius: 10px;
+    border: 2px solid #ccd6f6;
+    background-color: rgb(113, 146, 255);
+}
+.teams-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .teams-grid{
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+
+  }
+.team-grid-item {
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.team-logo{
+    width: 40px;
+    height: auto;
+    margin-bottom: 10px;
+  }</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/ligas/Ligas.css">section#sectionFaseRegular{
+    display: flex;
+}
+
+section#sectionLiga section.sectionTabla{
+    width: 30%;
+}
+
+section#sectionLiga section.sectionFixture{
+    width: 70%;
+    height: max-content;
+}
+
+section#sectionLiga section.sectionFixture{
+    margin-top: 60px
+}
+
+section#sectionLiga section.sectionFixture{
+    display: flex;
+    justify-content: center;
+}
+
+article.articleTablaEquipos{
+    width: 100%;
+}
+
+article.articleFixtureRegular,
+article.articleFixtureEliminacion{
+    width: 70%;
+}
+
+article.articleFixtureRegular table,
+article.articleTablaEquipos table{
+    width: 100%;
+}
+
+article.articleTablaEquipos{
+    width: 100%;
+    margin-bottom: 25px;
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/navLinks/NavAside.css">nav#navAside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+nav#navAside h2{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav#navAside img {
+  object-fit: contain;
+  object-position: top;
+  width: 50px;
+  height: 50px;
+}
+
+nav#navAside div {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: start;
+}
+
+nav#navAside ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+nav#navAside li {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  transition: background-color ease-in-out 0.5s;
+}
+
+nav#navAside li.active,
+nav#navAside li:hover {
+  border-radius: 4px;
+  background-color: rgba(232, 238, 255, 0.664);
+}</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/Principal.css">main#mainPrincipal{
+    display: flex;
+    flex-direction: row;
+}
+
+aside#asidePrincipal {
+  height: 100vh;
+  width: 300px;
+  background-color: #7192ff;
+  overflow-y: auto; /* para que el contenido del aside sea desplazable si es necesario */
+}
+
+section#sectionInicio::-webkit-scrollbar,
+section#sectionLiga::-webkit-scrollbar,
+section#sectionCopa::-webkit-scrollbar,
+#asidePrincipal::-webkit-scrollbar {
+  height: 8px;
+  width: 8px; /* Ancho de la barra de desplazamiento vertical */
+}
+section#sectionInicio::-webkit-scrollbar-track,
+section#sectionLiga::-webkit-scrollbar-track,
+section#sectionCopa::-webkit-scrollbar-track,
+#asidePrincipal::-webkit-scrollbar-track {
+  background: #84a0fc; /* Color de la pista de la barra de desplazamiento */
+}
+
+section#sectionInicio::-webkit-scrollbar-thumb,
+section#sectionLiga::-webkit-scrollbar-thumb,
+section#sectionCopa::-webkit-scrollbar-thumb,
+#asidePrincipal::-webkit-scrollbar-thumb {
+  background-color: #0a192f; /* Color de la "thumb" de la barra de desplazamiento */
+  border-radius: 10px; /* Redondear esquinas */
+  border: 2px solid #84a0fc; /* Espacio alrededor de la "thumb" */
+  box-shadow: 0px 0px 15px -5px #84a0fc;
+}
+
+/* Estilo para cuando se pasa el cursor sobre la "thumb" */
+section#sectionInicio::-webkit-scrollbar-thumb:hover,
+section#sectionLiga::-webkit-scrollbar-thumb:hover,
+section#sectionCopa::-webkit-scrollbar-thumb:hover,
+#asidePrincipal::-webkit-scrollbar-thumb:hover {
+  background: #0a192f;
+}
+section#sectionInicio,
+section#sectionLiga,
+section#sectionCopa {
+  padding: 20px;
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto; /* para que el contenido del aside sea desplazable si es necesario */
+
+}
+
+header#headerSeasons{
+    text-align: center;
+}
+
+ img{
+    width: 20px;
+}
+
+ul{
+    padding: 0;
+}
+
+li{
+    list-style: none;
+}
+
+li:hover {
+  cursor: pointer;
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/componentes/error/Error.css">main#mainError {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section#sectionError {
+  width: 100%;
+  height: max-content;
+  border-radius: 10px;
+  border: 2px solid #0a192f;
+  box-shadow: 2px 2px 15px -5px #0a192f;
+  padding: 20px;
+}
+
+section#sectionError {
+  text-shadow: 0 0px 10px #0a192f;
+  text-align: center;
+}
+</style><style type="text/css" data-vite-dev-id="C:/Users/Fonko/Documents/Desarrollo/repositorios-locales/react/react-football/src/App.css">* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px !important;
+  scroll-padding-top: 136px;
+}
+
+body {
+  font-family: "Noto Sans JP", sans-serif !important;
+  background-color: #84a0fc;
+  margin: 0;
+}
+
+
+
+#root{
+  height: 100%;
+  overflow: hidden;
+}
+
+
+ 
+.loader-principal {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+h1,
+h2,
+h3, h4 {
+ color: #0e2b55;
+ /* font-weight: 700;
+ line-height: 1.5; */
+}</style></head>
+  <body>
+    <div id="root"><main id="mainPrincipal"><aside id="asidePrincipal"><nav id="navAside"><h1>Inicio</h1><ul><li>Inicio</li></ul><div><h2><img src="https://media.api-sports.io/flags/ar.svg"> Argentina</h2><ul><li class="active"><img src="https://media.api-sports.io/football/leagues/128.png" alt="Liga Profesional Argentina">Liga Profesional Argentina</li><li class=""><img src="https://media.api-sports.io/football/leagues/1032.png" alt="Copa de la Liga Profesional">Copa de la Liga Profesional</li><li class=""><img src="https://media.api-sports.io/football/leagues/130.png" alt="Copa Argentina">Copa Argentina</li><li class=""><img src="https://media.api-sports.io/football/leagues/810.png" alt="Super Copa">Super Copa</li><li class=""><img src="https://media.api-sports.io/football/leagues/517.png" alt="Trofeo de Campeones de la Superliga">Trofeo de Campeones de la Superliga</li></ul></div><div><h2><img src="https://media.api-sports.io/flags/gb.svg"> Pirata go Home</h2><ul><li class=""><img src="https://media.api-sports.io/football/leagues/39.png" alt="Premier League">Premier League</li></ul></div><div><h2><img src=""> NATIONS</h2><ul><li class=""><img src="https://media.api-sports.io/football/leagues/1.png" alt="World Cup">World Cup</li><li class=""><img src="https://media.api-sports.io/football/leagues/9.png" alt="Copa America">Copa America</li><li class=""><img src="https://media.api-sports.io/football/leagues/4.png" alt="Euro Championship">Euro Championship</li></ul></div><div><h2><img src="https://i.imgur.com/NCAlqtf.png"> CONMEBOL</h2><ul><li class=""><img src="https://media.api-sports.io/football/leagues/13.png" alt="CONMEBOL Libertadores">CONMEBOL Libertadores</li><li class=""><img src="https://media.api-sports.io/football/leagues/11.png" alt="CONMEBOL Sudamericana">CONMEBOL Sudamericana</li><li class=""><img src="https://media.api-sports.io/football/leagues/541.png" alt="CONMEBOL Recopa">CONMEBOL Recopa</li></ul></div><div><h2><img src="https://i.imgur.com/0ts3uoO.png"> UEFA</h2><ul><li class=""><img src="https://media.api-sports.io/football/leagues/2.png" alt="UEFA Champions League">UEFA Champions League</li><li class=""><img src="https://media.api-sports.io/football/leagues/3.png" alt="UEFA Europa League">UEFA Europa League</li><li class=""><img src="https://media.api-sports.io/football/leagues/848.png" alt="UEFA Europa Conference League">UEFA Europa Conference League</li><li class=""><img src="https://media.api-sports.io/football/leagues/531.png" alt="UEFA Super Cup">UEFA Super Cup</li></ul></div></nav></aside><section id="sectionLiga"><header id="headerSeasons"><h1>Liga Profesional Argentina</h1><nav id="navSeasons"><h2>Temporadas:</h2><ul class="seasons-grid"><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2024</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2023</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2022</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2021</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2020</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2019</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2018</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2017</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2016</li><li class="season-grid-item"><img class="season-logo" src="https://media.api-sports.io/football/leagues/128.png"> 2015</li></ul></nav></header><section id="sectionLPA"><section id="sectionFaseRegular"><section class="sectionTabla"><h1>Fase Regular</h1><article class="articleTablaEquipos"><table><thead><tr class="rowGroupName"><th colspan="11">Liga Profesional Argentina</th></tr><tr class="rowStadistics"><th class="tdataPosicion">Pos</th><th class="tdataEscudo"></th><th class="tdataEquipo">Equipo</th><th>Pts.</th><th>PJ</th><th>PG</th><th>PE</th><th>PP</th><th>GF</th><th>GE</th><th>DG</th></tr></thead><tbody><tr><td class="tdataPosicion">1</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/445.png" alt=""></td><td class="tdataEquipo">Huracan</td><td>15</td><td>7</td><td>4</td><td>3</td><td>0</td><td>9</td><td>3</td><td>6</td></tr><tr><td class="tdataPosicion">2</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/441.png" alt=""></td><td class="tdataEquipo">Union Santa Fe</td><td>14</td><td>6</td><td>4</td><td>2</td><td>0</td><td>7</td><td>2</td><td>5</td></tr><tr><td class="tdataPosicion">3</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/456.png" alt=""></td><td class="tdataEquipo">Talleres Cordoba</td><td>14</td><td>7</td><td>4</td><td>2</td><td>1</td><td>12</td><td>8</td><td>4</td></tr><tr><td class="tdataPosicion">4</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/436.png" alt=""></td><td class="tdataEquipo">Racing Club</td><td>13</td><td>7</td><td>4</td><td>1</td><td>2</td><td>15</td><td>7</td><td>8</td></tr><tr><td class="tdataPosicion">5</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/478.png" alt=""></td><td class="tdataEquipo">Instituto Cordoba</td><td>13</td><td>7</td><td>4</td><td>1</td><td>2</td><td>10</td><td>6</td><td>4</td></tr><tr><td class="tdataPosicion">6</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/446.png" alt=""></td><td class="tdataEquipo">Lanus</td><td>12</td><td>7</td><td>3</td><td>3</td><td>1</td><td>11</td><td>9</td><td>2</td></tr><tr><td class="tdataPosicion">7</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/438.png" alt=""></td><td class="tdataEquipo">Velez Sarsfield</td><td>11</td><td>7</td><td>3</td><td>2</td><td>2</td><td>9</td><td>6</td><td>3</td></tr><tr><td class="tdataPosicion">8</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/473.png" alt=""></td><td class="tdataEquipo">Independ. Rivadavia</td><td>11</td><td>7</td><td>3</td><td>2</td><td>2</td><td>4</td><td>2</td><td>2</td></tr><tr><td class="tdataPosicion">9</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/440.png" alt=""></td><td class="tdataEquipo">Belgrano Cordoba</td><td>11</td><td>7</td><td>3</td><td>2</td><td>2</td><td>12</td><td>13</td><td>-1</td></tr><tr><td class="tdataPosicion">10</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/435.png" alt=""></td><td class="tdataEquipo">River Plate</td><td>10</td><td>7</td><td>3</td><td>1</td><td>3</td><td>12</td><td>8</td><td>4</td></tr><tr><td class="tdataPosicion">11</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/434.png" alt=""></td><td class="tdataEquipo">Gimnasia L.P.</td><td>10</td><td>7</td><td>3</td><td>1</td><td>3</td><td>10</td><td>7</td><td>3</td></tr><tr><td class="tdataPosicion">12</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/474.png" alt=""></td><td class="tdataEquipo">Sarmiento Junin</td><td>10</td><td>7</td><td>3</td><td>1</td><td>3</td><td>8</td><td>8</td><td>0</td></tr><tr><td class="tdataPosicion">13</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/455.png" alt=""></td><td class="tdataEquipo">Atletico Tucuman</td><td>10</td><td>7</td><td>2</td><td>4</td><td>1</td><td>6</td><td>6</td><td>0</td></tr><tr><td class="tdataPosicion">14</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/457.png" alt=""></td><td class="tdataEquipo">Newells Old Boys</td><td>10</td><td>7</td><td>3</td><td>1</td><td>3</td><td>4</td><td>5</td><td>-1</td></tr><tr><td class="tdataPosicion">15</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/437.png" alt=""></td><td class="tdataEquipo">Rosario Central</td><td>9</td><td>6</td><td>2</td><td>3</td><td>1</td><td>11</td><td>8</td><td>3</td></tr><tr><td class="tdataPosicion">16</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/450.png" alt=""></td><td class="tdataEquipo">Estudiantes L.P.</td><td>9</td><td>7</td><td>2</td><td>3</td><td>2</td><td>5</td><td>5</td><td>0</td></tr><tr><td class="tdataPosicion">17</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/476.png" alt=""></td><td class="tdataEquipo">Deportivo Riestra</td><td>9</td><td>7</td><td>3</td><td>0</td><td>4</td><td>6</td><td>7</td><td>-1</td></tr><tr><td class="tdataPosicion">18</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/458.png" alt=""></td><td class="tdataEquipo">Argentinos JRS</td><td>9</td><td>7</td><td>3</td><td>0</td><td>4</td><td>6</td><td>11</td><td>-5</td></tr><tr><td class="tdataPosicion">19</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/451.png" alt=""></td><td class="tdataEquipo">Boca Juniors</td><td>8</td><td>6</td><td>2</td><td>2</td><td>2</td><td>7</td><td>6</td><td>1</td></tr><tr><td class="tdataPosicion">20</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/1064.png" alt=""></td><td class="tdataEquipo">Platense</td><td>8</td><td>7</td><td>2</td><td>2</td><td>3</td><td>5</td><td>7</td><td>-2</td></tr><tr><td class="tdataPosicion">21</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/453.png" alt=""></td><td class="tdataEquipo">Independiente</td><td>7</td><td>7</td><td>1</td><td>4</td><td>2</td><td>5</td><td>8</td><td>-3</td></tr><tr><td class="tdataPosicion">22</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/452.png" alt=""></td><td class="tdataEquipo">Tigre</td><td>6</td><td>7</td><td>1</td><td>3</td><td>3</td><td>6</td><td>11</td><td>-5</td></tr><tr><td class="tdataPosicion">23</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/460.png" alt=""></td><td class="tdataEquipo">San Lorenzo</td><td>5</td><td>6</td><td>1</td><td>2</td><td>3</td><td>4</td><td>6</td><td>-2</td></tr><tr><td class="tdataPosicion">24</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/442.png" alt=""></td><td class="tdataEquipo">Defensa Y Justicia</td><td>5</td><td>7</td><td>0</td><td>5</td><td>2</td><td>6</td><td>9</td><td>-3</td></tr><tr><td class="tdataPosicion">25</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/449.png" alt=""></td><td class="tdataEquipo">Banfield</td><td>5</td><td>6</td><td>1</td><td>2</td><td>3</td><td>5</td><td>8</td><td>-3</td></tr><tr><td class="tdataPosicion">26</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/2432.png" alt=""></td><td class="tdataEquipo">Barracas Central</td><td>5</td><td>7</td><td>1</td><td>2</td><td>4</td><td>3</td><td>8</td><td>-5</td></tr><tr><td class="tdataPosicion">27</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/439.png" alt=""></td><td class="tdataEquipo">Godoy Cruz</td><td>3</td><td>6</td><td>1</td><td>3</td><td>2</td><td>4</td><td>7</td><td>-3</td></tr><tr><td class="tdataPosicion">28</td><td class="tdataEscudo"><img src="https://media.api-sports.io/football/teams/1065.png" alt=""></td><td class="tdataEquipo">Central Cordoba de Santiago</td><td>1</td><td>7</td><td>0</td><td>1</td><td>6</td><td>7</td><td>18</td><td>-11</td></tr></tbody></table></article></section><section class="sectionFixture"><article class="articleFixtureRegular"><div class="btnFixture"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><button>10</button><button>11</button><button>12</button><button>13</button><button>14</button><button>15</button><button>16</button><button>17</button><button>18</button><button>19</button><button>20</button><button>21</button><button>22</button><button>23</button><button>24</button><button>25</button><button>26</button><button>27</button></div><table><thead><tr class="trJornadaName"><th colspan="4">Jornada: Fecha 1</th></tr></thead><tbody><tr><th class="thDateMatch" colspan="4">10/5/2024 | 19:00:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/474.png"><span>Sarmiento Junin</span></div></td><td class="tdDataResult">1</td><td class="tdDataResult">2</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/478.png"><span>Instituto Cordoba</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">10/5/2024 | 21:15:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/458.png"><span>Argentinos JRS</span></div></td><td class="tdDataResult">3</td><td class="tdDataResult">2</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/437.png"><span>Rosario Central</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">10/5/2024 | 21:15:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/457.png"><span>Newells Old Boys</span></div></td><td class="tdDataResult">2</td><td class="tdDataResult">0</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/1064.png"><span>Platense</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">11/5/2024 | 14:30:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/445.png"><span>Huracan</span></div></td><td class="tdDataResult">3</td><td class="tdDataResult">1</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/442.png"><span>Defensa Y Justicia</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">11/5/2024 | 15:30:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/439.png"><span>Godoy Cruz</span></div></td><td class="tdDataResult">0</td><td class="tdDataResult">1</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/2432.png"><span>Barracas Central</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">11/5/2024 | 17:30:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/453.png"><span>Independiente</span></div></td><td class="tdDataResult">1</td><td class="tdDataResult">3</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/456.png"><span>Talleres Cordoba</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">11/5/2024 | 19:45:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/435.png"><span>River Plate</span></div></td><td class="tdDataResult">3</td><td class="tdDataResult">0</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/1065.png"><span>Central Cordoba de Santiago</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">12/5/2024 | 15:30:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/452.png"><span>Tigre</span></div></td><td class="tdDataResult">0</td><td class="tdDataResult">1</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/450.png"><span>Estudiantes L.P.</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">12/5/2024 | 15:30:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/476.png"><span>Deportivo Riestra</span></div></td><td class="tdDataResult">1</td><td class="tdDataResult">0</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/460.png"><span>San Lorenzo</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">12/5/2024 | 17:45:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/440.png"><span>Belgrano Cordoba</span></div></td><td class="tdDataResult">4</td><td class="tdDataResult">4</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/436.png"><span>Racing Club</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">12/5/2024 | 17:45:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/446.png"><span>Lanus</span></div></td><td class="tdDataResult">0</td><td class="tdDataResult">2</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/473.png"><span>Independ. Rivadavia</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">12/5/2024 | 20:15:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/455.png"><span>Atletico Tucuman</span></div></td><td class="tdDataResult">1</td><td class="tdDataResult">0</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/451.png"><span>Boca Juniors</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">13/5/2024 | 19:00:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/434.png"><span>Gimnasia L.P.</span></div></td><td class="tdDataResult">3</td><td class="tdDataResult">1</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/438.png"><span>Velez Sarsfield</span></div></td></tr></tbody><tbody><tr><th class="thDateMatch" colspan="4">13/5/2024 | 21:00:00 GMT-0300 (hora estándar de Argentina)</th></tr><tr><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/441.png"><span>Union Santa Fe</span></div></td><td class="tdDataResult">1</td><td class="tdDataResult">0</td><td class="tdDataTeam"><div><img src="https://media.api-sports.io/football/teams/449.png"><span>Banfield</span></div></td></tr></tbody></table></article></section></section></section></section></main></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
+  
+
+</body></html>

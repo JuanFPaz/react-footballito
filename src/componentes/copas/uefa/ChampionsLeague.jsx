@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
-import NavTeams from '../../navLinks/NavTeams'
 import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
 import FixtureGrupos from '../../fixtures/FixtureGrupos'
@@ -10,13 +9,10 @@ export default function ChampionsLeague ({ dataStandings, dataFixtures }) {
   const [faseGrupos, setDataFaseGrupos] = useState([])
   const [fasePrevia, setDataFasePrevia] = useState([])
   const [faseFinal, setDataFaseFinal] = useState([])
-  const [equipos, setEquipos] = useState([])
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
-    const equipos = [...dataStandings].reduce((acc, curr) => acc.concat(curr), [])
     const [fixtureFasePrevia, fixtureGrupos, fixtureFinal] = dataFixtures
-    setEquipos(equipos)
     setDataFaseGrupos(fixtureGrupos)
     setDataFasePrevia(fixtureFasePrevia)
     setDataFaseFinal(fixtureFinal)
@@ -27,7 +23,6 @@ export default function ChampionsLeague ({ dataStandings, dataFixtures }) {
     <>
       {renderCup && (
         <>
-          <NavTeams teams={equipos} />
           <section id='sectionFaseFinal'>
             <FixtureEliminacion fixture={faseFinal} />
           </section>

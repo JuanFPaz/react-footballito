@@ -15,18 +15,24 @@ export default function NavAside ({ links, onInicio, onLiga, onCopa }) {
   }
   return (
     <nav id='navAside'>
-      <h1>
-        Inicio
-      </h1>
+      <h1>Inicio</h1>
       <ul>
         <li onClick={onInicio}>Inicio</li>
       </ul>
       {links.map(({ country }) => (
         <div key={country.code}>
-          <h2><img src={country.flag} /> {country.name}</h2>
+          <h2>
+            <img src={country.flag} /> {country.name}
+          </h2>
           <ul>
             {country.leagues.map(({ league, seasons }) => (
-              <li key={league.id} className={league.id === active ? 'active' : ''} onClick={() => { handleActive({ league, seasons }) }}>
+              <li
+                key={league.id}
+                className={league.id === active ? 'active' : ''}
+                onClick={() => {
+                  handleActive({ league, seasons })
+                }}
+              >
                 <img src={league.logo} alt={league.name} />
                 {league.name}
               </li>

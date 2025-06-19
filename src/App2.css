@@ -1,0 +1,19 @@
+.asideLayout {
+  grid-area: sidebar;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 5rem;
+  display: block !important;
+  height: calc(100vh - 6rem);
+  padding-left: 0.25rem;
+  margin-left: -0.25rem;
+  overflow-y: auto;
+}
+
+.bd-layout {
+  color: white;
+  display: grid;
+  grid-template-areas: "sidebar main";
+  grid-template-columns: 1fr 5fr;
+  gap: 1.5rem;
+}
