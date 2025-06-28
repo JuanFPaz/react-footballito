@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
 import { LoadingSection } from '../loading/Loading'
-import NavSeasons from '../navLinks/NavSeasons'
+import NavSeasons from '../navs/NavSeasons'
 import CopaArgentina from './argentina/CopaArgentina'
 import CopaLibertadores from './conmebol/CopaLibertadores'
 import CopaSudamericana from './conmebol/CopaSudamericana'

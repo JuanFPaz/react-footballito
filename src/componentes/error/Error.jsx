@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import './Error.css'
 
-export default function Error ({ error, onLoadingApp }) {
+export default function Error ({ dataError, onLoadingApp }) {
   useEffect(() => {
     /*
       Este podemos enviarlo al componente inicio
@@ -16,7 +16,7 @@ export default function Error ({ error, onLoadingApp }) {
   return (
     <main id='mainError'>
       <section id='sectionError'>
-        <h1>Error: {error.message}</h1>
+        <h1>Error: {dataError.message}</h1>
         <p>Hubo un error al intentar conectarnos con el servidor.</p>
       </section>
     </main>

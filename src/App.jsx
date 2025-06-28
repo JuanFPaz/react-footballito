@@ -6,7 +6,7 @@ import './App.css'
 
 function App () {
   const [renderLoading, setRenderLoading] = useState(true)
-  const [dataLinks, setDataLinks] = useState(null)
+  const [dataApp, setDataApp] = useState(null)
   const [dataError, setDataError] = useState(null)
 
   const handleEventRenderLoading = () => {
@@ -25,23 +25,22 @@ function App () {
         }
         return data
       }).then(data => {
-        setDataLinks(data)
+        setDataApp(data)
       }).catch((err) => {
-        console.error('estamos en error .')
         setDataError(err)
       })
 
     return () => {
       setRenderLoading(true)
-      setDataLinks(null)
+      setDataApp(null)
       setDataError(null)
     }
   }, [])
   return (
     <>
       {renderLoading && <Loading />}
-      {dataLinks && <Principal {...dataLinks} onLoadingApp={handleEventRenderLoading} />}
-      {dataError && <Error error={dataError} onLoadingApp={handleEventRenderLoading} />}
+      {dataApp && <Principal dataPrincipal={dataApp} onLoadingApp={handleEventRenderLoading} />}
+      {dataError && <Error dataError={dataError} onLoadingApp={handleEventRenderLoading} />}
     </>
   )
 }

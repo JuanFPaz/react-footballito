@@ -1,4 +1,4 @@
-nav#navAside {
+nav#navLinks {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -6,34 +6,34 @@ nav#navAside {
   padding-right: 5px;
 }
 
-nav#navAside h2{
+nav#navLinks h2{
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-nav#navAside img {
+nav#navLinks img {
   object-fit: contain;
   object-position: top;
   width: 50px;
   height: 50px;
 }
 
-nav#navAside div {
+nav#navLinks div {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: start;
 }
 
-nav#navAside ul {
+nav#navLinks ul {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
 }
 
-nav#navAside li {
+nav#navLinks li {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -43,8 +43,8 @@ nav#navAside li {
   transition: background-color ease-in-out 0.5s;
 }
 
-nav#navAside li.active,
-nav#navAside li:hover {
+nav#navLinks li.active,
+nav#navLinks li:hover {
   border-radius: 4px;
   background-color: rgba(232, 238, 255, 0.664);
 }
