@@ -186,13 +186,51 @@ import './Ligas.css'
 
 export default function Ligas ({ dataLigas }) {
   const [renderLoading, setRenderLoading] = useState(true)
+  const [renderData, setRenderData] = useState(false)
+  const [renderError, setRenderError] = useState(false)
+  const [dataLeague, setDataLeague] = useState(null)
+  const [dataStanding, setDataStanding] = useState(null)
+  const [dataFixture, setDataFixture] = useState(null)
   const [dataSeason, setDataSeason] = useState(null)
+  const [dataError, setDataError] = useState(null)
+
   useEffect(() => {
-    console.log(dataLigas)
+    /** este effect solo se ejecuta cuando la prop dataLigas recibe un cambio,
+     * mientras navegemos en este componente,
+     * es decir, cuando componente <Principal /> No le envie nuevo datos a <Ligas/>
+     * este useEffect no se ejecuta.
+     */
+    fetch(dataLigas.season.link)
+      .then((res) => {
+        const data = res.json()
+        return data
+      })
+      .then((data) => {
+        setDataLeague(dataLigas.league)
+        setDataSeason(dataLigas.season)
+        setDataStanding(data.response[0].standings)
+        setDataFixture(data.response[0].fixtures)
+        setRenderData(true)
+      })
   }, [dataLigas])
+
   return (
     <section id='sectionLiga'>
-      {renderLoading && <LoadingSection />}
+      {/* {renderLoading && <LoadingSection />} */}
+      {/* {renderData && (dataLeague.id === 128 && (
+
+      ))} */}
+      {renderData && (
+        <>
+          {dataLeague.id === 128 && <LigaArgentina dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionLPA' />}
+          {dataLeague.id === 1032 && <CopaLigaArgentina dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionCLPA' />}
+        </>
+      )}
     </section>
   )
 }
+
+/** Oa, reduje aproximadamente 129 lineas de codigos (Contando espacios, comentarios e indentados de codigos)
+ * Aparte, de eliinar ese codigo redudante de <Ligas/> -> <SeasonData/>
+ * Nada mal para no haber tocado durante casi un año este codigo jeje n.n
+*/

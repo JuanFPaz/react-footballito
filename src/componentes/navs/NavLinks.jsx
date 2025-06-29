@@ -41,9 +41,7 @@ export default function NavLinks ({ dataNavLinks, onLigaPrincipal, onInicioPrinc
               <li
                 key={league.id}
                 className={league.id === active ? 'active' : ''}
-                onClick={(a) => {
-                  console.log(a)
-
+                onClick={() => {
                   handleActive({ league, seasons })
                 }}
               >
