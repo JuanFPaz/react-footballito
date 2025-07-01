@@ -2,17 +2,20 @@
 /* eslint-disable react/prop-types */
 import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureRegular from '../../fixtures/FixtureRegular'
-import NavTeams from '../../navs/NavTeams'
 import { useState, useEffect } from 'react'
 
 export default function LigaArgentina ({ dataStandings, dataFixtures, idSection }) {
   const [tablaLiga, setTabla] = useState([])
+  const [tablaclA, setTablaA] = useState([])
+  const [tablaclB, setTablaB] = useState([])
   const [faseRegular, setPhaseRegular] = useState([])
   const [renderLeague, setRenderLeague] = useState(false)
   useEffect(() => {
-    const [ligaProfesional] = dataStandings
+    const [ligaProfesional, zonaA, zonaB] = dataStandings
     const [fixtureRegular] = dataFixtures
     setTabla(ligaProfesional)
+    setTablaA(zonaA)
+    setTablaB(zonaB)
     setPhaseRegular(fixtureRegular)
     setRenderLeague(true)
   }, [dataStandings, dataFixtures])
@@ -25,11 +28,18 @@ export default function LigaArgentina ({ dataStandings, dataFixtures, idSection 
               <h1>
                 {faseRegular[0].phaseName}
               </h1>
-              <TablaEquipos standing={tablaLiga} />
+              <TablaEquipos standing={tablaclA} />
+              <TablaEquipos standing={tablaclB} />
             </section>
             <section className='sectionFixture'>
               <FixtureRegular fixture={faseRegular} />
             </section>
+          </section>
+          <section className='sectionTabla'>
+            <h1>
+              Tabla Anual
+            </h1>
+            <TablaEquipos standing={tablaLiga} />
           </section>
         </section>
       )}

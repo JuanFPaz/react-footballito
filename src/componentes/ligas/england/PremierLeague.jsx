@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureRegular from '../../fixtures/FixtureRegular'
-import NavTeams from '../../navs/NavTeams'
 import { useState, useEffect } from 'react'
 
 export default function PremierLeague ({ dataStandings, dataFixtures, idSection }) {

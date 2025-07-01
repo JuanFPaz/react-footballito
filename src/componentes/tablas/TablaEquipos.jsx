@@ -22,7 +22,6 @@ export default function TablaEquipos ({ standing }) {
             <th>GF</th>
             <th>GE</th>
             <th>DG</th>
-            <th>Ultimos 5</th>
           </tr>
         </thead>
         <tbody>

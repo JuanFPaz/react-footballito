@@ -1,17 +1,2 @@
-POST http://localhost:3000/fixtures
-Content-Type: application/json
+GET http://localhost:3000/conmebol/2025/copa-america
 
-{
-    "league": 4,
-    "season": 2024,
-    "country": ["nations"]
-}
-###
-POST http://localhost:3000/standings
-Content-Type: application/json
-
-{
-    "league": 4,
-    "season": 2024,
-    "country": ["nations"]
-}
