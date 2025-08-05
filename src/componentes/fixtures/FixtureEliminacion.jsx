@@ -2,66 +2,78 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import './Fixtures.css'
-import sortMatchs from '../../helpers/sortMatchs'
 
-export default function FixtureEliminacion ({ fixture }) {
-  const [dataPhase, setDataPhase] = useState(null)
+export default function FixtureEliminacion ({ dataFaseUnica }) {
+  const [dataFixture, setDataFixture] = useState(null)
   const [dataRondas, setDataRondas] = useState([])
+  const [dataJornada, setDataJornada] = useState('')
 
   useEffect(() => {
-    const [{ phaseName, phaseFixtures }] = fixture
-    setDataPhase(phaseName)
-    setDataRondas(phaseFixtures)
-  }, [fixture])
+    console.log(dataFaseUnica)
+
+    setDataFixture(dataFaseUnica)
+  }, [dataFaseUnica])
 
   return (
     <>
-      {dataPhase && (
-        <article className='articleFixtureEliminacion'>
-          <h1>{dataPhase}</h1>
-          {dataRondas.map(({ fixtureName, fixtureMatchs }) => (
-            <table key={fixtureName}>
-              <thead>
-                <tr className='trJornadaName'>
-                  <th colSpan={4}>
-                    {fixtureName}
-                  </th>
-                </tr>
-              </thead>
-              {fixtureMatchs.sort(sortMatchs).map(m => (
-                <tbody key={m.id}>
-                  <tr className='thDateMatch'>
-                    <td colSpan={4}>
-                      {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='tdDataTeam'>
-                      <div>
-                        <img src={m.teams.home.logo} />
-                        <span>{m.teams.home.name}</span>
-                      </div>
-                    </td>
-                    <td className='tdDataResult'>
-                      {m.goals.home === null ? '-' : m.goals.home}
-                      {m.status.short === 'PEN' ? (<div>({m.score.penalty.home})</div>) : (<></>)}
-                    </td>
-                    <td className='tdDataResult'>
-                      {m.goals.away === null ? '-' : m.goals.away}
-                      {m.status.short === 'PEN' ? (<div>({m.score.penalty.away})</div>) : (<></>)}
-                    </td>
-                    <td className='tdDataTeam'>
-                      <div>
-                        <img src={m.teams.away.logo} />
-                        <span>{m.teams.away.name}</span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              ))}
-            </table>
-          )).reverse()}
-        </article>
+      {dataFixture && (
+        <>
+          {dataFixture.map((fx, idx) =>
+            (
+              <div key={idx} className='articleFixtureRegular'>
+                <div className='btnFixture'>
+                  {fx.fecha}
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th />
+                      <th />
+                      <th />
+                      <th />
+                      <th />
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {fx.fixture.map(({ fixture, teams, goals, score }, idx) => (
+                      <tr key={idx}>
+                        <td>
+                          {fixture.status.short === 'TBD' ? 'Sin Definir' : fixture.dateToString}
+                        </td>
+                        <td className='tdDataTeam'>
+                          {teams.home.name}
+                          <img src={teams.home.logo} />
+                        </td>
+                        <td className='tdDataResult'>
+                          <div>
+                            {goals.home === null ? '-' : goals.home}
+                          </div>
+                          <div>
+                            {score.penalty.home === null ? '' : `(${score.penalty.home})`}
+                          </div>
+                        </td>
+                        <td className='tdDataResult'>
+                          <div>
+                            {goals.away === null ? '-' : goals.away}
+                          </div>
+                          <div>
+                            {score.penalty.away === null ? '' : `(${score.penalty.away})`}
+                          </div>
+                        </td>
+                        <td className='tdDataTeam'>
+                          <img src={teams.away.logo} />
+                          {teams.away.name}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )
+          ).reverse()}
+
+        </>
       )}
     </>
   )

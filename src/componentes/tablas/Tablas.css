@@ -1,55 +1,48 @@
-article.articleTablaEquipos table{
-    width: 100%;
-    border-collapse: collapse;
-    font-size: small;
+div.tablaEquipos {
+  margin-top: 20px;
+  width: 100%;
 }
 
-article.articleTablaEquipos tr.rowGroupName{
-    color:rgb(204, 214, 246);
-    background-color: rgba(10, 25, 47, 0.486);
-}
-article.articleTablaEquipos tr.rowStadistics{
-    background-color: rgba(10, 25, 47, 0.486);
-    color:rgb(204, 214, 246);
+div.tablaEquipos table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-article.articleTablaEquipos tr.rowGroupName th{
-    padding: 2px 2px 2px 8px;
+div.tablaEquipos thead th {
+  color: rgb(255, 255, 255);
+  background-color: rgb(18, 17, 95);
+  text-align: center;
 }
-article.articleTablaEquipos .tdataPosicion{
-    padding: 2px 2px 2px 8px;
+
+div.tablaEquipos tbody td {
+  padding: 6px;
+  text-align: center;
+}
+
+div.tablaEquipos tbody td:nth-child(2) {
+  text-align: left;
+}
+
+div.tablaEquipos thead th:nth-child(2) {
+  text-align: left;
+  width: 40%;
+}
+
+div.tablaEquipos thead tr.rowStadistics {
+  background-color: rgb(34, 34, 70);
+  color: rgb(255, 255, 255);
+}
+div.tablaEquipos tbody td img {
+    margin-right: 10px;
     width: 20px;
-    text-align: left;
-    font-weight: bold;
+}
+div.tablaEquipos tbody tr:nth-child(odd) {
+  color: rgb(255, 255, 255);
+  background-color: rgb(97, 94, 253);
 }
 
-article.articleTablaEquipos .tdataEscudo{
-    padding: 2px 2px 2px 2px;
-    width: 30px;
-    display: flex;
-    justify-content: center;
+div.tablaEquipos tbody tr:nth-child(even) {
+  background-color: rgb(65, 61, 255);
+  color: rgb(255, 255, 255);
 }
-
-article.articleTablaEquipos td{
-    text-align: center;
-}
-
-article.articleTablaEquipos .tdataEscudo img{
-    display: block;
-    width: 16px ;
-    height: 16px ;
-}
-
-article.articleTablaEquipos .tdataEquipo {
-    min-width: 100px;
-    text-align: left;
-    white-space: nowrap;
-}
-
-article.articleTablaEquipos tbody tr:nth-child(odd) {
-    background-color: #b4c5fd;; /* Color para filas impares */
-  }
-  
-article.articleTablaEquipos tbody tr:nth-child(even) {
-    background-color: #d8e1ff; /* Color para filas pares */
-  }

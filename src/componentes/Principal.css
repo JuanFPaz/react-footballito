@@ -1,72 +1,99 @@
-main#mainPrincipal{
+header#headerPrincipal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgb(18, 17, 95);
+    color: white;
+    padding: 8px;
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    padding: 1rem
+}
+
+main#mainPrincipal {
+  display: flex;
+  flex-direction: row;
 }
 
 aside#asidePrincipal {
   height: 100vh;
-  width: 300px;
-  background-color: #7192ff;
+  background-color: rgb(18, 17, 95);
   overflow-y: auto; /* para que el contenido del aside sea desplazable si es necesario */
 }
 
-section#sectionInicio::-webkit-scrollbar,
-section#sectionLiga::-webkit-scrollbar,
-section#sectionCopa::-webkit-scrollbar,
-#asidePrincipal::-webkit-scrollbar {
-  height: 8px;
-  width: 8px; /* Ancho de la barra de desplazamiento vertical */
-}
-section#sectionInicio::-webkit-scrollbar-track,
-section#sectionLiga::-webkit-scrollbar-track,
-section#sectionCopa::-webkit-scrollbar-track,
-#asidePrincipal::-webkit-scrollbar-track {
-  background: #84a0fc; /* Color de la pista de la barra de desplazamiento */
-}
-
-section#sectionInicio::-webkit-scrollbar-thumb,
-section#sectionLiga::-webkit-scrollbar-thumb,
-section#sectionCopa::-webkit-scrollbar-thumb,
-#asidePrincipal::-webkit-scrollbar-thumb {
-  background-color: #0a192f; /* Color de la "thumb" de la barra de desplazamiento */
-  border-radius: 10px; /* Redondear esquinas */
-  border: 2px solid #84a0fc; /* Espacio alrededor de la "thumb" */
-  box-shadow: 0px 0px 15px -5px #84a0fc;
-}
-
-/* Estilo para cuando se pasa el cursor sobre la "thumb" */
-section#sectionInicio::-webkit-scrollbar-thumb:hover,
-section#sectionLiga::-webkit-scrollbar-thumb:hover,
-section#sectionCopa::-webkit-scrollbar-thumb:hover,
-#asidePrincipal::-webkit-scrollbar-thumb:hover {
-  background: #0a192f;
-}
 section#sectionInicio,
 section#sectionLiga,
 section#sectionCopa {
-  padding: 20px;
   width: 100%;
+  padding-top: 70px;
   height: 100vh;
-  overflow-y: auto; /* para que el contenido del aside sea desplazable si es necesario */
-
 }
 
-header#headerSeasons{
-    text-align: center;
+div.containerLiga::-webkit-scrollbar,
+div.containerCopa::-webkit-scrollbar,
+div.containerInicio::-webkit-scrollbar,
+#asidePrincipal::-webkit-scrollbar {
+  height: 16px;
+  width: 16px; /* Ancho de la barra de desplazamiento vertical */
+}
+div.containerLiga::-webkit-scrollbar-track,
+div.containerCopa::-webkit-scrollbar-track,
+div.containerInicio::-webkit-scrollbar-track,
+#asidePrincipal::-webkit-scrollbar-track {
+  background: rgb(58, 55, 255); /* Color de la pista de la barra de desplazamiento */
 }
 
- img{
-    width: 20px;
+div.containerCopa::-webkit-scrollbar-thumb,
+div.containerLiga::-webkit-scrollbar-thumb,
+div.containerInicio::-webkit-scrollbar-thumb,
+#asidePrincipal::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 255, 255); /* Color de la "thumb" de la barra de desplazamiento */
+  border-radius: 10px; /* Redondear esquinas */
+  border: 2px solid rgb(58, 55, 255); /* Espacio alrededor de la "thumb" */
+  box-shadow: 0px 0px 15px -5px rgb(58, 55, 255);
 }
 
-ul{
-    padding: 0;
+
+div.containerLiga,
+div.containerCopa,
+div.containerInicio{
+  height: 100%;
+  padding: 10px;
+  overflow-y: auto;
 }
 
-li{
-    list-style: none;
+img {
+  width: 20px;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 li:hover {
   cursor: pointer;
+}
+
+
+@media(min-width:1200px){
+  header#headerPrincipal,
+  aside#asidePrincipal {
+  width: 20%;
+}
+
+aside#asidePrincipal{
+  padding-top: 80px
+}
+
+section#sectionInicio,
+section#sectionLiga,
+section#sectionCopa {
+  padding: 0;
+  width: 80%;
+}
 }

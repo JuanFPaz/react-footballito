@@ -5,66 +5,75 @@ import sortMatchs from '../../helpers/sortMatchs'
 import './Fixtures.css'
 
 /* Esto va por mi motomel, :') */
-export default function FixtureRegular ({ fixture }) {
-  const [dataPhase, setDataPhase] = useState(null)
-  const [dataRondas, setDataRondas] = useState([])
-  const [dataJornada, setDataJornada] = useState('')
-  const [dataMatchs, setDataMatchs] = useState([])
+export default function FixtureRegular ({ dataFaseRegular }) {
+  const [dataFixture, setDataFixture] = useState(null)
+  const [dataCurrentFecha, setDataCurrentFecha] = useState(null)
 
   useEffect(() => {
-    const [{ phaseName, phaseFixtures }] = fixture
-    const [{ fixtureName, fixtureMatchs }] = phaseFixtures
-    setDataPhase(phaseName)
-    setDataRondas(phaseFixtures)
-    setDataJornada(fixtureName)
-    setDataMatchs(fixtureMatchs)
-  }, [fixture])
+    const [currentFecha] = dataFaseRegular.filter(fr => fr.current)
+    console.log(currentFecha)
 
+    setDataFixture(dataFaseRegular)
+    setDataCurrentFecha(currentFecha)
+  }, [dataFaseRegular])
+
+  const handleCurrentButton = (fx) => {
+    return dataCurrentFecha.fecha === fx.fecha
+  }
+
+  const handleClickButton = (fx) => {
+    setDataCurrentFecha(fx)
+  }
   return (
     <>
-      {dataPhase && (
-        <article className='articleFixtureRegular'>
+      {dataFixture && (
+        <div className='articleFixtureRegular'>
           <div className='btnFixture'>
-            {dataRondas.map(({ fixtureName, fixtureMatchs }, idx) => (
-              <button key={idx} onClick={() => { setDataJornada(fixtureName); setDataMatchs(fixtureMatchs) }}>
+            {dataFixture.map((fx, idx) => (
+              <button
+                key={idx}
+                className={handleCurrentButton(fx) ? 'active' : ''}
+                onClick={() => {
+                  handleClickButton(fx)
+                }}
+              >
                 {idx + 1}
               </button>
             ))}
           </div>
           <table>
             <thead>
-              <tr className='trJornadaName'>
-                <th colSpan='4'>Jornada: {dataJornada}</th>
-              </tr>
+              <th />
+              <th> {dataCurrentFecha.fecha} </th>
+              <th />
+              <th />
+              <th />
             </thead>
-            {dataMatchs.sort(sortMatchs).map(m => (
-              <tbody key={m.id}>
-                <tr>
-                  <th className='thDateMatch' colSpan={4}>
-                    {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
+            <tbody>
+              {dataCurrentFecha.fixture.map(({ fixture, teams, goals }, idx) => (
+                <tr key={idx}>
+                  <th>
+                    {fixture.status.short === 'TBD' ? 'Sin Definir' : ''}
+                    {fixture.status.short === 'NS' ? fixture.dateToString : ''}
+                    {fixture.status.short === 'HT' ? 'Entretiempo' : ''}
+                    {fixture.status.short === 'FT' ? `Finalizado ${fixture.status.elapsed}'` : ''}
+
                   </th>
-                </tr>
-                <tr>
                   <td className='tdDataTeam'>
-                    <div>
-                      <img src={m.teams.home.logo} />
-                      <span>{m.teams.home.name}</span>
-                    </div>
+                    {teams.home.name}
+                    <img src={teams.home.logo} />
                   </td>
-                  <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
-                  <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
+                  <td className='tdDataResult'>{goals.home === null ? '-' : goals.home}</td>
+                  <td className='tdDataResult'>{goals.away === null ? '-' : goals.away}</td>
                   <td className='tdDataTeam'>
-                    <div>
-                      <img src={m.teams.away.logo} />
-                      <span>{m.teams.away.name}</span>
-                    </div>
+                    <img src={teams.away.logo} />
+                    {teams.away.name}
                   </td>
                 </tr>
-              </tbody>
-            )
-            )}
+              ))}
+            </tbody>
           </table>
-        </article>
+        </div>
       )}
     </>
   )

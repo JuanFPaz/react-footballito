@@ -3,19 +3,17 @@
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import { LoadingSection } from '../loading/Loading'
+import Loading from '../loading/Loading'
 import LigaArgentina from './argentina/LigaArgentina'
-import CopaLigaArgentina from './argentina/CopaLigaArgentina'
 import './Ligas.css'
+import Brasileirao from './brazil/Brasileirao'
 
 export default function Ligas ({ dataLigas }) {
   const [renderLoading, setRenderLoading] = useState(true)
   const [renderData, setRenderData] = useState(false)
   const [renderError, setRenderError] = useState(false)
   const [dataLeague, setDataLeague] = useState(null)
-  const [dataSeason, setDataSeason] = useState(null)
-  const [dataStanding, setDataStanding] = useState(null)
-  const [dataFixture, setDataFixture] = useState(null)
+  const [dataResponse, setDataResponse] = useState(null)
   const [dataError, setDataError] = useState(null)
 
   useEffect(() => {
@@ -24,28 +22,26 @@ export default function Ligas ({ dataLigas }) {
      * es decir, cuando componente <Principal /> No le envie nuevo datos a <Ligas/>
      * este useEffect no se ejecuta.
      */
-    fetch(dataLigas.season.link)
-      .then((res) => {
-        const data = res.json()
-
-        setDataLeague(dataLigas.league)
-        setDataSeason(dataLigas.season)
+    fetch(dataLigas.link)
+      .then(async (res) => {
+        const data = await res.json()
+        setDataLeague(dataLigas)
         if (!res.ok) {
           throw data
         }
         return data
       })
       .then((data) => {
-        setDataLeague(dataLigas.league)
-        setDataSeason(dataLigas.season)
-        setDataStanding(data.response[0].standings)
-        setDataFixture(data.response[0].fixtures)
+        const { response: [dataResponse] } = data
+        setDataResponse(dataResponse)
         setRenderLoading(false)
         setRenderData(true)
+        // setDataStanding(data.response[0].standings)
+        // setDataFixture(dataExample.response[0].dataFixtures)
+        // setRenderLoading(false)
+        // setRenderData(true)
       })
       .catch((data) => {
-        console.log(data)
-
         setDataError(data)
         setRenderLoading(false)
         setRenderError(true)
@@ -56,28 +52,28 @@ export default function Ligas ({ dataLigas }) {
       setRenderData(false)
       setRenderError(false)
       setDataLeague(null)
-      setDataSeason(null)
-      setDataStanding(null)
-      setDataFixture(null)
+      setDataResponse(null)
       setDataError(null)
     }
   }, [dataLigas])
 
   return (
     <section id='sectionLiga'>
-      {renderLoading && <LoadingSection />}
-      {renderData && (
-        <>
-          {dataLeague.id === 128 && <LigaArgentina dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionLPA' />}
-          {dataLeague.id === 1032 && <CopaLigaArgentina dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionCLPA' />}
-        </>
-      )}
-      {renderError && (
-        <div>
-          <h1>Hubo un error leyendo {dataLeague.name} {dataSeason.year} </h1>
-          <h2> {JSON.stringify(dataError.status)} </h2>
-        </div>
-      )}
+      <div className='containerLiga'>
+        {renderLoading && <Loading />}
+        {renderData && (
+          <>
+            {dataLeague.id === 71 && <Brasileirao dataResponse={dataResponse} idSection='sectionLPA' />}
+            {dataLeague.id === 128 && <LigaArgentina dataResponse={dataResponse} idSection='sectionLPA' />}
+          </>
+        )}
+        {renderError && (
+          <section id='sectionError'>
+            <h1>Error: {console.log(dataError)}</h1>
+            <p>Miau</p>
+          </section>
+        )}
+      </div>
     </section>
   )
 }

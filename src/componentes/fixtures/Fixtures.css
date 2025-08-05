@@ -1,86 +1,88 @@
-article.articleFixtureRegular tr.trJornadaName,
-article.articleFixtureGrupos tr.trJornadaName,
-article.articleFixtureEliminacion tr.trJornadaName{
-    background-color: rgba(10, 25, 47, 0.486);
-    color:rgb(204, 214, 246);
+
+
+div.articleFixtureRegular table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.0em;
 }
 
-article.articleFixtureRegular th,
-article.articleFixtureEliminacion th,
-article.articleFixtureGrupos th{
-    padding: 2px 2px 2px 8px;
+div.articleFixtureRegular thead th,
+div.articleFixtureRegular tbody th {
+  color: rgb(255, 255, 255);
+  background-color: rgb(18, 17, 95);
+  text-align: center;
+}
+div.articleFixtureRegular tbody td {
+  padding: 6px;
+  text-align: center;
 }
 
-
-article.articleFixtureRegular div.btnFixture{
-    margin: 0 auto;
-    background-color: #0a192f7c;
+div.articleFixtureRegular thead th:nth-child(1){
+    width: 25%;
+}
+div.articleFixtureRegular thead th:nth-child(3),
+div.articleFixtureRegular thead th:nth-child(4){
+  width: 5%;
+  text-align: center;
 }
 
-article.articleFixtureRegular div.btnFixture button{
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    margin: 5px;
-    border: none;
-    background-color: #0a192f7c;
-    color: #d8e1ff;
-    cursor: pointer;
-}
-
-article.articleFixtureRegular table,
-article.articleFixtureEliminacion table{
-    width: 100%;
-    text-align: center;
-    border-collapse: collapse;
-    font-size: small;
-}
-
-article.articleFixtureGrupos table{
-    width: 49%;
-    text-align: center;
-    border-collapse: collapse;
-    font-size: small;
-}
-
-article.articleFixtureRegular td.tdDataTeam,
-article.articleFixtureEliminacion td.tdDataTeam,
-article.articleFixtureGrupos td.tdDataTeam{
-    width: 45%;
-    border-bottom: 1px solid #0a192f7c ;
-    background-color: #d8e1ff;; /* Color para filas impares */
-}
-
-article.articleFixtureRegular td.tdDataTeam div,
-article.articleFixtureEliminacion td.tdDataTeam div,
-article.articleFixtureGrupos td.tdDataTeam div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-article.articleFixtureRegular td.tdDataResult,
-article.articleFixtureEliminacion td.tdDataResult,
-article.articleFixtureGrupos td.tdDataResult{
-    width: 5%;
-    background-color: #0a192f7c;
-    border-bottom: 1px solid #d8e1ff ;
-    color: #d8e1ff;
-}
-
-article.articleFixtureRegular tr:last-child td.tdDataResult,
-article.articleFixtureEliminacion tr:last-child td.tdDataResult,
-article.articleFixtureGrupos td.tdDataResult{
-    border-bottom: none;
+div.articleFixtureRegular thead th:nth-child(2){
+    width: 42.5%;
 }
 
 
-td.tdDataTeam img, td.tdDataTeam span
-{
-    display: block;
+div.articleFixtureRegular thead th:nth-child(5){
+    width: 42.5%;
 }
 
-.thDateMatch {
-    background-color: rgba(10, 25, 47, 0.486);
-    color:rgb(204, 214, 246);
+div.articleFixtureRegular tbody tr:nth-child(even) {
+  color: rgb(255, 255, 255);
+  background-color: rgb(97, 94, 253);
+}
+
+div.articleFixtureRegular tbody tr:nth-child(odd) {
+  color: rgb(255, 255, 255);
+  background-color: rgb(65, 61, 255);
+}
+
+div.articleFixtureRegular tbody td:nth-child(2) {
+  text-align: right;
+}
+div.articleFixtureRegular tbody td:nth-child(5) {
+  text-align: left;
+}
+div.articleFixtureRegular tbody td:nth-child(1),
+div.articleFixtureRegular tbody td:nth-child(3),
+div.articleFixtureRegular tbody td:nth-child(4){
+  padding: 6px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(18, 17, 95);
+}
+
+
+div.articleFixtureRegular tbody td img {
+    width: 20px;
+}
+div.articleFixtureRegular div.btnFixture {
+  text-align: center;
+  color: white;
+  background-color: rgb(23, 22, 43);
+}
+
+div.articleFixtureRegular div.btnFixture button {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin: 5px;
+  border: none;
+  background-color:  rgb(65, 61, 255);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+div.articleFixtureRegular div.btnFixture button.active {
+
+  background-color:  rgb(255, 61, 158);
+
 }

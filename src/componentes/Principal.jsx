@@ -7,6 +7,7 @@ import Copas from './copas/Copas'
 import Ligas from './ligas/Ligas'
 import NavLinks from './navs/NavLinks'
 import './Principal.css'
+import { Navbar } from 'react-bootstrap'
 
 export default function Principal ({ dataPrincipal, onLoadingApp }) {
   const [dataLinks, setDataLinks] = useState(dataPrincipal)
@@ -23,14 +24,13 @@ export default function Principal ({ dataPrincipal, onLoadingApp }) {
   }
 
   const handleEventRenderLiga = (dataSeleccionada) => {
-    /** DataSeleccionada = {league:{...}, season:{...}} */
     setRenderInicio(false)
     setRenderCopa(false)
     setRenderLiga(true)
+
     setDataLeague(dataSeleccionada)
   }
   const handleEventRenderCopa = (dataSeleccionada) => {
-    /** DataSeleccionada = {league:{...}, season:{...}} */
     setRenderCopa(true)
     setRenderLiga(false)
     setRenderInicio(false)

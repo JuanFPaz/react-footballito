@@ -1,40 +1,23 @@
-section#sectionFaseRegular{
+div.ligaContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+div#sectionTabla {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
+}
+/* div#sectionLiga div.sectionTabla {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-section#sectionLiga section.sectionTabla{
-    width: 30%;
-}
-
-section#sectionLiga section.sectionFixture{
-    width: 70%;
-    height: max-content;
-}
-
-section#sectionLiga section.sectionFixture{
-    margin-top: 60px
-}
-
-section#sectionLiga section.sectionFixture{
-    display: flex;
-    justify-content: center;
-}
-
-article.articleTablaEquipos{
-    width: 100%;
-}
-
-article.articleFixtureRegular,
-article.articleFixtureEliminacion{
-    width: 70%;
-}
-
-article.articleFixtureRegular table,
-article.articleTablaEquipos table{
-    width: 100%;
-}
-
-article.articleTablaEquipos{
-    width: 100%;
-    margin-bottom: 25px;
-}
+div#sectionLiga div.sectionFixture {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+} */

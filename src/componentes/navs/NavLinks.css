@@ -1,3 +1,7 @@
+div.asd{
+  padding: 1rem
+}
+
 nav#navLinks {
   display: flex;
   flex-direction: column;
@@ -7,6 +11,7 @@ nav#navLinks {
 }
 
 nav#navLinks h2{
+  color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,17 +39,19 @@ nav#navLinks ul {
 }
 
 nav#navLinks li {
+  color: rgb(215, 213, 255);
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-top: 5px;
   padding-bottom: 5px;
-  transition: background-color ease-in-out 0.5s;
+  transition: background-color ease-in-out 0.5s, color ease-in-out 0.45s;
 }
 
 nav#navLinks li.active,
 nav#navLinks li:hover {
   border-radius: 4px;
-  background-color: rgba(232, 238, 255, 0.664);
+  color: rgb(255, 255, 255);
+  background-color: rgb(58, 55, 255);
 }

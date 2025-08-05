@@ -4,19 +4,13 @@ import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureRegular from '../../fixtures/FixtureRegular'
 import { useState, useEffect } from 'react'
 
-export default function LigaArgentina ({ dataResponse, idSection }) {
-  const [tablaclA, setTablaA] = useState([])
-  const [tablaclB, setTablaB] = useState([])
+export default function EliminatoriasMundial ({ dataResponse, idSection }) {
   const [tablaAnual, setTablaAnual] = useState([])
   const [dataFaseRegular, setFaseRegular] = useState([])
   const [renderLeague, setRenderLeague] = useState(false)
   useEffect(() => {
-    const { dataStandings: { zonaA, zonaB, tablaAnual, tablaPromedios }, dataFixtures: { faseRegular } } = dataResponse
+    const { dataStandings: { tablaAnual }, dataFixtures: { faseRegular } } = dataResponse
 
-    console.log(dataResponse.dataFixtures)
-
-    setTablaA(zonaA)
-    setTablaB(zonaB)
     setTablaAnual(tablaAnual)
     setFaseRegular(faseRegular)
     setRenderLeague(true)
@@ -28,18 +22,11 @@ export default function LigaArgentina ({ dataResponse, idSection }) {
         <div id={idSection} className='ligaContainer'>
           <div id='sectionFaseRegular'>
             <div className='sectionTabla'>
-              <TablaEquipos standing={tablaclA} />
-              <TablaEquipos standing={tablaclB} />
+              <TablaEquipos standing={tablaAnual} />
             </div>
             <div className='sectionFixture'>
               <FixtureRegular dataFaseRegular={dataFaseRegular} />
             </div>
-          </div>
-          <div className='sectionOtrasTablas'>
-            <h1>
-              Tabla Anual
-            </h1>
-            <TablaEquipos standing={tablaAnual} />
           </div>
         </div>
       )}

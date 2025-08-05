@@ -4,7 +4,7 @@ import TablaEquipos from '../../tablas/TablaEquipos'
 import FixtureFaseGrupos from '../../fixtures/FixtureGrupos'
 // import FixtureGrupos from '../../fixtures/FixtureGrupos'
 
-export default function CopaLibertadores ({ dataResponse, idSection }) {
+export default function CopaDelMundo ({ dataResponse, idSection }) {
   const [grupoA, setGrupoA] = useState([])
   const [grupoB, setGrupoB] = useState([])
   const [grupoC, setGrupoC] = useState([])

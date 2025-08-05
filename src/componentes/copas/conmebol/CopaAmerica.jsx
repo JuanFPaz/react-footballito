@@ -1,39 +1,68 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import TablaEquipos from '../../tablas/TablaEquipos'
-import FixtureGrupos from '../../fixtures/FixtureGrupos'
+import FixtureFaseGrupos from '../../fixtures/FixtureGrupos'
 
-export default function CopaAmerica ({ dataStandings, dataFixtures, idSection }) {
-  const [grupos, setDataGrupos] = useState([])
-  const [faseGrupos, setDataFaseGrupos] = useState([])
+// import FixtureGrupos from '../../fixtures/FixtureGrupos'
+
+export default function CopaAmerica ({ dataResponse, idSection }) {
+  const [grupoA, setGrupoA] = useState([])
+  const [grupoB, setGrupoB] = useState([])
+  const [grupoC, setGrupoC] = useState([])
+  const [grupoD, setGrupoD] = useState([])
+
+  const [fixtureA, setFixtureA] = useState([])
+  const [fixtureB, setFixtureB] = useState([])
+  const [fixtureC, setFixtureC] = useState([])
+  const [fixtureD, setFixtureD] = useState([])
+
   const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
-    const [fixtureGrupos] = dataFixtures
-    setDataFaseGrupos(fixtureGrupos)
-    setDataGrupos(dataStandings)
+    const {
+      dataStandings: { grupoA, grupoB, grupoC, grupoD }
+    } = dataResponse
+    console.log(dataResponse.dataFixtures)
+
+    const {
+      dataFixtures: { faseGrupos: [fixA, fixB, fixC, fixD] }
+    } = dataResponse
+
+    setGrupoA(grupoA)
+    setFixtureA(fixA)
+    setGrupoB(grupoB)
+    setFixtureB(fixB)
+    setGrupoC(grupoC)
+    setFixtureC(fixC)
+    setGrupoD(grupoD)
+    setFixtureD(fixD)
     setRenderCup(true)
-  }, [dataStandings, dataFixtures])
+  }, [dataResponse])
   return (
     <>
       {renderCup && (
-        <section id={idSection}>
-          <section id='sectionFaseGrupos'>
-            <h1>
-              {faseGrupos[0].phaseName}
-            </h1>
-            {grupos.map((g, idx) => (
-              <div className='sectionTabla' key={idx}>
-                <TablaEquipos standing={g} />
-                <div className='sectionFixture'>
-                  <FixtureGrupos fixture={faseGrupos} teamsGroup={g} />
-                </div>
-              </div>
-            ))}
-          </section>
-        </section>
+        <div id={idSection} className='ligaContainer'>
+          <div id='sectionFaseFinal' />
+          <div id='sectionFaseRegular'>
+            <div className='sectionTabla'>
+              <TablaEquipos standing={grupoA} />
+              <FixtureFaseGrupos dataFaseUnica={fixtureA} />
+            </div>
+            <div className='sectionTabla'>
+              <TablaEquipos standing={grupoB} />
+              <FixtureFaseGrupos dataFaseUnica={fixtureB} />
+            </div>
+            <div className='sectionTabla'>
+              <TablaEquipos standing={grupoC} />
+              <FixtureFaseGrupos dataFaseUnica={fixtureC} />
+            </div>
+            <div className='sectionTabla'>
+              <TablaEquipos standing={grupoD} />
+              <FixtureFaseGrupos dataFaseUnica={fixtureD} />
+            </div>
+          </div>
+        </div>
       )}
     </>
-
   )
 }

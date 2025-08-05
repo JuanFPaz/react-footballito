@@ -4,16 +4,12 @@ import './Tablas.css'
 
 export default function TablaEquipos ({ standing }) {
   return (
-    <article className='articleTablaEquipos'>
+    <div className='tablaEquipos'>
       <table>
         <thead>
-          <tr className='rowGroupName'>
-            <th colSpan='11'>{standing[0].group}</th>
-          </tr>
           <tr className='rowStadistics'>
-            <th className='tdataPosicion'>Pos</th>
-            <th className='tdataEscudo' />
-            <th className='tdataEquipo'>Equipo</th>
+            <th>Pos</th>
+            <th>Equipo</th>
             <th>Pts.</th>
             <th>PJ</th>
             <th>PG</th>
@@ -43,8 +39,7 @@ export default function TablaEquipos ({ standing }) {
             ) => (
               <tr key={id}>
                 <td className='tdataPosicion'>{idx + 1}</td>
-                <td className='tdataEscudo'><img src={logo} alt='' /></td>
-                <td className='tdataEquipo'>{name}</td>
+                <td className='tdataEquipo'><img src={logo} alt='' />{name}</td>
                 <td>{points}</td>
                 <td>{played}</td>
                 <td>{win}</td>
@@ -58,6 +53,6 @@ export default function TablaEquipos ({ standing }) {
           )}
         </tbody>
       </table>
-    </article>
+    </div>
   )
 }

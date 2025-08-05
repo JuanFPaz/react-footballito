@@ -1,22 +1,25 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import FixtureFinal from '../../fixtures/FixtureEliminacion'
+import FixtureEliminacion from '../../fixtures/FixtureEliminacion'
 
 // eslint-disable-next-line react/prop-types
-export default function CopaArgentina ({ dataFixtures }) {
+export default function CopaArgentina ({ dataResponse, idSection }) {
   const [faseUnica, setFaseUnica] = useState([])
-  const [renderCup, setRenderLeague] = useState(false)
+  const [renderCup, setRenderCup] = useState(false)
 
   useEffect(() => {
-    const [unicaFase] = dataFixtures
-    setFaseUnica(unicaFase)
-    setRenderLeague(true)
-  }, [dataFixtures])
+    const { dataFixtures: { faseCopaArgentina } } = dataResponse
+    setFaseUnica(faseCopaArgentina)
+    setRenderCup(true)
+  }, [dataResponse])
 
   return (
     <>
       {renderCup && (
         <>
-          <FixtureFinal fixture={faseUnica} />
+          <div id={idSection} className='ligaContainer'>
+            <FixtureEliminacion dataFaseUnica={faseUnica} />
+          </div>
         </>
       )}
     </>

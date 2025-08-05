@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-pascal-case */
 /* eslint-disable promise/param-names */
 /* eslint-disable n/handle-callback-err */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import { LoadingSection } from '../loading/Loading'
+import Loading from '../loading/Loading'
 import CopaArgentina from './argentina/CopaArgentina'
 import CopaLibertadores from './conmebol/CopaLibertadores'
 import CopaSudamericana from './conmebol/CopaSudamericana'
@@ -12,16 +13,17 @@ import EuropaLeague from './uefa/EuropaLeague'
 import ConferenceLeague from './uefa/ConferenceLeague'
 import CopaAmerica from './conmebol/CopaAmerica'
 import Eurocopa from './uefa/Eurocopa'
+import CopaDelMundo from './fifa/CopaDelMundo'
 import './Copas.css'
+import EliminatoriasMundial from './conmebol/EliminatoriasMundial'
+import RecopaSudamericana from './conmebol/RecopaSudamericana'
 
 export default function Copas ({ dataCopas }) {
   const [renderLoading, setRenderLoading] = useState(true)
   const [renderData, setRenderData] = useState(false)
   const [renderError, setRenderError] = useState(false)
   const [dataCup, setDataCup] = useState(null)
-  const [dataSeason, setDataSeason] = useState(null)
-  const [dataStanding, setDataStanding] = useState(null)
-  const [dataFixture, setDataFixture] = useState(null)
+  const [dataResponse, setDataResponse] = useState(null)
   const [dataError, setDataError] = useState(null)
 
   useEffect(() => {
@@ -30,21 +32,20 @@ export default function Copas ({ dataCopas }) {
      * es decir, cuando componente <Principal /> No le envie nuevo datos a <Copas/>
      * este useEffect no se ejecuta.
      */
-    fetch(dataCopas.season.link)
-      .then((res) => {
-        const data = res.json()
-        setDataCup(dataCopas.league)
-        setDataSeason(dataCopas.season)
+    fetch(dataCopas.link)
+      .then(async (res) => {
+        const data = await res.json()
+        setDataCup(dataCopas)
         if (!res.ok) {
-          throw res
+          throw data
         }
         return data
       })
       .then((data) => {
-        setDataStanding(data.response[0].standings)
-        setDataFixture(data.response[0].fixtures)
-        setRenderLoading(false)
+        const { response: [dataResponse] } = data
+        setDataResponse(dataResponse)
         setRenderData(true)
+        setRenderLoading(false)
       })
       .catch((data) => {
         setDataError(data)
@@ -57,33 +58,32 @@ export default function Copas ({ dataCopas }) {
       setRenderData(false)
       setRenderError(false)
       setDataCup(null)
-      setDataSeason(null)
-      setDataStanding(null)
-      setDataFixture(null)
+      setDataResponse(null)
       setDataError(null)
     }
   }, [dataCopas])
+
   return (
     <section id='sectionCopa'>
-      {renderLoading && <LoadingSection />}
-      {renderData && (
-        <>
-          {dataCup.name === 'Copa Argentina' && <CopaArgentina dataFixtures={dataFixture} />}
-          {dataCup.name === 'CONMEBOL Libertadores' && <CopaLibertadores dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionLali' />}
-          {dataCup.name === 'CONMEBOL Sudamericana' && <CopaSudamericana dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionSudaca' />}
-          {dataCup.name === 'UEFA Champions League' && <ChampionsLeague dataStandings={dataStanding} dataFixtures={dataFixture} />}
-          {dataCup.name === 'UEFA Europa League' && <EuropaLeague dataStandings={dataStanding} dataFixtures={dataFixture} />}
-          {dataCup.name === 'UEFA Europa Conference League' && <ConferenceLeague dataStandings={dataStanding} dataFixtures={dataFixture} />}
-          {dataCup.name === 'Copa America' && <CopaAmerica dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionLali' />}
-          {dataCup.name === 'Euro Championship' && <Eurocopa dataStandings={dataStanding} dataFixtures={dataFixture} idSection='sectionLali' />}
-        </>
-      )}
-      {renderError && (
-        <div>
-          <h1>Hubo un error leyendo {dataCup.name} {dataSeason.year}</h1>
-          <h2> {JSON.stringify(dataError.status)} </h2>
-        </div>
-      )}
+      <div className='containerCopa'>
+        {renderLoading && <Loading />}
+        {renderData && (
+          <>
+            {dataCup.id === 34 && <EliminatoriasMundial dataResponse={dataResponse} idSection='Eliminatorias' />}
+            {dataCup.id === 130 && <CopaArgentina dataResponse={dataResponse} idSection='Copa Argetina' />}
+            {dataCup.id === 541 && <RecopaSudamericana dataResponse={dataResponse} />}
+            {dataCup.id === 9 && <CopaAmerica dataResponse={dataResponse} idSection='Copa America' />}
+            {(dataCup.id === 1 || dataCup.id === 15) && <CopaDelMundo dataResponse={dataResponse} />}
+            {(dataCup.id === 11 || dataCup.id === 13) && <CopaLibertadores dataResponse={dataResponse} />}
+          </>
+        )}
+        {renderError && (
+          <section id='sectionError'>
+            <h1>Error: {console.log(dataError)}</h1>
+            <p>Miau</p>
+          </section>
+        )}
+      </div>
     </section>
   )
 }

@@ -2,62 +2,71 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react'
 import './Fixtures.css'
-import filterMatchs from '../../helpers/filterMatchs'
-import sortMatchs from '../../helpers/sortMatchs'
 
-/* no fixtures solo miau miau */
-export default function FixtureGrupos ({ fixture, teamsGroup }) {
+export default function FixtureFaseGrupos ({ dataFaseUnica }) {
+  const [dataFixture, setDataFixture] = useState(null)
   const [dataRondas, setDataRondas] = useState([])
-  const [dataEquipos, setDataEquipos] = useState([])
+  const [dataJornada, setDataJornada] = useState('')
 
   useEffect(() => {
-    const [{ phaseFixtures }] = fixture
-    setDataEquipos([...teamsGroup])
-    setDataRondas(phaseFixtures)
-  }, [fixture, teamsGroup])
+    setDataFixture(dataFaseUnica)
+  }, [dataFaseUnica])
 
   return (
     <>
-      {dataRondas && (
-        <article className='articleFixtureGrupos'>
-          {dataRondas.map(({ fixtureName, fixtureMatchs }, idx) => (
-            <table key={idx}>
+      {dataFixture && (
+        <>
+          <div className='articleFixtureRegular'>
+            <table>
               <thead>
-                <tr className='trJornadaName'>
-                  <th colSpan='4'>Jornada: {fixtureName}</th>
+                <tr>
+                  <th />
+                  <th />
+                  <th />
+                  <th />
+                  <th />
+                  <th />
                 </tr>
               </thead>
-              {fixtureMatchs.filter((m) => filterMatchs(m, dataEquipos)).sort(sortMatchs).map(m => (
-                (
-                  <tbody key={m.id}>
-                    <tr>
-                      <th colSpan={4} className='thDateMatch'>
-                        {new Date(m.date).toLocaleDateString()} | {new Date(m.date).toTimeString()}
-                      </th>
-                    </tr>
-                    <tr>
+              {dataFixture.map(({ fixture }, idx) => (
+                <tbody key={idx}>
+                  {fixture.map(({ fixture, teams, score, goals }, idxx) => (
+                    <tr key={idxx}>
+                      <td>
+                        {fixture.status.short === 'TBD' ? 'Sin Definir' : fixture.dateToString}
+                      </td>
                       <td className='tdDataTeam'>
+                        {teams.home.name}
+                        <img src={teams.home.logo} />
+                      </td>
+                      <td className='tdDataResult'>
                         <div>
-                          <img src={m.teams.home.logo} />
-                          <span>{m.teams.home.name}</span>
+                          {goals.home === null ? '-' : goals.home}
+                        </div>
+                        <div>
+                          {score.penalty.home === null ? '' : `(${score.penalty.home})`}
                         </div>
                       </td>
-                      <td className='tdDataResult'>{m.goals.home === null ? '-' : m.goals.home}</td>
-                      <td className='tdDataResult'>{m.goals.away === null ? '-' : m.goals.away}</td>
-                      <td className='tdDataTeam'>
+                      <td className='tdDataResult'>
                         <div>
-                          <img src={m.teams.away.logo} />
-                          <span>{m.teams.away.name}</span>
+                          {goals.away === null ? '-' : goals.away}
+                        </div>
+                        <div>
+                          {score.penalty.away === null ? '' : `(${score.penalty.away})`}
                         </div>
                       </td>
+                      <td className='tdDataTeam'>
+                        <img src={teams.away.logo} />
+                        {teams.away.name}
+                      </td>
                     </tr>
-                  </tbody>
-                )
-              )
-              )}
+                  ))}
+
+                </tbody>
+              )).reverse()}
             </table>
-          ))}
-        </article>
+          </div>
+        </>
       )}
     </>
   )
