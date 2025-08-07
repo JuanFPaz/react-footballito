@@ -53,4 +53,4 @@ Actualmente, estoy en **busqueda** de alguien que pueda **contribuir con el dise
 
 ## Autor
 
-- Juan Paz, desarrollador Javascript.
+- [Juan Paz](https://jpaz.ar), desarrollador Javascript.
